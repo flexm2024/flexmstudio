@@ -1,0 +1,427 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css');
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+/* ════════════════════════════════════════════════════════
+   FONT STRATEGY
+   · Latin / numbers / headings  →  Montserrat (display)
+   · 한글 / body copy             →  Pretendard Variable
+   · code / mono labels           →  JetBrains Mono
+   폰트 스택 순서: 글리프 존재 우선 → 언어 자동 분리
+   ════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════
+   60-30-10 COLOR RULE
+   60 % → --c-bg / --c-bg-sub       dominant background
+   30 % → --c-surface / surface2    cards, panels, chrome
+   10 % → --c-accent                CTAs, links, highlights
+   ════════════════════════════════════════════════════════ */
+:root {
+  /* ── 60 % dominant ─────────────────────────────────── */
+  --c-bg:       #f4f7ff;
+  --c-bg-sub:   #eaeffc;
+
+  /* ── 30 % secondary ────────────────────────────────── */
+  --c-surface:  #ffffff;
+  --c-surface2: #e2e9f8;
+  --c-border:   rgba(40, 96, 255, 0.13);
+
+  /* ── typography ────────────────────────────────────── */
+  --c-text:     #0b1120;
+  --c-muted:    #4a5680;
+
+  /* ── 10 % accent ───────────────────────────────────── */
+  --c-accent:        #2860ff;   /* primary CTA / links */
+  --c-accent-dark:   #1a4fe0;
+  --c-accent-light:  #5585ff;
+  --c-accent-mint:   #20cc80;   /* complementary — use sparingly (success / badge) */
+
+  /* ── semantic ──────────────────────────────────────── */
+  --c-success:  #20cc80;
+  --c-warning:  #f0a020;
+  --c-danger:   #ff4060;
+
+  /* ── decorative ────────────────────────────────────── */
+  --c-grid:        rgba(40, 96, 255, 0.05);
+  --c-orb1:        rgba(40, 96, 255, 0.10);
+  --c-orb2:        rgba(32, 204, 128, 0.07);
+  --c-card-shadow: rgba(40, 96, 255, 0.07);
+}
+
+.dark {
+  /* ── 60 % dominant ─────────────────────────────────── */
+  --c-bg:       #0c0c10;
+  --c-bg-sub:   #111116;
+
+  /* ── 30 % secondary ────────────────────────────────── */
+  --c-surface:  #18181f;
+  --c-surface2: #22222d;
+  --c-border:   rgba(160, 160, 210, 0.11);
+
+  /* ── typography ────────────────────────────────────── */
+  --c-text:     #eaeaf2;
+  --c-muted:    #8a8ab0;
+
+  /* ── 10 % accent (same hue across modes) ──────────── */
+  --c-accent:        #6690ff;
+  --c-accent-dark:   #4d76f0;
+  --c-accent-light:  #88aaff;
+  --c-accent-mint:   #36dea0;
+
+  /* ── semantic ──────────────────────────────────────── */
+  --c-success:  #36dea0;
+  --c-warning:  #f5c040;
+  --c-danger:   #ff607a;
+
+  /* ── decorative ────────────────────────────────────── */
+  --c-grid:        rgba(100, 110, 230, 0.04);
+  --c-orb1:        rgba(102, 144, 255, 0.10);
+  --c-orb2:        rgba(54, 222, 160, 0.06);
+  --c-card-shadow: rgba(80, 100, 220, 0.08);
+}
+
+/* ── Tailwind font theme ────────────────────────────────
+   --font-display stack: Montserrat handles Latin/numbers;
+   Pretendard Variable catches Korean glyphs as fallback.  */
+@theme {
+  --font-sans:    'Paperlogy', 'Pretendard Variable', Pretendard, sans-serif;
+  --font-display: 'Paperlogy', 'Pretendard Variable', Pretendard, sans-serif;
+  --font-mono:    'Paperlogy', 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 19px; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--c-bg);
+  color: var(--c-text);
+  overflow-x: hidden;
+  transition: background 0.35s ease, color 0.35s ease;
+  word-break: keep-all;          /* 한국어 단어 단위 줄바꿈 */
+  line-height: 1.7;
+}
+
+/* 배경 그리드 패턴 */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(var(--c-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  transition: opacity 0.35s;
+}
+
+#root { min-height: 100vh; }
+
+/* 제목: Montserrat(Latin) + Pretendard(한글) 자동 분리 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  word-break: keep-all;
+}
+
+/* Montserrat 숫자/영문에 kerning 개선 */
+[class*="section-title"],
+.stat-number {
+  font-family: var(--font-display);
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+code, pre, .mono { font-family: var(--font-mono); }
+
+/* ════ 공통 컴포넌트 ════ */
+@layer components {
+
+  .card {
+    position: relative;
+    border-radius: 16px;
+    border: 1px solid var(--c-border);
+    background: var(--c-surface);
+    backdrop-filter: blur(12px);
+    transition: border-color 0.25s ease, transform 0.25s ease,
+                box-shadow 0.25s ease, background 0.35s ease;
+    overflow: hidden;
+  }
+  .card:hover {
+    border-color: color-mix(in srgb, var(--c-accent) 50%, transparent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px var(--c-card-shadow),
+                0 0 0 1px color-mix(in srgb, var(--c-accent) 8%, transparent);
+  }
+
+  .glass-card {
+    position: relative;
+    border-radius: 20px;
+    border: 1px solid var(--c-border);
+    background: var(--c-surface);
+    backdrop-filter: blur(20px);
+    transition: background 0.35s ease, border-color 0.35s ease;
+  }
+
+  .glow-card {
+    position: relative;
+    border-radius: 20px;
+    background: var(--c-surface);
+    backdrop-filter: blur(16px);
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.35s ease;
+  }
+  .glow-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit; padding: 1px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--c-accent) 50%, transparent),
+      color-mix(in srgb, var(--c-accent-mint) 30%, transparent),
+      color-mix(in srgb, var(--c-accent) 10%, transparent)
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                  linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+  .glow-card:hover::before { opacity: 1; }
+  .glow-card:hover {
+    box-shadow: 0 20px 60px var(--c-card-shadow);
+    transform: translateY(-4px);
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 2rem;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-dark));
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.875rem;
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--c-accent) 35%, transparent);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--c-accent-light), var(--c-accent));
+    box-shadow: 0 6px 28px color-mix(in srgb, var(--c-accent) 50%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 2rem;
+    background: color-mix(in srgb, var(--c-accent) 8%, transparent);
+    color: var(--c-accent);
+    font-weight: 700;
+    font-size: 0.875rem;
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+    border-radius: 10px;
+    border: 1px solid color-mix(in srgb, var(--c-accent) 35%, transparent);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-secondary:hover {
+    background: color-mix(in srgb, var(--c-accent) 15%, transparent);
+    border-color: var(--c-accent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--c-accent) 20%, transparent);
+    transform: translateY(-2px);
+  }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: .15rem .65rem; border-radius: 999px;
+    font-size: .7rem; font-weight: 600;
+    font-family: var(--font-display);
+    background: color-mix(in srgb, var(--c-accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-accent) 30%, transparent);
+    color: var(--c-accent);
+  }
+
+  /* mint는 success / 상태 표시 용도로만 사용 */
+  .badge-mint {
+    display: inline-flex; align-items: center;
+    padding: .15rem .65rem; border-radius: 999px;
+    font-size: .7rem; font-weight: 600;
+    font-family: var(--font-display);
+    background: color-mix(in srgb, var(--c-accent-mint) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-accent-mint) 30%, transparent);
+    color: var(--c-accent-mint);
+  }
+
+  .badge-pink {
+    display: inline-flex; align-items: center;
+    padding: .15rem .65rem; border-radius: 999px;
+    font-size: .7rem; font-weight: 600;
+    font-family: var(--font-display);
+    background: color-mix(in srgb, var(--c-danger) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-danger) 30%, transparent);
+    color: var(--c-danger);
+  }
+
+  /* ── Tags (mono font for tech labels) ── */
+  .tag {
+    display: inline-flex; align-items: center;
+    padding: .2rem .65rem; border-radius: 6px;
+    font-size: .7rem; font-family: var(--font-mono);
+    background: color-mix(in srgb, var(--c-accent) 6%, transparent);
+    border: 1px solid var(--c-border);
+    color: var(--c-muted);
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  /* ── Section heading ── */
+  .section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: var(--font-display);
+    color: var(--c-text);
+    margin-bottom: .5rem;
+    letter-spacing: -0.025em;
+  }
+
+  .accent-bar {
+    width: 3rem; height: 3px;
+    background: linear-gradient(90deg, var(--c-accent), var(--c-accent-mint));
+    border-radius: 999px;
+    margin-bottom: 3rem;
+  }
+
+  /* ── Filter buttons ── */
+  .filter-btn {
+    padding: .42rem 1.1rem; border-radius: 999px;
+    font-size: .8rem; font-weight: 600;
+    font-family: var(--font-display);
+    border: 1px solid var(--c-border);
+    background: transparent;
+    color: var(--c-muted);
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .filter-btn:hover {
+    border-color: color-mix(in srgb, var(--c-accent) 40%, transparent);
+    color: var(--c-accent);
+    background: color-mix(in srgb, var(--c-accent) 6%, transparent);
+  }
+  .filter-btn.active {
+    border-color: var(--c-accent);
+    background: color-mix(in srgb, var(--c-accent) 15%, transparent);
+    color: var(--c-accent);
+  }
+}
+
+/* ════ 애니메이션 ════ */
+@keyframes fadeInUp  { from { opacity: 0; transform: translateY(20px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes fadeIn    { from { opacity: 0 } to { opacity: 1 } }
+@keyframes modalIn   { from { opacity: 0; transform: scale(.93) translateY(16px) } to { opacity: 1; transform: scale(1) translateY(0) } }
+@keyframes blink     { 0%, 100% { opacity: 1 } 50% { opacity: 0 } }
+@keyframes bounce    { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(9px) } }
+@keyframes float     { 0%, 100% { transform: translateY(0) rotate(0deg) } 50% { transform: translateY(-22px) rotate(3deg) } }
+@keyframes floatB    { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-16px) } }
+@keyframes shimmer   { 0% { background-position: -200% center } 100% { background-position: 200% center } }
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px color-mix(in srgb, var(--c-accent) 30%, transparent) }
+  50%       { box-shadow: 0 0 40px color-mix(in srgb, var(--c-accent) 60%, transparent) }
+}
+
+.page-enter  { animation: fadeInUp 0.4s ease forwards; }
+.scroll-fade { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+.scroll-fade.is-visible { opacity: 1; transform: translateY(0); }
+
+/* 타이핑 커서 */
+.typing-cursor {
+  display: inline-block; width: 3px; height: 1em;
+  background: var(--c-accent);
+  margin-left: 4px; vertical-align: middle;
+  border-radius: 2px;
+  animation: blink .9s step-end infinite;
+}
+
+/* ── 텍스트 그라디언트 ── */
+.text-gradient-blue {
+  background: linear-gradient(135deg, var(--c-accent), var(--c-accent-mint));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.text-gradient-warm {
+  background: linear-gradient(135deg, var(--c-warning), var(--c-danger));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.text-gradient-all {
+  background: linear-gradient(135deg, var(--c-accent) 0%, var(--c-accent-mint) 60%, var(--c-accent-light) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.text-shimmer {
+  background: linear-gradient(90deg,
+    var(--c-text) 0%,
+    var(--c-accent) 30%,
+    var(--c-accent-mint) 60%,
+    var(--c-text) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ═══════════════════════════════════════════════
+   TIPTAP EDITOR
+   ═══════════════════════════════════════════════ */
+.tiptap-editor .ProseMirror {
+  padding: 1rem 1.25rem;
+  min-height: 320px;
+  outline: none;
+  font-family: 'Paperlogy', var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--c-text);
+}
+.tiptap-editor .ProseMirror p { margin: 0 0 0.75rem; }
+.tiptap-editor .ProseMirror h1 { font-size: 1.6rem; font-weight: 800; margin: 1.5rem 0 0.75rem; line-height: 1.2; letter-spacing: -0.02em; color: var(--c-text); font-family: 'Paperlogy', var(--font-display); }
+.tiptap-editor .ProseMirror h2 { font-size: 1.25rem; font-weight: 700; margin: 1.25rem 0 0.6rem; color: var(--c-text); font-family: 'Paperlogy', var(--font-display); border-bottom: 1px solid var(--c-border); padding-bottom: 0.4rem; }
+.tiptap-editor .ProseMirror h3 { font-size: 1rem; font-weight: 700; margin: 1rem 0 0.5rem; color: var(--c-accent); font-family: 'Paperlogy', var(--font-display); }
+.tiptap-editor .ProseMirror ul, .tiptap-editor .ProseMirror ol { padding-left: 1.5rem; margin: 0.5rem 0 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.tiptap-editor .ProseMirror li { font-size: 0.9rem; color: var(--c-muted); line-height: 1.8; }
+.tiptap-editor .ProseMirror blockquote { border-left: 3px solid var(--c-accent); padding-left: 1rem; margin: 0.75rem 0; color: var(--c-muted); font-style: italic; }
+.tiptap-editor .ProseMirror pre { background: color-mix(in srgb, var(--c-accent) 6%, var(--c-surface2)); border: 1px solid var(--c-border); border-radius: 8px; padding: 0.875rem 1rem; overflow-x: auto; margin: 0.5rem 0 1rem; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.7; }
+.tiptap-editor .ProseMirror code { font-family: var(--font-mono); font-size: 0.85em; background: color-mix(in srgb, var(--c-accent) 10%, transparent); padding: 0.1em 0.4em; border-radius: 4px; color: var(--c-accent); }
+.tiptap-editor .ProseMirror pre code { background: none; padding: 0; color: var(--c-text); font-size: inherit; }
+.tiptap-editor .ProseMirror a { color: var(--c-accent); text-decoration: underline; }
+.tiptap-editor .ProseMirror img { max-width: 100%; border-radius: 8px; margin: 0.5rem 0; }
+.tiptap-editor .ProseMirror p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: var(--c-muted); opacity: 0.5; pointer-events: none; float: left; height: 0; }
+.tiptap-editor .ProseMirror .ProseMirror-selectednode { outline: 2px solid var(--c-accent); border-radius: 4px; }
+/* selection */
+.tiptap-editor .ProseMirror ::selection { background: color-mix(in srgb, var(--c-accent) 25%, transparent); }
+
+/* ═══════════════════════════════════════════════
+   RICHTEXT BODY (블로그 포스트 뷰)
+   ═══════════════════════════════════════════════ */
+.richtext-body { font-size: 0.95rem; line-height: 1.9; color: var(--c-muted); font-family: 'Paperlogy', var(--font-sans); }
+.richtext-body h1 { font-size: clamp(1.3rem,3vw,1.75rem); font-weight: 800; color: var(--c-text); margin: 2.5rem 0 1rem; font-family: 'Paperlogy', var(--font-display); line-height: 1.25; letter-spacing: -0.02em; }
+.richtext-body h2 { font-size: 1.15rem; font-weight: 700; color: var(--c-text); margin: 2rem 0 0.75rem; font-family: 'Paperlogy', var(--font-display); padding-bottom: 0.5rem; border-bottom: 1px solid var(--c-border); }
+.richtext-body h3 { font-size: 1rem; font-weight: 700; color: var(--c-accent); margin: 1.5rem 0 0.5rem; font-family: 'Paperlogy', var(--font-display); }
+.richtext-body p { margin: 0 0 1rem; }
+.richtext-body ul, .richtext-body ol { padding-left: 1.5rem; margin: 0.5rem 0 1.25rem; }
+.richtext-body li { margin-bottom: 0.35rem; }
+.richtext-body blockquote { border-left: 3px solid var(--c-accent); padding-left: 1rem; margin: 1rem 0; font-style: italic; }
+.richtext-body pre { background: color-mix(in srgb, var(--c-accent) 6%, var(--c-surface2)); border: 1px solid var(--c-border); border-radius: 10px; padding: 1rem 1.25rem; overflow-x: auto; margin: 0.5rem 0 1.25rem; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.7; }
+.richtext-body code { font-family: var(--font-mono); font-size: 0.85em; background: color-mix(in srgb, var(--c-accent) 10%, transparent); padding: 0.1em 0.4em; border-radius: 4px; color: var(--c-accent); }
+.richtext-body pre code { background: none; padding: 0; color: var(--c-text); }
+.richtext-body a { color: var(--c-accent); text-decoration: underline; }
+.richtext-body img { max-width: 100%; border-radius: 10px; margin: 0.75rem 0; }
+.richtext-body strong { color: var(--c-text); font-weight: 700; }

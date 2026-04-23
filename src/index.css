@@ -52,34 +52,34 @@
 
 .dark {
   /* ── 60 % dominant ─────────────────────────────────── */
-  --c-bg:       #0c0c10;
-  --c-bg-sub:   #111116;
+  --c-bg:       #09090b;
+  --c-bg-sub:   #0f0f12;
 
   /* ── 30 % secondary ────────────────────────────────── */
-  --c-surface:  #18181f;
-  --c-surface2: #22222d;
-  --c-border:   rgba(160, 160, 210, 0.11);
+  --c-surface:  #18181c;
+  --c-surface2: #232328;
+  --c-border:   rgba(255, 255, 255, 0.07);
 
   /* ── typography ────────────────────────────────────── */
-  --c-text:     #eaeaf2;
-  --c-muted:    #8a8ab0;
+  --c-text:     #f2f2f4;
+  --c-muted:    #80808a;
 
-  /* ── 10 % accent (same hue across modes) ──────────── */
-  --c-accent:        #6690ff;
-  --c-accent-dark:   #4d76f0;
-  --c-accent-light:  #88aaff;
-  --c-accent-mint:   #36dea0;
+  /* ── 10 % accent ───────────────────────────────────── */
+  --c-accent:        #6b8fff;
+  --c-accent-dark:   #5275f0;
+  --c-accent-light:  #8aaaff;
+  --c-accent-mint:   #3ecf8e;
 
   /* ── semantic ──────────────────────────────────────── */
-  --c-success:  #36dea0;
-  --c-warning:  #f5c040;
-  --c-danger:   #ff607a;
+  --c-success:  #3ecf8e;
+  --c-warning:  #f5b942;
+  --c-danger:   #ff5c72;
 
   /* ── decorative ────────────────────────────────────── */
-  --c-grid:        rgba(100, 110, 230, 0.04);
-  --c-orb1:        rgba(102, 144, 255, 0.10);
-  --c-orb2:        rgba(54, 222, 160, 0.06);
-  --c-card-shadow: rgba(80, 100, 220, 0.08);
+  --c-grid:        rgba(255, 255, 255, 0.022);
+  --c-orb1:        rgba(107, 143, 255, 0.09);
+  --c-orb2:        rgba(62, 207, 142, 0.05);
+  --c-card-shadow: rgba(0, 0, 0, 0.45);
 }
 
 /* ── Tailwind font theme ────────────────────────────────

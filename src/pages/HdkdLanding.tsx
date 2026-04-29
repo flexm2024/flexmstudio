@@ -287,22 +287,21 @@ export default function HdkdLanding() {
       {/* ══ 히어로 ══ */}
       <section style={{
         minHeight: '100vh',
-        background: `linear-gradient(160deg, ${C.beige} 0%, #EDE3D5 40%, #D4C4AE 100%)`,
+        position: 'relative', overflow: 'hidden',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 'clamp(5rem, 10vw, 8rem) clamp(1rem, 5vw, 4rem) 4rem',
-        position: 'relative', overflow: 'hidden',
       }}>
+        {/* 배경 이미지 */}
         <div style={{
-          position: 'absolute', top: '-10%', right: '-5%',
-          width: '600px', height: '600px', borderRadius: '50%',
-          background: `radial-gradient(circle, rgba(139,111,71,0.08) 0%, transparent 70%)`,
-          pointerEvents: 'none',
+          position: 'absolute', inset: 0,
+          backgroundImage: 'url(https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1600&q=80)',
+          backgroundSize: 'cover', backgroundPosition: 'center',
+          filter: 'brightness(0.55)',
         }} />
+        {/* 반투명 베이지 오버레이 */}
         <div style={{
-          position: 'absolute', bottom: '-15%', left: '-10%',
-          width: '500px', height: '500px', borderRadius: '50%',
-          background: `radial-gradient(circle, rgba(196,168,130,0.12) 0%, transparent 70%)`,
-          pointerEvents: 'none',
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(160deg, rgba(90,60,30,0.55) 0%, rgba(42,31,20,0.65) 100%)',
         }} />
 
         <div style={{ maxWidth: '760px', textAlign: 'center', position: 'relative', zIndex: 1 }}>
@@ -313,9 +312,9 @@ export default function HdkdLanding() {
           >
             <div style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-              background: 'rgba(139,111,71,0.1)', border: `1px solid rgba(139,111,71,0.25)`,
+              background: 'rgba(255,255,255,0.12)', border: `1px solid rgba(255,255,255,0.3)`,
               borderRadius: '999px', padding: '0.35rem 1rem', marginBottom: '1.5rem',
-              fontSize: '0.75rem', fontWeight: 700, color: C.wood, letterSpacing: '0.05em',
+              fontSize: '0.75rem', fontWeight: 700, color: 'rgba(255,255,255,0.9)', letterSpacing: '0.05em',
             }}>
               <Leaf size={13} />
               국내 장인이 직접 만드는 원목 가구
@@ -324,14 +323,15 @@ export default function HdkdLanding() {
             <h1 style={{
               fontSize: 'clamp(2.8rem, 7vw, 5rem)',
               fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.05,
-              color: '#2A1F14', marginBottom: '1.25rem',
+              color: '#FFFFFF', marginBottom: '1.25rem',
+              textShadow: '0 2px 20px rgba(0,0,0,0.3)',
             }}>
               자연에서 온 가구,<br />
-              <span style={{ color: C.wood }}>삶에 스며들다</span>
+              <span style={{ color: C.woodLight }}>삶에 스며들다</span>
             </h1>
 
             <p style={{
-              fontSize: 'clamp(1rem, 2vw, 1.15rem)', color: C.muted,
+              fontSize: 'clamp(1rem, 2vw, 1.15rem)', color: 'rgba(255,255,255,0.8)',
               lineHeight: 1.8, maxWidth: '520px', margin: '0 auto 2.5rem',
             }}>
               30년 경력의 장인이 한 땀 한 땀 제작하는<br />
@@ -372,7 +372,7 @@ export default function HdkdLanding() {
           transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
           style={{
             position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)',
-            cursor: 'pointer', color: C.wood, opacity: 0.6,
+            cursor: 'pointer', color: 'white', opacity: 0.7,
           }}
           onClick={() => scrollTo('features')}
         >

@@ -10,6 +10,7 @@ import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import BlogPost from './pages/BlogPost'
 import NukkiAI from './pages/NukkiAI'
+import HdkdLanding from './pages/HdkdLanding'
 
 export default function App() {
   return (
@@ -25,8 +26,9 @@ export default function App() {
               <Route path="/contact"     element={<Contact />} />
               <Route path="/blog"        element={<Blog />} />
               <Route path="/blog/:slug"  element={<BlogPost />} />
-              <Route path="/nukki-ai"   element={<NukkiAI />} />
+              <Route path="/nukki-ai"    element={<NukkiAI />} />
             </Route>
+            <Route path="/hdkd" element={<HdkdLanding />} />
           </Routes>
         </BrowserRouter>
       </AdminProvider>

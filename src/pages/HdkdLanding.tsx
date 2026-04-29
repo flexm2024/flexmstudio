@@ -206,7 +206,6 @@ export default function HdkdLanding() {
   const NAV = [
     { label: '제품', id: 'products' },
     { label: '회사소개', id: 'about' },
-    { label: '문의', id: 'contact' },
   ]
 
   return (

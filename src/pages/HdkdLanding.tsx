@@ -189,14 +189,7 @@ function ContactForm() {
 
 /* ── 메인 컴포넌트 ─────────────────────────────────────────── */
 export default function HdkdLanding() {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -213,12 +206,11 @@ export default function HdkdLanding() {
 
       {/* ══ 헤더 ══ */}
       <header style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        position: 'sticky', top: 0, zIndex: 100,
         height: '64px',
-        background: scrolled ? 'rgba(250,250,248,0.92)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? `1px solid ${C.border}` : 'none',
-        transition: 'all 0.3s',
+        background: 'rgba(250,250,248,0.97)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: `1px solid ${C.border}`,
         display: 'flex', alignItems: 'center',
         padding: '0 clamp(1rem, 5vw, 4rem)',
       }}>
@@ -285,10 +277,10 @@ export default function HdkdLanding() {
 
       {/* ══ 히어로 ══ */}
       <section style={{
-        minHeight: '100vh',
+        minHeight: 'calc(100vh - 64px)',
         position: 'relative', overflow: 'hidden',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: 'clamp(5rem, 10vw, 8rem) clamp(1rem, 5vw, 4rem) 4rem',
+        padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem) 4rem',
       }}>
         {/* 배경 이미지 */}
         <div style={{

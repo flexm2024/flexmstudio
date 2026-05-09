@@ -58,6 +58,28 @@ export default function CoverImageMaker({ initialTitle, onApply, onClose }: Prop
     drawCanvas(ctx, { color1, color2, direction, title, subtitle, textColor })
   }, [color1, color2, direction, title, subtitle, textColor])
 
+  const handleDownload = () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    canvas.toBlob((blob) => {
+      if (!blob) return
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'cover-image.webp'
+      a.click()
+      URL.revokeObjectURL(url)
+    }, 'image/webp', quality)
+  }
+
+  const handleApply = () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const dataUrl = canvas.toDataURL('image/webp', quality)
+    onApply(dataUrl)
+    onClose()
+  }
+
   return (
     <>
       {/* zIndex 400: above BlogEditor (300) */}
@@ -183,10 +205,21 @@ export default function CoverImageMaker({ initialTitle, onApply, onClose }: Prop
               <span style={{ fontSize: '0.68rem', color: 'var(--c-muted)', textAlign: 'center' }}>
                 실제 출력: {W} × {H} · WebP {Math.round(quality * 100)}%
               </span>
-              {/* 버튼 — Task 3에서 채움 */}
               <div style={{ display: 'flex', gap: '0.6rem', marginTop: 'auto' }}>
-                <button disabled style={{ flex: 1, padding: '0.65rem', background: 'var(--c-surface2)', border: '1px solid var(--c-border)', borderRadius: '10px', color: 'var(--c-muted)', fontSize: '0.85rem', cursor: 'not-allowed' }}>↓ WebP 다운로드</button>
-                <button disabled style={{ flex: 1, padding: '0.65rem', background: 'var(--c-accent)', border: 'none', borderRadius: '10px', color: '#fff', fontSize: '0.85rem', fontWeight: 700, cursor: 'not-allowed' }}>✓ 커버로 적용</button>
+                <button
+                  type="button"
+                  onClick={handleDownload}
+                  style={{ flex: 1, padding: '0.65rem', background: 'var(--c-surface2)', border: '1px solid var(--c-border)', borderRadius: '10px', color: 'var(--c-text)', fontSize: '0.85rem', cursor: 'pointer', fontFamily: 'var(--font-display)' }}
+                >
+                  ↓ WebP 다운로드
+                </button>
+                <button
+                  type="button"
+                  onClick={handleApply}
+                  style={{ flex: 1, padding: '0.65rem', background: 'var(--c-accent)', border: 'none', borderRadius: '10px', color: '#fff', fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-display)' }}
+                >
+                  ✓ 커버로 적용
+                </button>
               </div>
             </div>
           </div>

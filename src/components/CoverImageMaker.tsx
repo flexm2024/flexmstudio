@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 type Direction = 'to right' | 'to bottom right' | 'to bottom'
 
@@ -26,6 +26,18 @@ interface Props {
   initialTitle: string
   onApply: (dataUrl: string) => void
   onClose: () => void
+}
+
+const labelStyle: React.CSSProperties = {
+  fontSize: '0.68rem', fontWeight: 600, color: 'var(--c-muted)', textTransform: 'uppercase',
+  letterSpacing: '0.07em', fontFamily: 'var(--font-display)', marginBottom: '0.4rem',
+}
+
+const inputStyle: React.CSSProperties = {
+  width: '100%', padding: '0.35rem 0.6rem', borderRadius: '7px',
+  background: 'var(--c-surface2)', border: '1px solid var(--c-border)',
+  color: 'var(--c-text)', fontSize: '0.78rem', outline: 'none', boxSizing: 'border-box',
+  fontFamily: 'var(--font-sans)',
 }
 
 export default function CoverImageMaker({ initialTitle, onApply, onClose }: Props) {
@@ -70,10 +82,92 @@ export default function CoverImageMaker({ initialTitle, onApply, onClose }: Prop
 
           {/* 바디 */}
           <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-            {/* 좌측 패널 — Task 2에서 채움 */}
-            <div style={{ width: '220px', flexShrink: 0, borderRight: '1px solid var(--c-border)', overflowY: 'auto', padding: '1rem' }}>
-              <p style={{ color: 'var(--c-muted)', fontSize: '0.75rem' }}>컨트롤 패널 (Task 2)</p>
+            {/* 좌측 패널 */}
+          <div style={{ width: '220px', flexShrink: 0, borderRight: '1px solid var(--c-border)', overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+
+            {/* 프리셋 템플릿 */}
+            <div>
+              <p style={labelStyle}>프리셋 템플릿</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px' }}>
+                {PRESETS.map(p => (
+                  <button
+                    key={p.name}
+                    type="button"
+                    title={p.name}
+                    onClick={() => { setColor1(p.color1); setColor2(p.color2); setDirection(p.direction); setTextColor(p.textColor) }}
+                    style={{ height: '34px', background: `linear-gradient(${p.direction}, ${p.color1}, ${p.color2})`, borderRadius: '6px', border: color1 === p.color1 && color2 === p.color2 ? '2px solid var(--c-accent)' : '2px solid transparent', cursor: 'pointer', fontSize: '0.65rem', color: p.textColor, fontFamily: 'var(--font-display)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', padding: '0 4px' }}
+                  >
+                    {p.name}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            <hr style={{ border: 'none', borderTop: '1px solid var(--c-border)', margin: 0 }} />
+
+            {/* 배경 색상 */}
+            <div>
+              <p style={labelStyle}>배경 색상</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <input type="color" value={color1} onChange={e => setColor1(e.target.value)} style={{ width: '32px', height: '24px', border: '1px solid var(--c-border)', borderRadius: '4px', cursor: 'pointer', padding: '1px' }} />
+                  <input value={color1} onChange={e => setColor1(e.target.value)} maxLength={7} style={inputStyle} />
+                  <span style={{ fontSize: '0.65rem', color: 'var(--c-muted)', whiteSpace: 'nowrap' }}>색 1</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <input type="color" value={color2} onChange={e => setColor2(e.target.value)} style={{ width: '32px', height: '24px', border: '1px solid var(--c-border)', borderRadius: '4px', cursor: 'pointer', padding: '1px' }} />
+                  <input value={color2} onChange={e => setColor2(e.target.value)} maxLength={7} style={inputStyle} />
+                  <span style={{ fontSize: '0.65rem', color: 'var(--c-muted)', whiteSpace: 'nowrap' }}>색 2</span>
+                </div>
+              </div>
+              <p style={{ ...labelStyle, marginTop: '0.6rem' }}>방향</p>
+              <div style={{ display: 'flex', gap: '4px' }}>
+                {([['to right', '→'], ['to bottom right', '↘'], ['to bottom', '↓']] as [Direction, string][]).map(([d, icon]) => (
+                  <button
+                    key={d}
+                    type="button"
+                    onClick={() => setDirection(d)}
+                    style={{ flex: 1, height: '26px', background: direction === d ? 'var(--c-accent)' : 'var(--c-surface2)', border: `1px solid ${direction === d ? 'var(--c-accent)' : 'var(--c-border)'}`, borderRadius: '6px', cursor: 'pointer', color: direction === d ? '#fff' : 'var(--c-muted)', fontSize: '0.85rem' }}
+                  >
+                    {icon}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <hr style={{ border: 'none', borderTop: '1px solid var(--c-border)', margin: 0 }} />
+
+            {/* 텍스트 */}
+            <div>
+              <p style={labelStyle}>텍스트</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+                <div>
+                  <span style={{ fontSize: '0.68rem', color: 'var(--c-muted)' }}>제목</span>
+                  <input value={title} onChange={e => setTitle(e.target.value)} placeholder="제목을 입력하세요" style={{ ...inputStyle, marginTop: '0.2rem' }} />
+                </div>
+                <div>
+                  <span style={{ fontSize: '0.68rem', color: 'var(--c-muted)' }}>부제목</span>
+                  <input value={subtitle} onChange={e => setSubtitle(e.target.value)} placeholder="(선택 사항)" style={{ ...inputStyle, marginTop: '0.2rem' }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.2rem' }}>
+                  <input type="color" value={textColor} onChange={e => setTextColor(e.target.value)} style={{ width: '32px', height: '24px', border: '1px solid var(--c-border)', borderRadius: '4px', cursor: 'pointer', padding: '1px' }} />
+                  <span style={{ fontSize: '0.68rem', color: 'var(--c-muted)' }}>텍스트 색상</span>
+                </div>
+              </div>
+            </div>
+
+            <hr style={{ border: 'none', borderTop: '1px solid var(--c-border)', margin: 0 }} />
+
+            {/* WebP 품질 */}
+            <div>
+              <p style={labelStyle}>WebP 품질</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <input type="range" min={0.5} max={1} step={0.05} value={quality} onChange={e => setQuality(Number(e.target.value))} style={{ flex: 1 }} />
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--c-text)', fontFamily: 'var(--font-mono)', minWidth: '2.8rem', textAlign: 'right' }}>{Math.round(quality * 100)}%</span>
+              </div>
+            </div>
+
+          </div>
 
             {/* 우측 미리보기 */}
             <div style={{ flex: 1, padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>

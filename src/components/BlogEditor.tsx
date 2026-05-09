@@ -210,7 +210,7 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
           onClose={() => setShowCoverMaker(false)}
         />
       )}
-    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', animation: 'fadeIn 0.2s ease' }}>
+      <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', animation: 'fadeIn 0.2s ease' }}>
       <div
         onClick={e => e.stopPropagation()}
         onDragOver={handleModalDragOver}
@@ -465,7 +465,7 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
           </button>
         </div>
       </div>
-    </div>
+      </div>
     </>
   )
 }

@@ -5,6 +5,7 @@ import { generateSlug } from '../lib/seo'
 import { getIcon, BLOG_ICON_PRESETS } from '../lib/icons'
 import { renderMarkdown } from '../lib/renderMarkdown'
 import RichTextEditor from './RichTextEditor'
+import CoverImageMaker from './CoverImageMaker'
 import type { Post } from '../hooks/useBlogPosts'
 
 type ContentType = 'richtext' | 'markdown' | 'html'
@@ -54,19 +55,85 @@ const MODE_TABS: { key: ContentType; label: string }[] = [
   { key: 'html',      label: 'HTML' },
 ]
 
+function extractMeta(content: string, contentType: ContentType) {
+  if (contentType === 'html' || contentType === 'richtext') {
+    const titleMatch = content.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)
+    const pMatch = content.match(/<p[^>]*>([\s\S]*?)<\/p>/i)
+    const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : '제목 없음'
+    const excerpt = pMatch ? pMatch[1].replace(/<[^>]+>/g, '').trim().slice(0, 120) : ''
+    return { title, excerpt }
+  }
+  const titleMatch = content.match(/^#\s+(.+)$/m)
+  const bodyLines = content.split('\n').filter(l => l.trim() && !l.startsWith('#') && !l.startsWith('```') && !l.startsWith('>') && !l.startsWith('-'))
+  const title = titleMatch ? titleMatch[1].trim() : '제목 없음'
+  const excerpt = bodyLines[0]?.replace(/[*_`]/g, '').trim().slice(0, 120) ?? ''
+  return { title, excerpt }
+}
+
 export default function BlogEditor({ post, onSave, onClose }: Props) {
   const [icon, setIcon] = useState(post?.icon ?? 'pen-to-square')
   const [coverImage, setCoverImage] = useState<string | undefined>(post?.coverImage)
-  const [title, setTitle] = useState(post?.title ?? '')
-  const [excerpt, setExcerpt] = useState(post?.excerpt ?? '')
-  const [tagsRaw, setTagsRaw] = useState(post?.tags.join(', ') ?? '')
   const [content, setContent] = useState(post?.content ?? '')
   const [slug, setSlug] = useState(post?.slug ?? '')
   const [contentType, setContentType] = useState<ContentType>(post?.contentType ?? 'richtext')
   const [showPreview, setShowPreview] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showIconPicker, setShowIconPicker] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [loadedFileName, setLoadedFileName] = useState('')
+  const [localImgRefs, setLocalImgRefs] = useState<{ src: string; name: string }[]>([])
+  const [showCoverMaker, setShowCoverMaker] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const htmlFileRef = useRef<HTMLInputElement>(null)
+
+  const loadHtmlFile = (file: File) => {
+    if (!file.name.endsWith('.html') && file.type !== 'text/html') return
+    const reader = new FileReader()
+    reader.onload = () => {
+      const html = reader.result as string
+      const h1Match = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)
+      const titleText = h1Match
+        ? h1Match[1].replace(/<[^>]+>/g, '').trim()
+        : file.name.replace(/\.html?$/, '')
+      setSlug(generateSlug(titleText))
+      setContent(html)
+      setContentType('html')
+      setLoadedFileName(file.name)
+      setErrors({})
+      // 로컬 이미지 경로 감지
+      const srcs = [...html.matchAll(/src=["']([^"']+)["']/gi)]
+        .map(m => m[1])
+        .filter(s => !s.startsWith('http') && !s.startsWith('data:') && !s.startsWith('//'))
+        .filter((s, i, a) => a.indexOf(s) === i)
+      setLocalImgRefs(srcs.map(s => ({ src: s, name: s.split(/[/\\]/).pop() ?? s })))
+    }
+    reader.readAsText(file, 'UTF-8')
+  }
+
+  const replaceLocalImage = (originalSrc: string, file: File) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      const base64 = reader.result as string
+      const escaped = originalSrc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      setContent(prev => prev.replace(new RegExp(escaped, 'g'), base64))
+      setLocalImgRefs(prev => prev.filter(r => r.src !== originalSrc))
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleModalDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    if ([...e.dataTransfer.items].some(i => i.kind === 'file')) setIsDragging(true)
+  }
+  const handleModalDragLeave = (e: React.DragEvent) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) setIsDragging(false)
+  }
+  const handleModalDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(false)
+    const file = e.dataTransfer.files[0]
+    if (file) loadHtmlFile(file)
+  }
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -97,10 +164,7 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
 
   const validate = () => {
     const e: Record<string, string> = {}
-    if (!title.trim()) e.title = '제목을 입력해 주세요.'
-    if (!excerpt.trim()) e.excerpt = '요약을 입력해 주세요.'
-    if (!content.trim() && contentType === 'richtext') e.content = '내용을 입력해 주세요.'
-    if (!content.trim() && contentType !== 'richtext') e.content = '내용을 입력해 주세요.'
+    if (!content.trim()) e.content = '내용을 입력해 주세요.'
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -108,13 +172,15 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
   const handleSubmit = (e?: FormEvent) => {
     e?.preventDefault()
     if (!validate()) return
+    const trimmed = content.trim()
+    const { title, excerpt } = extractMeta(trimmed, contentType)
     onSave({
       icon, coverImage,
-      title: title.trim(),
-      excerpt: excerpt.trim(),
-      slug: slug.trim() || generateSlug(title.trim()),
-      tags: tagsRaw.split(',').map(t => t.trim()).filter(Boolean),
-      content: content.trim(),
+      title,
+      excerpt,
+      slug: slug.trim() || generateSlug(title),
+      tags: [],
+      content: trimmed,
       contentType,
     })
   }
@@ -136,23 +202,66 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
   const modalWidth = showSplitPreview ? '1140px' : '720px'
 
   return (
+    <>
+      {showCoverMaker && (
+        <CoverImageMaker
+          initialTitle={extractMeta(content, contentType).title}
+          onApply={(dataUrl) => setCoverImage(dataUrl)}
+          onClose={() => setShowCoverMaker(false)}
+        />
+      )}
     <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', animation: 'fadeIn 0.2s ease' }}>
-      <div onClick={e => e.stopPropagation()} style={{ background: 'var(--c-surface)', border: '1px solid var(--c-border)', borderRadius: '20px', width: '100%', maxWidth: modalWidth, maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'modalIn 0.25s ease', transition: 'max-width 0.25s ease' }}>
+      <div
+        onClick={e => e.stopPropagation()}
+        onDragOver={handleModalDragOver}
+        onDragLeave={handleModalDragLeave}
+        onDrop={handleModalDrop}
+        style={{ background: 'var(--c-surface)', border: `1px solid ${isDragging ? 'var(--c-accent)' : 'var(--c-border)'}`, borderRadius: '20px', width: '100%', maxWidth: modalWidth, maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'modalIn 0.25s ease', transition: 'max-width 0.25s ease, border-color 0.15s', position: 'relative' }}
+      >
+        {/* 드래그 오버레이 */}
+        {isDragging && (
+          <div style={{ position: 'absolute', inset: 0, zIndex: 20, borderRadius: '20px', background: 'color-mix(in srgb, var(--c-accent) 12%, rgba(0,0,0,0.5))', border: '2px dashed var(--c-accent)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', pointerEvents: 'none' }}>
+            <svg width="48" height="48" fill="none" stroke="var(--c-accent)" viewBox="0 0 24 24" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
+            <p style={{ color: 'var(--c-accent)', fontWeight: 700, fontSize: '1rem', fontFamily: 'var(--font-display)' }}>HTML 파일을 여기에 놓으세요</p>
+            <p style={{ color: 'var(--c-muted)', fontSize: '0.8rem' }}>슬러그 자동 생성 · 내용 자동 입력</p>
+          </div>
+        )}
 
         {/* 헤더 */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--c-border)', flexShrink: 0 }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--c-text)', fontFamily: 'var(--font-display)' }}>
-            {post ? '글 수정' : '새 글 쓰기'}
-          </h2>
-          <button onClick={onClose} style={{ background: 'var(--c-surface2)', border: '1px solid var(--c-border)', borderRadius: '8px', width: '34px', height: '34px', cursor: 'pointer', color: 'var(--c-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--c-text)', fontFamily: 'var(--font-display)' }}>
+              {post ? '글 수정' : '새 글 쓰기'}
+            </h2>
+            {loadedFileName && (
+              <span style={{ fontSize: '0.7rem', color: 'var(--c-accent-mint)', background: 'color-mix(in srgb, var(--c-accent-mint) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--c-accent-mint) 25%, transparent)', borderRadius: '6px', padding: '0.15rem 0.5rem', fontFamily: 'var(--font-mono)' }}>
+                {loadedFileName}
+              </span>
+            )}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input ref={htmlFileRef} type="file" accept=".html,text/html" style={{ display: 'none' }} onChange={e => { const f = e.target.files?.[0]; if (f) loadHtmlFile(f); e.target.value = '' }} />
+            <button
+              type="button"
+              onClick={() => htmlFileRef.current?.click()}
+              title="HTML 파일 불러오기"
+              style={{ padding: '0.3rem 0.7rem', borderRadius: '8px', background: 'var(--c-surface2)', border: '1px solid var(--c-border)', color: 'var(--c-muted)', fontSize: '0.72rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'var(--font-display)', transition: 'all 0.15s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--c-accent)'; e.currentTarget.style.color = 'var(--c-accent)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--c-border)'; e.currentTarget.style.color = 'var(--c-muted)' }}
+            >
+              <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
+              HTML 불러오기
+            </button>
+            <button onClick={onClose} style={{ background: 'var(--c-surface2)', border: '1px solid var(--c-border)', borderRadius: '8px', width: '34px', height: '34px', cursor: 'pointer', color: 'var(--c-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
         </div>
 
         {/* 폼 */}
         <form onSubmit={handleSubmit} style={{ overflowY: 'auto', flex: 1, padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
 
-          {/* 커버 */}
+          {/* 커버 이미지 + 아이콘 */}
           <div>
             <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--c-muted)', marginBottom: '0.5rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               커버 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(이미지 업로드 또는 아이콘 선택)</span>
@@ -165,6 +274,14 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
                 }
                 <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload} />
               </label>
+              <button
+                type="button"
+                onClick={() => setShowCoverMaker(true)}
+                style={{ flexShrink: 0, padding: '0.4rem 0.75rem', borderRadius: '8px', background: 'var(--c-surface2)', border: '1px solid var(--c-border)', color: 'var(--c-accent)', fontSize: '0.72rem', cursor: 'pointer', fontFamily: 'var(--font-display)', display: 'flex', alignItems: 'center', gap: '0.35rem', height: '80px', flexDirection: 'column', justifyContent: 'center' }}
+              >
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><rect x="3" y="3" width="18" height="18" rx="2"/><path strokeLinecap="round" d="M3 9h18M9 21V9"/></svg>
+                <span>이미지<br/>만들기</span>
+              </button>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                 {coverImage && (
                   <button type="button" onClick={() => setCoverImage(undefined)}
@@ -195,37 +312,10 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
             </div>
           </div>
 
-          {/* 제목 */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: errors.title ? 'var(--c-danger)' : 'var(--c-muted)', marginBottom: '0.4rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>제목</label>
-            <input type="text" value={title} onChange={e => { setTitle(e.target.value); setErrors(v => ({ ...v, title: '' })) }}
-              placeholder="글 제목을 입력하세요" style={inputStyle('title')}
-              onFocus={e => focusStyle(e, 'title')} onBlur={e => blurStyle(e, 'title')} />
-            {errors.title && <p style={{ fontSize: '0.72rem', color: 'var(--c-danger)', marginTop: '0.3rem' }}>{errors.title}</p>}
-          </div>
-
-          {/* 요약 */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: errors.excerpt ? 'var(--c-danger)' : 'var(--c-muted)', marginBottom: '0.4rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>요약 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(카드에 표시됩니다)</span></label>
-            <input type="text" value={excerpt} onChange={e => { setExcerpt(e.target.value); setErrors(v => ({ ...v, excerpt: '' })) }}
-              placeholder="한두 문장으로 글을 요약해 주세요" style={inputStyle('excerpt')}
-              onFocus={e => focusStyle(e, 'excerpt')} onBlur={e => blurStyle(e, 'excerpt')} />
-            {errors.excerpt && <p style={{ fontSize: '0.72rem', color: 'var(--c-danger)', marginTop: '0.3rem' }}>{errors.excerpt}</p>}
-          </div>
-
-          {/* 태그 */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--c-muted)', marginBottom: '0.4rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>태그 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(쉼표로 구분)</span></label>
-            <input type="text" value={tagsRaw} onChange={e => setTagsRaw(e.target.value)}
-              placeholder="기획, AI, 생산성" style={inputStyle('')}
-              onFocus={e => e.currentTarget.style.borderColor = 'var(--c-accent)'}
-              onBlur={e => e.currentTarget.style.borderColor = 'var(--c-border)'} />
-          </div>
-
           {/* 슬러그 */}
           <div>
             <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--c-muted)', marginBottom: '0.4rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              URL 슬러그 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(비워두면 제목으로 자동 생성)</span>
+              URL 슬러그 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(비워두면 본문 제목으로 자동 생성)</span>
             </label>
             <div style={{ display: 'flex', alignItems: 'center', background: 'var(--c-surface2)', border: '1px solid var(--c-border)', borderRadius: '10px', overflow: 'hidden', transition: 'border-color 0.2s' }}
               onFocusCapture={e => (e.currentTarget.style.borderColor = 'var(--c-accent)')}
@@ -237,12 +327,32 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
                 type="text"
                 value={slug}
                 onChange={e => setSlug(e.target.value.replace(/\s+/g, '-').replace(/[^\w가-힣-]/g, ''))}
-                onBlur={() => { if (!slug && title) setSlug(generateSlug(title)) }}
-                placeholder={title ? generateSlug(title) : '슬러그-입력'}
+                placeholder="슬러그-입력"
                 style={{ flex: 1, padding: '0.7rem 1rem', background: 'transparent', border: 'none', color: 'var(--c-text)', fontSize: '0.82rem', outline: 'none', fontFamily: 'var(--font-mono)' }}
               />
             </div>
           </div>
+
+          {/* 로컬 이미지 경고 */}
+          {localImgRefs.length > 0 && (
+            <div style={{ background: 'color-mix(in srgb, var(--c-warning) 8%, var(--c-surface))', border: '1px solid color-mix(in srgb, var(--c-warning) 30%, transparent)', borderLeft: '3px solid var(--c-warning)', borderRadius: '10px', padding: '0.9rem 1rem' }}>
+              <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--c-warning)', marginBottom: '0.6rem', fontFamily: 'var(--font-display)' }}>
+                ⚠ 로컬 이미지 {localImgRefs.length}개 — 각 이미지 파일을 업로드하면 자동으로 본문에 삽입됩니다
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                {localImgRefs.map(ref => (
+                  <label key={ref.src} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', padding: '0.4rem 0.6rem', borderRadius: '7px', background: 'color-mix(in srgb, var(--c-warning) 5%, transparent)', border: '1px dashed color-mix(in srgb, var(--c-warning) 25%, transparent)', transition: 'background 0.15s' }}
+                    onMouseEnter={e => (e.currentTarget.style.background = 'color-mix(in srgb, var(--c-warning) 12%, transparent)')}
+                    onMouseLeave={e => (e.currentTarget.style.background = 'color-mix(in srgb, var(--c-warning) 5%, transparent)')}>
+                    <span style={{ fontSize: '0.8rem' }}>📎</span>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--c-text)', fontFamily: 'var(--font-mono)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ref.name}</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--c-warning)', fontWeight: 600, flexShrink: 0 }}>클릭하여 업로드</span>
+                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={e => { const f = e.target.files?.[0]; if (f) replaceLocalImage(ref.src, f); e.target.value = '' }} />
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* 본문 */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -338,7 +448,7 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
                   {content.trim()
                     ? contentType === 'markdown'
                       ? <div>{renderMarkdown(content)}</div>
-                      : <div dangerouslySetInnerHTML={{ __html: content }} style={{ color: 'var(--c-text)', lineHeight: 1.8 }} />
+                      : <div dangerouslySetInnerHTML={{ __html: content }} className="richtext-body" style={{ overflowX: 'hidden' }} />
                     : <p style={{ color: 'var(--c-muted)', fontSize: '0.8rem', fontStyle: 'italic' }}>내용을 입력하면 미리보기가 표시됩니다.</p>
                   }
                 </div>
@@ -356,5 +466,6 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
         </div>
       </div>
     </div>
+    </>
   )
 }

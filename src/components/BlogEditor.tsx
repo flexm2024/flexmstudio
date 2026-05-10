@@ -1,4 +1,5 @@
 import { useState, useRef, type FormEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash, faCode, faLink } from '@fortawesome/free-solid-svg-icons'
 import { generateSlug } from '../lib/seo'
@@ -10,6 +11,25 @@ import type { Post } from '../hooks/useBlogPosts'
 
 type ContentType = 'richtext' | 'markdown' | 'html'
 type Draft = Omit<Post, 'id' | 'date' | 'readMin'>
+
+const IFRAME_FONT = '<link id="__fe_font__" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css">'
+const IFRAME_SCRIPT = `<script id="__fe_dm__">document.designMode="on";document.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();});});</script>`
+
+function isHtmlTemplate(c: string): boolean {
+  const h = c.slice(0, 500)
+  return /^\s*<!DOCTYPE/i.test(h) || /^\s*<html\b/i.test(h) || /<style[\s>]/i.test(h)
+}
+
+function buildEditableSrcDoc(html: string): string {
+  let s = html.includes('<head>') ? html.replace('<head>', `<head>${IFRAME_FONT}`) : IFRAME_FONT + html
+  return s.includes('</body>') ? s.replace('</body>', `${IFRAME_SCRIPT}</body>`) : s + IFRAME_SCRIPT
+}
+
+function cleanEditedHtml(html: string): string {
+  return html
+    .replace(/<link[^>]+id="__fe_font__"[^>]*\/?>/gi, '')
+    .replace(/<script[^>]+id="__fe_dm__"[^>]*>[\s\S]*?<\/script>/gi, '')
+}
 
 interface Props {
   post: Post | null
@@ -72,7 +92,8 @@ function extractMeta(content: string, contentType: ContentType) {
 
 export default function BlogEditor({ post, onSave, onClose }: Props) {
   const [icon, setIcon] = useState(post?.icon ?? 'pen-to-square')
-  const [coverImage, setCoverImage] = useState<string | undefined>(post?.coverImage)
+  const [coverImage, setCoverImage] = useState(post?.coverImage ?? '')
+  const [coverText, setCoverText] = useState(post?.coverText ?? '')
   const [content, setContent] = useState(post?.content ?? '')
   const [slug, setSlug] = useState(post?.slug ?? '')
   const [contentType, setContentType] = useState<ContentType>(post?.contentType ?? 'richtext')
@@ -83,8 +104,14 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
   const [loadedFileName, setLoadedFileName] = useState('')
   const [localImgRefs, setLocalImgRefs] = useState<{ src: string; name: string }[]>([])
   const [showCoverMaker, setShowCoverMaker] = useState(false)
+  const [editSrcDoc, setEditSrcDoc] = useState<string | null>(() =>
+    (post?.contentType === 'richtext' || post?.contentType === 'html') && isHtmlTemplate(post?.content ?? '')
+      ? buildEditableSrcDoc(post!.content)
+      : null
+  )
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const htmlFileRef = useRef<HTMLInputElement>(null)
+  const iframeEditRef = useRef<HTMLIFrameElement>(null)
 
   const loadHtmlFile = (file: File) => {
     if (!file.name.endsWith('.html') && file.type !== 'text/html') return
@@ -143,7 +170,25 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
     reader.readAsDataURL(file)
   }
 
+  const getIframeContent = (): string => {
+    const doc = iframeEditRef.current?.contentDocument
+    if (!doc) return content
+    return cleanEditedHtml(doc.documentElement.outerHTML)
+  }
+
   const handleModeChange = (type: ContentType) => {
+    // 글작성 iframe 모드에서 빠져나갈 때 content 동기화
+    if (contentType === 'richtext' && editSrcDoc) {
+      const synced = getIframeContent()
+      setContent(synced)
+    }
+    // 글작성 탭 전환 시 HTML 템플릿이면 iframe 편집 모드 활성화
+    if (type === 'richtext') {
+      const src = isHtmlTemplate(content) ? buildEditableSrcDoc(content) : null
+      setEditSrcDoc(src)
+    } else {
+      setEditSrcDoc(null)
+    }
     setContentType(type)
     setShowPreview(false)
   }
@@ -162,26 +207,54 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
     }, 0)
   }
 
-  const validate = () => {
-    const e: Record<string, string> = {}
-    if (!content.trim()) e.content = '내용을 입력해 주세요.'
-    setErrors(e)
-    return Object.keys(e).length === 0
+  const handleIframeImageInsert = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      const doc = iframeEditRef.current?.contentDocument
+      if (!doc) return
+      const img = doc.createElement('img')
+      img.src = reader.result as string
+      img.style.cssText = 'max-width:100%;border-radius:8px;margin:1rem auto;display:block;'
+      const sel = doc.getSelection()
+      if (sel && sel.rangeCount > 0) {
+        const range = sel.getRangeAt(0)
+        range.collapse(false)
+        range.insertNode(img)
+        range.setStartAfter(img)
+        range.collapse(true)
+        sel.removeAllRanges()
+        sel.addRange(range)
+      } else {
+        doc.body.appendChild(img)
+      }
+    }
+    reader.readAsDataURL(file)
+    e.target.value = ''
   }
 
   const handleSubmit = (e?: FormEvent) => {
     e?.preventDefault()
-    if (!validate()) return
-    const trimmed = content.trim()
-    const { title, excerpt } = extractMeta(trimmed, contentType)
+    // iframe 편집 모드면 iframe에서 최종 콘텐츠 추출
+    let finalContent = content
+    let finalType: ContentType = contentType
+    if (contentType === 'richtext' && editSrcDoc) {
+      finalContent = getIframeContent()
+      finalType = 'html' // HTML 구조 보존을 위해 html 타입으로 저장
+    }
+    if (!finalContent.trim()) { setErrors({ content: '내용을 입력해 주세요.' }); return }
+    const trimmed = finalContent.trim()
+    const { title, excerpt } = extractMeta(trimmed, finalType)
     onSave({
       icon, coverImage,
+      coverText: coverText.trim(),
       title,
       excerpt,
       slug: slug.trim() || generateSlug(title),
       tags: [],
       content: trimmed,
-      contentType,
+      contentType: finalType,
     })
   }
 
@@ -201,7 +274,7 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
   const showSplitPreview = showPreview && contentType !== 'richtext'
   const modalWidth = showSplitPreview ? '1140px' : '720px'
 
-  return (
+  return createPortal(
     <>
       {showCoverMaker && (
         <CoverImageMaker
@@ -284,7 +357,7 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
               </button>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                 {coverImage && (
-                  <button type="button" onClick={() => setCoverImage(undefined)}
+                  <button type="button" onClick={() => setCoverImage('')}
                     style={{ fontSize: '0.72rem', color: 'var(--c-danger)', background: 'transparent', border: '1px solid color-mix(in srgb, var(--c-danger) 30%, transparent)', borderRadius: '6px', padding: '0.3rem 0.7rem', cursor: 'pointer', fontFamily: 'var(--font-display)' }}>
                     이미지 제거
                   </button>
@@ -310,6 +383,22 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
                 <p style={{ fontSize: '0.65rem', color: 'var(--c-muted)' }}>이미지 업로드 시 아이콘 대신 표시됩니다</p>
               </div>
             </div>
+          </div>
+
+          {/* 썸네일 텍스트 */}
+          <div>
+            <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--c-muted)', marginBottom: '0.4rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              썸네일 텍스트 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(비워두면 글 제목이 표시됩니다)</span>
+            </label>
+            <input
+              type="text"
+              value={coverText}
+              onChange={e => setCoverText(e.target.value)}
+              placeholder="썸네일 이미지에 표시할 텍스트"
+              style={inputStyle('coverText')}
+              onFocus={e => focusStyle(e, 'coverText')}
+              onBlur={e => blurStyle(e, 'coverText')}
+            />
           </div>
 
           {/* 슬러그 */}
@@ -415,12 +504,30 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {contentType === 'richtext' ? (
                   <>
-                    <RichTextEditor
-                      key="richtext"
-                      value={content}
-                      onChange={val => { setContent(val); setErrors(v => ({ ...v, content: '' })) }}
-                      hasError={!!errors.content}
-                    />
+                    {editSrcDoc ? (
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', border: `1px solid ${errors.content ? 'var(--c-danger)' : 'var(--c-accent)'}`, borderRadius: '10px', overflow: 'hidden' }}>
+                        <div style={{ padding: '0.35rem 0.75rem', background: 'color-mix(in srgb, var(--c-accent) 8%, var(--c-surface))', borderBottom: '1px solid var(--c-border)', display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+                          <span style={{ fontSize: '0.68rem', color: 'var(--c-accent)', flex: 1 }}>✏ 텍스트를 클릭해서 수정 · 저장 시 스타일 그대로 보존</span>
+                          <label style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.25rem 0.65rem', borderRadius: '6px', background: 'var(--c-accent)', color: '#fff', fontSize: '0.7rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-display)', flexShrink: 0 }}>
+                            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path strokeLinecap="round" strokeLinejoin="round" d="m21 15-5-5L5 21"/></svg>
+                            이미지 삽입
+                            <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleIframeImageInsert} />
+                          </label>
+                        </div>
+                        <iframe
+                          ref={iframeEditRef}
+                          srcDoc={editSrcDoc}
+                          style={{ flex: 1, border: 'none', minHeight: '380px', width: '100%' }}
+                        />
+                      </div>
+                    ) : (
+                      <RichTextEditor
+                        key="richtext"
+                        value={content}
+                        onChange={val => { setContent(val); setErrors(v => ({ ...v, content: '' })) }}
+                        hasError={!!errors.content}
+                      />
+                    )}
                     {errors.content && <p style={{ fontSize: '0.72rem', color: 'var(--c-danger)', marginTop: '0.3rem' }}>{errors.content}</p>}
                   </>
                 ) : (
@@ -466,6 +573,7 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
         </div>
       </div>
       </div>
-    </>
+    </>,
+    document.body
   )
 }

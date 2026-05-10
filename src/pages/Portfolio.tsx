@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
-import { useScrollFadeIn } from '../hooks/useScrollFadeIn'
 import { useMetaTags } from '../hooks/useMetaTags'
 import { usePortfolioProjects, type Project } from '../hooks/usePortfolioProjects'
 import { useAdmin } from '../context/AdminContext'
@@ -20,8 +19,6 @@ export default function Portfolio() {
   const [modal, setModal] = useState<Project | null>(null)
   const [editTarget, setEditTarget] = useState<Project | null>(null)
   const [showEditor, setShowEditor] = useState(false)
-  const listRef = useScrollFadeIn()
-
   useMetaTags({ title: '포트폴리오', description: '서비스 기획과 디지털 전환 프로젝트 포트폴리오.', keywords: '포트폴리오, IT 기획, 프로젝트, 서비스 기획', canonical: '/portfolio' })
 
   const filtered = active === '전체' ? projects : projects.filter(p => p.category === active)
@@ -31,7 +28,7 @@ export default function Portfolio() {
   }
 
   return (
-    <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '5rem 1.5rem' }}>
+    <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '5rem var(--page-px)' }}>
 
       {/* 헤더 */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '0' }}>
@@ -66,15 +63,20 @@ export default function Portfolio() {
       </div>
 
       {/* 그리드 */}
-      <div ref={listRef} className="scroll-fade" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: '1.25rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: '1.25rem' }}>
         {filtered.map((project, i) => (
-          <div key={project.id} className="card" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', transitionDelay: `${i * 50}ms` }}>
+          <div key={project.id} className="card" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', transitionDelay: `${i * 30}ms` }}>
             {/* 썸네일 */}
-            <div style={{ height: '140px', background: project.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', borderBottom: '1px solid var(--c-border)', color: 'var(--c-accent)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ height: '140px', background: project.customColor || project.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', borderBottom: '1px solid var(--c-border)', color: 'var(--c-accent)', position: 'relative', overflow: 'hidden' }}>
               {project.coverImage
                 ? <img src={project.coverImage} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                : <FontAwesomeIcon icon={getIcon(project.icon)} />
+                : !project.customColor && <FontAwesomeIcon icon={getIcon(project.icon)} />
               }
+              {project.coverText && (
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem', pointerEvents: 'none' }}>
+                  <span style={{ fontSize: '1.35rem', color: '#fff', fontWeight: 700, lineHeight: 1.4, textAlign: 'center', textShadow: '0 0 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.8)', maxWidth: '100%' }}>{project.coverText}</span>
+                </div>
+              )}
               {isAdmin && (
                 <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', display: 'flex', gap: '0.35rem' }}>
                   <button onClick={() => { setEditTarget(project); setShowEditor(true) }}
@@ -113,9 +115,6 @@ export default function Portfolio() {
               </div>
               <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--c-text)', marginBottom: '0.4rem' }}>{project.title}</h3>
               <p style={{ fontSize: '0.8rem', color: 'var(--c-muted)', lineHeight: 1.7, flex: 1, marginBottom: '1rem' }}>{project.desc}</p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '1rem' }}>
-                {project.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
-              </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 {project.link && (
                   <a href={project.link} target="_blank" rel="noreferrer" className="btn-primary" style={{ textDecoration: 'none', flex: 1, fontSize: '0.78rem', padding: '0.45rem 0.75rem', textAlign: 'center', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>

@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, useRef, type FormEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getIcon } from '../lib/icons'
 import type { Project } from '../hooks/usePortfolioProjects'
@@ -23,20 +24,46 @@ const PORTFOLIO_ICON_PRESETS = [
 
 export default function PortfolioEditor({ project, onSave, onClose }: Props) {
   const [icon, setIcon] = useState(project?.icon ?? 'briefcase')
+  const [coverText, setCoverText] = useState(project?.coverText ?? '')
+  const [customColor, setCustomColor] = useState(project?.customColor ?? '')
   const [title, setTitle] = useState(project?.title ?? '')
   const [category, setCategory] = useState(project?.category ?? '웹사이트')
   const [desc, setDesc] = useState(project?.desc ?? '')
   const [longDesc, setLongDesc] = useState(project?.longDesc ?? '')
-  const [tagsRaw, setTagsRaw] = useState(project?.tags.join(', ') ?? '')
-  const [period, setPeriod] = useState(project?.period ?? '')
-  const [team, setTeam] = useState(project?.team ?? '')
-  const [role, setRole] = useState(project?.role ?? '')
   const [featuresRaw, setFeaturesRaw] = useState(project?.features.join('\n') ?? '')
   const [link, setLink] = useState(project?.link ?? '')
   const [github, setGithub] = useState(project?.github ?? '')
-  const [coverImage, setCoverImage] = useState<string | undefined>(project?.coverImage)
+  const [coverImage, setCoverImage] = useState(project?.coverImage ?? '')
   const [showIconPicker, setShowIconPicker] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null)
+  const dragging = useRef(false)
+  const offset = useRef({ x: 0, y: 0 })
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = modalRef.current
+    if (!el || pos !== null) return
+    const rect = el.getBoundingClientRect()
+    setPos({ x: (window.innerWidth - rect.width) / 2, y: Math.max(24, (window.innerHeight - rect.height) / 2) })
+  })
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!dragging.current) return
+      setPos({ x: e.clientX - offset.current.x, y: Math.max(0, e.clientY - offset.current.y) })
+    }
+    const onUp = () => { dragging.current = false }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp) }
+  }, [])
+
+  const onDragStart = (e: React.MouseEvent) => {
+    dragging.current = true
+    offset.current = { x: e.clientX - (pos?.x ?? 0), y: e.clientY - (pos?.y ?? 0) }
+  }
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -51,9 +78,6 @@ export default function PortfolioEditor({ project, onSave, onClose }: Props) {
     if (!title.trim()) e.title = '제목을 입력해 주세요.'
     if (!desc.trim()) e.desc = '간단 설명을 입력해 주세요.'
     if (!longDesc.trim()) e.longDesc = '상세 설명을 입력해 주세요.'
-    if (!period.trim()) e.period = '개발 기간을 입력해 주세요.'
-    if (!team.trim()) e.team = '팀 구성을 입력해 주세요.'
-    if (!role.trim()) e.role = '역할을 입력해 주세요.'
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -63,15 +87,17 @@ export default function PortfolioEditor({ project, onSave, onClose }: Props) {
     if (!validate()) return
     const draft: Draft = {
       icon,
-      coverImage,
+      coverImage: coverImage,
+      coverText: coverText.trim(),
+      customColor: customColor,
       title: title.trim(),
       category,
       desc: desc.trim(),
       longDesc: longDesc.trim(),
-      tags: tagsRaw.split(',').map(t => t.trim()).filter(Boolean),
-      period: period.trim(),
-      team: team.trim(),
-      role: role.trim(),
+      tags: project?.tags ?? [],
+      period: '',
+      team: '',
+      role: '',
       features: featuresRaw.split('\n').map(f => f.trim()).filter(Boolean),
       link: link.trim() || undefined,
       github: github.trim() || undefined,
@@ -107,15 +133,42 @@ export default function PortfolioEditor({ project, onSave, onClose }: Props) {
     fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em',
   }
 
-  return (
-    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', animation: 'fadeIn 0.2s ease' }}>
-      <div onClick={e => e.stopPropagation()} style={{ background: 'var(--c-surface)', border: '1px solid var(--c-border)', borderRadius: '20px', width: '100%', maxWidth: '760px', maxHeight: '92vh', display: 'flex', flexDirection: 'column', animation: 'modalIn 0.25s ease' }}>
-
-        {/* 헤더 */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--c-border)', flexShrink: 0 }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--c-text)', fontFamily: 'var(--font-display)' }}>
-            {project ? '프로젝트 수정' : '새 프로젝트 등록'}
-          </h2>
+  return createPortal(
+    <div style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', animation: 'fadeIn 0.2s ease', pointerEvents: pos ? 'auto' : 'none' }} onClick={onClose}>
+      <div
+        ref={modalRef}
+        onClick={e => e.stopPropagation()}
+        style={{
+          position: 'fixed',
+          top: pos?.y ?? '50%',
+          left: pos?.x ?? '50%',
+          transform: pos ? 'none' : 'translate(-50%,-50%)',
+          background: 'var(--c-surface)',
+          border: '1px solid var(--c-border)',
+          borderRadius: '20px',
+          width: '760px',
+          maxWidth: 'calc(100vw - 2rem)',
+          maxHeight: '92vh',
+          display: 'flex',
+          flexDirection: 'column',
+          animation: 'modalIn 0.25s ease',
+          boxShadow: '0 24px 64px rgba(0,0,0,0.4)',
+        }}
+      >
+        {/* 헤더 - 드래그 핸들 */}
+        <div
+          onMouseDown={onDragStart}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--c-border)', flexShrink: 0, cursor: 'grab', userSelect: 'none' }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', opacity: 0.3 }}>
+              <div style={{ display: 'flex', gap: '3px' }}>{[0,1,2].map(i => <div key={i} style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--c-text)' }} />)}</div>
+              <div style={{ display: 'flex', gap: '3px' }}>{[0,1,2].map(i => <div key={i} style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--c-text)' }} />)}</div>
+            </div>
+            <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--c-text)', fontFamily: 'var(--font-display)' }}>
+              {project ? '프로젝트 수정' : '새 프로젝트 등록'}
+            </h2>
+          </div>
           <button onClick={onClose} style={{ background: 'var(--c-surface2)', border: '1px solid var(--c-border)', borderRadius: '8px', width: '34px', height: '34px', cursor: 'pointer', color: 'var(--c-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
@@ -141,7 +194,7 @@ export default function PortfolioEditor({ project, onSave, onClose }: Props) {
                 </label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   {coverImage && (
-                    <button type="button" onClick={() => setCoverImage(undefined)}
+                    <button type="button" onClick={() => setCoverImage('')}
                       style={{ fontSize: '0.68rem', color: 'var(--c-danger)', background: 'transparent', border: '1px solid color-mix(in srgb, var(--c-danger) 30%, transparent)', borderRadius: '6px', padding: '0.25rem 0.6rem', cursor: 'pointer' }}>
                       제거
                     </button>
@@ -177,6 +230,57 @@ export default function PortfolioEditor({ project, onSave, onClose }: Props) {
             </div>
           </div>
 
+          {/* 배경 색상 */}
+          <div>
+            <label style={labelStyle}>배경 색상 / 패턴 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(선택 안 하면 카테고리 기본색)</span></label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', alignItems: 'center' }}>
+              {/* 이미지 패턴 프리셋 */}
+              {[
+                { key: "url('/bg-network.png') center/cover no-repeat", src: '/bg-network.png', label: '네트워크 패턴' },
+              ].map(({ key, src, label }) => (
+                <button key={key} type="button" onClick={() => setCustomColor(customColor === key ? '' : key)} title={label}
+                  style={{ width: '42px', height: '26px', borderRadius: '6px', backgroundImage: `url('${src}')`, backgroundSize: 'cover', backgroundPosition: 'center', border: customColor === key ? '2px solid var(--c-text)' : '2px solid var(--c-border)', outline: customColor === key ? '2px solid var(--c-accent)' : 'none', outlineOffset: '1px', cursor: 'pointer', flexShrink: 0, transition: 'outline 0.1s' }}
+                />
+              ))}
+              {/* 구분선 */}
+              <div style={{ width: '1px', height: '20px', background: 'var(--c-border)', flexShrink: 0 }} />
+              {/* 단색 프리셋 */}
+              {[
+                '#3b7eff','#0ea5e9','#6366f1','#7c3aed','#a855f7',
+                '#ec4899','#ef4444','#f97316','#f59e0b','#eab308',
+                '#22c55e','#10b981','#14b8a6','#1e293b','#334155','#64748b',
+              ].map(c => (
+                <button key={c} type="button" onClick={() => setCustomColor(customColor === c ? '' : c)}
+                  style={{ width: '26px', height: '26px', borderRadius: '6px', background: c, border: customColor === c ? '2px solid var(--c-text)' : '2px solid transparent', outline: customColor === c ? '2px solid var(--c-accent)' : 'none', outlineOffset: '1px', cursor: 'pointer', flexShrink: 0, transition: 'outline 0.1s' }}
+                />
+              ))}
+              {/* 직접 입력 */}
+              <label title="직접 색상 선택" style={{ width: '26px', height: '26px', borderRadius: '6px', border: '2px dashed var(--c-border)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden', position: 'relative', background: 'var(--c-surface2)' }}>
+                <svg width="12" height="12" fill="none" stroke="var(--c-muted)" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/></svg>
+                <input type="color" value={customColor.match(/^#[0-9a-f]{6}$/i) ? customColor : '#3b7eff'} onChange={e => setCustomColor(e.target.value)}
+                  style={{ position: 'absolute', opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }} />
+              </label>
+              {customColor && (
+                <button type="button" onClick={() => setCustomColor('')}
+                  style={{ fontSize: '0.68rem', color: 'var(--c-muted)', background: 'transparent', border: '1px solid var(--c-border)', borderRadius: '6px', padding: '0.2rem 0.5rem', cursor: 'pointer' }}>
+                  초기화
+                </button>
+              )}
+            </div>
+            {customColor && (
+              <div style={{ marginTop: '0.5rem', width: '100%', height: '32px', borderRadius: '8px', background: customColor, border: '1px solid var(--c-border)' }} />
+            )}
+          </div>
+
+          {/* 썸네일 텍스트 */}
+          <div>
+            <label style={labelStyle}>썸네일 텍스트 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(비워두면 표시 안 함)</span></label>
+            <input type="text" value={coverText} onChange={e => setCoverText(e.target.value)}
+              placeholder="썸네일 이미지에 표시할 텍스트"
+              style={inputStyle('')}
+              onFocus={e => onFocus(e, '')} onBlur={e => onBlur(e, '')} />
+          </div>
+
           {/* 제목 */}
           <div>
             <label style={{ ...labelStyle, color: errors.title ? 'var(--c-danger)' : 'var(--c-muted)' }}>제목</label>
@@ -203,39 +307,6 @@ export default function PortfolioEditor({ project, onSave, onClose }: Props) {
               style={{ ...inputStyle('longDesc'), resize: 'vertical', fontFamily: 'var(--font-sans)', lineHeight: 1.7 }}
               onFocus={e => onFocus(e, 'longDesc')} onBlur={e => onBlur(e, 'longDesc')} />
             {errors.longDesc && <p style={{ fontSize: '0.72rem', color: 'var(--c-danger)', marginTop: '0.3rem' }}>{errors.longDesc}</p>}
-          </div>
-
-          {/* 기간 / 팀 / 역할 */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '0.75rem' }}>
-            <div>
-              <label style={{ ...labelStyle, color: errors.period ? 'var(--c-danger)' : 'var(--c-muted)' }}>개발 기간</label>
-              <input type="text" value={period} onChange={e => { setPeriod(e.target.value); setErrors(v => ({ ...v, period: '' })) }}
-                placeholder="예: 3개월" style={inputStyle('period')}
-                onFocus={e => onFocus(e, 'period')} onBlur={e => onBlur(e, 'period')} />
-              {errors.period && <p style={{ fontSize: '0.72rem', color: 'var(--c-danger)', marginTop: '0.3rem' }}>{errors.period}</p>}
-            </div>
-            <div>
-              <label style={{ ...labelStyle, color: errors.team ? 'var(--c-danger)' : 'var(--c-muted)' }}>팀 구성</label>
-              <input type="text" value={team} onChange={e => { setTeam(e.target.value); setErrors(v => ({ ...v, team: '' })) }}
-                placeholder="예: 개인 프로젝트" style={inputStyle('team')}
-                onFocus={e => onFocus(e, 'team')} onBlur={e => onBlur(e, 'team')} />
-              {errors.team && <p style={{ fontSize: '0.72rem', color: 'var(--c-danger)', marginTop: '0.3rem' }}>{errors.team}</p>}
-            </div>
-            <div>
-              <label style={{ ...labelStyle, color: errors.role ? 'var(--c-danger)' : 'var(--c-muted)' }}>내 역할</label>
-              <input type="text" value={role} onChange={e => { setRole(e.target.value); setErrors(v => ({ ...v, role: '' })) }}
-                placeholder="예: 기획 · 개발" style={inputStyle('role')}
-                onFocus={e => onFocus(e, 'role')} onBlur={e => onBlur(e, 'role')} />
-              {errors.role && <p style={{ fontSize: '0.72rem', color: 'var(--c-danger)', marginTop: '0.3rem' }}>{errors.role}</p>}
-            </div>
-          </div>
-
-          {/* 태그 */}
-          <div>
-            <label style={labelStyle}>기술 스택 / 태그 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(쉼표로 구분)</span></label>
-            <input type="text" value={tagsRaw} onChange={e => setTagsRaw(e.target.value)}
-              placeholder="React, TypeScript, Firebase" style={inputStyle('')}
-              onFocus={e => onFocus(e, '')} onBlur={e => onBlur(e, '')} />
           </div>
 
           {/* 주요 기능 */}
@@ -272,6 +343,7 @@ export default function PortfolioEditor({ project, onSave, onClose }: Props) {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

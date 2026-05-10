@@ -1,0 +1,10 @@
+name = "portfolio"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "dist"
+
+[[kv_namespaces]]
+binding = "APP_KV"
+id = "d7ac7ad6992a453da4ad721ab06ac9ad"
+
+[vars]
+ADMIN_SECRET = "1111"

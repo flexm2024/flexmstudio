@@ -1,5 +1,5 @@
 export const SITE_NAME = 'FlexM Studio'
-export const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://flexm.studio'
+export const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://flexmstudio.com'
 
 export function generateSlug(title: string): string {
   const slug = title

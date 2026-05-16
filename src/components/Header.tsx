@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, type ReactElement } from 'react'
 import { createPortal } from 'react-dom'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
@@ -17,7 +17,7 @@ const navLinks = [
   { to: '/contact',   label: '연락처' },
 ]
 
-const mobileNavIcons: Record<string, JSX.Element> = {
+const mobileNavIcons: Record<string, ReactElement> = {
   '/': (
     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />

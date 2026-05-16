@@ -197,7 +197,7 @@ export default function Header() {
       {isMobile && createPortal(
         <div
           style={{
-            position: 'fixed', inset: 0, zIndex: 49,
+            position: 'fixed', top: '4rem', left: 0, right: 0, bottom: 0, zIndex: 49,
             background: theme === 'dark' ? '#111318' : '#ffffff',
             opacity: menuOpen ? 1 : 0,
             pointerEvents: menuOpen ? 'auto' : 'none',
@@ -206,33 +206,6 @@ export default function Header() {
             overflowY: 'auto',
           }}
         >
-          {/* 상단 헤더 */}
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '0 1.25rem',
-            height: '4rem',
-            flexShrink: 0,
-            borderBottom: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
-          }}>
-            <NavLink to="/" onClick={() => setMenuOpen(false)} reloadDocument style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <img src="/favicon.svg" alt="" aria-hidden="true" style={{ width: '22px', height: '22px' }} />
-              <span style={{ fontSize: '1rem', fontWeight: 700, color: theme === 'dark' ? '#e5e7eb' : '#111827' }}>FlexM Studio</span>
-            </NavLink>
-            <button
-              onClick={() => setMenuOpen(false)}
-              aria-label="메뉴 닫기"
-              style={{
-                padding: '0.5rem', background: 'none', border: 'none', cursor: 'pointer',
-                color: theme === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}
-            >
-              <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
           {/* 네비게이션 리스트 */}
           <nav style={{ flex: 1 }}>
             {navLinks.map(({ to, label }, i) => (

@@ -29,6 +29,7 @@ const SEED_IDS = new Set(['1', '2', '3'])
 
 export function useBlogPosts() {
   const [posts, setPosts] = useState<Post[]>(loadCache)
+  const [serverLoaded, setServerLoaded] = useState(false)
   const lastWriteRef = useRef(0)
 
   const syncFromServer = useCallback(async () => {
@@ -57,7 +58,10 @@ export function useBlogPosts() {
       const mapped = data.map(ensureSlug)
       setPosts(mapped)
       localStorage.setItem(BLOG_KEY, JSON.stringify(mapped))
-    } catch {}
+    } catch {
+    } finally {
+      setServerLoaded(true)
+    }
   }, [])
 
   useEffect(() => {
@@ -124,5 +128,5 @@ export function useBlogPosts() {
     }).catch(console.error)
   }, [])
 
-  return { posts, addPost, updatePost, deletePost }
+  return { posts, serverLoaded, addPost, updatePost, deletePost }
 }

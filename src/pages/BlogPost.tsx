@@ -1,10 +1,9 @@
-import { useMemo, useState, useRef } from 'react'
+import { useMemo, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInbox } from '@fortawesome/free-solid-svg-icons'
 import { useBlogPosts, type Post } from '../hooks/useBlogPosts'
 import { useAdmin } from '../context/AdminContext'
-import { useTheme } from '../context/ThemeContext'
 import BlogEditor from '../components/BlogEditor'
 import { getIcon } from '../lib/icons'
 import { renderMarkdown } from '../lib/renderMarkdown'
@@ -17,39 +16,8 @@ function formatDate(iso: string) {
   return `${y}. ${m}. ${d}`
 }
 
-const PAPERLOGY_LINK = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css">'
-
-const LIGHT_MODE_VARS = `
-<style>
-:root {
-  --c-bg: #f4f7ff !important;
-  --c-bg-sub: #eaeffc !important;
-  --c-surface: #ffffff !important;
-  --c-surface2: #e2e9f8 !important;
-  --c-border: rgba(40,96,255,0.13) !important;
-  --c-text: #0b1120 !important;
-  --c-muted: #4a5680 !important;
-  --c-accent: #2860ff !important;
-  --c-accent-dark: #1a4fe0 !important;
-  --c-accent-light: #5585ff !important;
-  --c-accent-mint: #20cc80 !important;
-  --c-warning: #f0a020 !important;
-  --c-danger: #ff4060 !important;
-  --c-card-shadow: rgba(40,96,255,0.07) !important;
-}
-</style>`
-
-function injectPostDate(html: string, date: string, theme: 'light' | 'dark'): string {
-  const formatted = formatDate(date)
-  const dated = html.replace(/✦\s*\d{4}년\s*기준/g, `✦ ${formatted}`)
-  const colorScheme = `<meta name="color-scheme" content="only ${theme}"><style>:root{color-scheme:only ${theme}}</style>`
-  const headInject = PAPERLOGY_LINK + colorScheme
-  let result = dated.includes('<head>') ? dated.replace('<head>', `<head>${headInject}`) : headInject + dated
-  // 라이트 모드일 때 OS 다크모드 미디어쿼리를 !important로 무력화
-  if (theme === 'light') {
-    result = result.includes('</head>') ? result.replace('</head>', `${LIGHT_MODE_VARS}</head>`) : result + LIGHT_MODE_VARS
-  }
-  return result
+function injectPostDate(html: string, date: string): string {
+  return html.replace(/✦\s*\d{4}년\s*기준/g, `✦ ${formatDate(date)}`)
 }
 
 function isFullHtmlDoc(content: string): boolean {
@@ -59,12 +27,10 @@ function isFullHtmlDoc(content: string): boolean {
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>()
-  const { posts, updatePost } = useBlogPosts()
+  const { posts, serverLoaded, updatePost } = useBlogPosts()
   const { isAdmin } = useAdmin()
-  const { theme } = useTheme()
   const navigate = useNavigate()
   const [showEditor, setShowEditor] = useState(false)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const post: Post | undefined = useMemo(
     () => posts.find(p => p.slug === slug || p.id === slug),
@@ -94,8 +60,8 @@ export default function BlogPost() {
       ...(post.coverImage ? { image: post.coverImage } : {}),
     },
   } : {
-    title: '글을 찾을 수 없음',
-    noIndex: true,
+    title: serverLoaded ? '글을 찾을 수 없음' : '로딩 중...',
+    noIndex: serverLoaded,
   })
 
   if (!post) {
@@ -109,7 +75,7 @@ export default function BlogPost() {
     )
   }
 
-  /* ── HTML 타입 또는 HTML 전문서인 richtext: iframe으로 격리 렌더링 ── */
+  /* ── HTML 타입 또는 HTML 전문서인 richtext: DOM에 직접 렌더링 (SEO 색인 가능) ── */
   if (post.contentType === 'html' || (post.contentType === 'richtext' && isFullHtmlDoc(post.content))) {
     return (
       <>
@@ -139,21 +105,8 @@ export default function BlogPost() {
           </div>
         )}
 
-        {/* HTML 콘텐츠 — iframe으로 격리 */}
-        <iframe
-          ref={iframeRef}
-          srcDoc={injectPostDate(post.content, post.date, theme)}
-          title={post.title}
-          style={{ display: 'block', width: '100%', border: 'none', minHeight: '60vh' }}
-          onLoad={() => {
-            try {
-              const iframe = iframeRef.current
-              if (!iframe?.contentDocument) return
-              const h = iframe.contentDocument.documentElement.scrollHeight
-              if (h > 0) iframe.style.height = h + 'px'
-            } catch {}
-          }}
-        />
+        {/* HTML 콘텐츠 — DOM에 직접 삽입해 Googlebot이 텍스트를 읽을 수 있게 함 */}
+        <div dangerouslySetInnerHTML={{ __html: injectPostDate(post.content, post.date) }} />
 
         {showEditor && (
           <BlogEditor

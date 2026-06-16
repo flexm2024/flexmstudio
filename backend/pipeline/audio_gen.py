@@ -13,12 +13,12 @@ def generate_audio(scenes: list[Scene], voice: str, job_dir: Path) -> list[Path]
     paths = []
     for i, scene in enumerate(scenes):
         audio_path = audio_dir / f"scene_{i:02d}.mp3"
-        response = client.audio.speech.create(
+        with client.audio.speech.with_streaming_response.create(
             model="tts-1",
             voice=voice,
             input=scene.narration,
-        )
-        response.stream_to_file(audio_path)
+        ) as response:
+            response.stream_to_file(audio_path)
         paths.append(audio_path)
 
     return paths

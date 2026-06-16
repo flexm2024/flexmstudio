@@ -7,7 +7,26 @@ from models import Scene
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY", "dummy-key-for-tests"))
 
+def _demo_images(scenes: list[Scene], job_dir: Path) -> list[Path]:
+    from PIL import Image as PILImage, ImageDraw, ImageFont
+    images_dir = job_dir / "images"
+    images_dir.mkdir(parents=True, exist_ok=True)
+    colors = [(70, 130, 180), (210, 105, 30), (60, 130, 60)]
+    paths = []
+    for i, scene in enumerate(scenes):
+        img = PILImage.new("RGB", (1024, 1792), color=colors[i % len(colors)])
+        draw = ImageDraw.Draw(img)
+        text = scene.image_prompt[:60]
+        draw.text((512, 896), text, fill="white", anchor="mm")
+        path = images_dir / f"scene_{i:02d}.png"
+        img.save(path)
+        paths.append(path)
+    return paths
+
+
 def generate_images(scenes: list[Scene], job_dir: Path) -> list[Path]:
+    if os.getenv("DEMO_MODE"):
+        return _demo_images(scenes, job_dir)
     images_dir = job_dir / "images"
     images_dir.mkdir(parents=True, exist_ok=True)
 

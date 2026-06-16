@@ -12,7 +12,20 @@ _STYLE_PREFIX = {
     "minimal": "minimalist flat design, simple shapes",
 }
 
+def _demo_scenes(script: str) -> list[Scene]:
+    sentences = [s.strip() for s in script.replace(".", ".\n").splitlines() if s.strip()][:3]
+    if not sentences:
+        sentences = [script[:80]]
+    colors = ["a vibrant blue gradient background", "a warm orange sunset", "a cool green forest"]
+    return [
+        Scene(narration=s, image_prompt=f"{colors[i % len(colors)]}, minimal style", duration_estimate=2.5)
+        for i, s in enumerate(sentences)
+    ]
+
+
 def parse_script(script: str, image_style: str) -> list[Scene]:
+    if os.getenv("DEMO_MODE"):
+        return _demo_scenes(script)
     style_desc = _STYLE_PREFIX.get(image_style, "photorealistic")
     response = client.chat.completions.create(
         model="gpt-4o",

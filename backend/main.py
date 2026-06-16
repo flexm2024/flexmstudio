@@ -8,7 +8,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI, BackgroundTasks, HTTPException
+from fastapi import FastAPI, BackgroundTasks, HTTPException, Request
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -33,9 +33,9 @@ STORAGE_DIR = Path("storage")
 def run_pipeline(job_id: str, request: GenerateRequest):
     job = get_job(job_id)
     job_dir = STORAGE_DIR / job_id
-    job_dir.mkdir(parents=True, exist_ok=True)
 
     try:
+        job_dir.mkdir(parents=True, exist_ok=True)
         job.status = JobStatus.parsing
         job.message = "스크립트 분석 중..."
         job.progress = 10
@@ -89,9 +89,11 @@ async def generate(request: GenerateRequest, background_tasks: BackgroundTasks):
 
 
 @app.get("/api/status/{job_id}")
-async def status(job_id: str):
+async def status(job_id: str, request: Request):
     async def event_stream():
         while True:
+            if await request.is_disconnected():
+                break
             job = get_job(job_id)
             if not job:
                 yield f"data: {json.dumps({'error': 'not found'})}\n\n"
@@ -122,15 +124,24 @@ async def upload(job_id: str, body: UploadRequest):
     video_path = Path(job.output_path)
 
     if "youtube" in body.platforms:
-        from uploaders.youtube import upload_to_youtube
-        results["youtube"] = upload_to_youtube(video_path)
+        try:
+            from uploaders.youtube import upload_to_youtube
+            results["youtube"] = upload_to_youtube(video_path)
+        except Exception as e:
+            results["youtube"] = f"오류: {e}"
 
     if "tiktok" in body.platforms:
-        from uploaders.tiktok import upload_to_tiktok
-        results["tiktok"] = upload_to_tiktok(video_path)
+        try:
+            from uploaders.tiktok import upload_to_tiktok
+            results["tiktok"] = upload_to_tiktok(video_path)
+        except Exception as e:
+            results["tiktok"] = f"오류: {e}"
 
     if "instagram" in body.platforms:
-        from uploaders.instagram import upload_to_instagram
-        results["instagram"] = upload_to_instagram(video_path)
+        try:
+            from uploaders.instagram import upload_to_instagram
+            results["instagram"] = upload_to_instagram(video_path)
+        except Exception as e:
+            results["instagram"] = f"오류: {e}"
 
     return {"results": results}

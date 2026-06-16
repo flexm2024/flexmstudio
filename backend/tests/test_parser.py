@@ -44,3 +44,14 @@ def test_parse_script_style_prefix_in_prompt():
     call_args = mock_create.call_args
     user_content = call_args.kwargs["messages"][1]["content"]
     assert "animated" in user_content
+
+def test_parse_script_uses_json_response_format():
+    scenes_data = [
+        {"narration": "Scene", "image_prompt": "Image", "duration_estimate": 2.0}
+    ]
+    with patch("pipeline.parser.client.chat.completions.create", return_value=_mock_response(scenes_data)) as mock_create:
+        parse_script("script", "realistic")
+
+    call_kwargs = mock_create.call_args.kwargs
+    assert call_kwargs["response_format"] == {"type": "json_object"}
+    assert call_kwargs["model"] == "gpt-4o"

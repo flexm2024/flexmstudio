@@ -20,7 +20,7 @@ def upload_to_tiktok(video_path: Path, title: str = "My Shorts") -> str:
         json={
             "post_info": {
                 "title": title,
-                "privacy_level": "PUBLIC_TO_EVERYONE",
+                "privacy_level": "SELF_ONLY",
                 "disable_duet": False,
                 "disable_stitch": False,
             },

@@ -32,7 +32,7 @@ def upload_to_youtube(video_path: Path, title: str = "My Shorts") -> str:
                 "tags": ["shorts"],
                 "categoryId": "22",
             },
-            "status": {"privacyStatus": "public"},
+            "status": {"privacyStatus": "private"},
         },
         media_body=MediaFileUpload(str(video_path), chunksize=-1, resumable=True),
     )

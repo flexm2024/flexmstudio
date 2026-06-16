@@ -67,7 +67,7 @@ def run_pipeline(job_id: str, request: GenerateRequest):
         update_job(job)
 
         output_path = assemble_video(scenes, image_paths, audio_paths, job_dir)
-        job.output_path = str(output_path)
+        job.output_path = str(output_path.resolve())
         job.status = JobStatus.done
         job.message = "완료!"
         job.progress = 100

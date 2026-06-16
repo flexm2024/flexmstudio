@@ -24,14 +24,13 @@ def test_video_endpoint_404_when_job_missing():
     res = client.get("/api/video/nonexistent-job-id")
     assert res.status_code == 404
 
-def test_generate_and_status():
-    with patch("main.run_pipeline"):
-        from main import app
-        client = TestClient(app)
-        gen_res = client.post("/api/generate", json={
-            "script": "Test script",
-            "voice": "echo",
-            "image_style": "minimal",
-        })
-    job_id = gen_res.json()["job_id"]
-    assert job_id is not None
+def test_status_streams_job_state():
+    from main import app
+    import job_store
+    from models import Job, JobStatus
+    client = TestClient(app)
+    job = Job(job_id="test-status-job", status=JobStatus.done, progress=100, message="완료!")
+    job_store._jobs["test-status-job"] = job
+    status_res = client.get("/api/status/test-status-job")
+    assert status_res.status_code == 200
+    assert "done" in status_res.text

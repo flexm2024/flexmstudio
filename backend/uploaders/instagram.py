@@ -26,6 +26,22 @@ def upload_to_instagram(video_path: Path, caption: str = "#Shorts") -> str:
     create_res.raise_for_status()
     creation_id = create_res.json()["id"]
 
+    import time
+    for _ in range(30):
+        status_res = httpx.get(
+            f"{GRAPH_API}/{creation_id}",
+            params={"fields": "status_code", "access_token": access_token},
+        )
+        status_res.raise_for_status()
+        status_code = status_res.json().get("status_code")
+        if status_code == "FINISHED":
+            break
+        if status_code == "ERROR":
+            raise RuntimeError("Instagram 미디어 컨테이너 처리 실패")
+        time.sleep(5)
+    else:
+        raise TimeoutError("Instagram 미디어 컨테이너 대기 시간 초과")
+
     publish_res = httpx.post(
         f"{GRAPH_API}/{ig_user_id}/media_publish",
         params={"creation_id": creation_id, "access_token": access_token},

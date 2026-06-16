@@ -64,9 +64,15 @@ export default function ResultPage() {
               />
               <span className="flex-1">{p.label}</span>
               {results[p.id] && (
-                <span className="text-green-400 text-xs truncate max-w-[120px]" title={results[p.id]}>
-                  ✓ 업로드됨
-                </span>
+                results[p.id].startsWith("오류:") ? (
+                  <span className="text-red-400 text-xs truncate max-w-[120px]" title={results[p.id]}>
+                    ✗ 실패
+                  </span>
+                ) : (
+                  <span className="text-green-400 text-xs truncate max-w-[120px]" title={results[p.id]}>
+                    ✓ 업로드됨
+                  </span>
+                )
               )}
             </label>
           ))}

@@ -1,7 +1,11 @@
 # .gitignore
 backend/storage/
 backend/.env
+backend/server.log
+backend/server_err.log
+backend/fonts/
 frontend/.next/
+frontend/out/
 frontend/node_modules/
 __pycache__/
 *.pyc

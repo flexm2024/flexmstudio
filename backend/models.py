@@ -14,6 +14,7 @@ class Voice(str, Enum):
     nova = "nova"
 
 class GenerateRequest(BaseModel):
+    title: str = ""
     script: str
     voice: Voice = Voice.alloy
     image_style: ImageStyle = ImageStyle.realistic
@@ -28,18 +29,30 @@ class JobStatus(str, Enum):
     parsing = "parsing"
     generating_images = "generating_images"
     generating_audio = "generating_audio"
+    awaiting_render = "awaiting_render"
     assembling = "assembling"
+    rendering = "rendering"
     done = "done"
     error = "error"
 
 class Job(BaseModel):
     job_id: str
+    title: str = ""
+    script: str = ""
+    created_at: str = ""
     status: JobStatus = JobStatus.pending
     progress: int = 0
     message: str = ""
     scenes: list[Scene] = []
     output_path: Optional[str] = None
     error: Optional[str] = None
+
+class ScriptGenRequest(BaseModel):
+    title: str
+    keywords: str = ""
+
+class DraftRequest(BaseModel):
+    title: str
 
 class UploadRequest(BaseModel):
     platforms: list[str]

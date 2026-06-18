@@ -6,6 +6,7 @@ from models import Scene
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY", "dummy-key-for-tests"))
 
+
 def _demo_audio(scenes: list[Scene], job_dir: Path) -> list[Path]:
     import wave, struct, math
     audio_dir = job_dir / "audio"
@@ -20,14 +21,10 @@ def _demo_audio(scenes: list[Scene], job_dir: Path) -> list[Path]:
             wf.setnchannels(1)
             wf.setsampwidth(2)
             wf.setframerate(sample_rate)
-            # 저음 비프 0.1초 + 무음
             beep_samples = int(sample_rate * 0.1)
             frames = b""
             for j in range(n_samples):
-                if j < beep_samples:
-                    val = int(3000 * math.sin(2 * math.pi * 440 * j / sample_rate))
-                else:
-                    val = 0
+                val = int(3000 * math.sin(2 * math.pi * 440 * j / sample_rate)) if j < beep_samples else 0
                 frames += struct.pack("<h", val)
             wf.writeframes(frames)
         paths.append(audio_path)

@@ -1,0 +1,12 @@
+# Render.com 배포 설정 — 백엔드 Docker 서비스
+services:
+  - type: web
+    name: shorts-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false

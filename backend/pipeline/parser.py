@@ -35,8 +35,9 @@ def parse_script(script: str, image_style: str) -> list[Scene]:
                 "content": (
                     "You are a video script editor. Split the given script into 3-7 scenes. "
                     "For each scene provide: narration (text to read aloud), "
-                    "image_prompt (DALL-E 3 prompt in English, with style prefix), "
+                    "image_prompt (image generation prompt in English, with style prefix), "
                     "duration_estimate (estimated narration seconds as float). "
+                    "IMPORTANT: All image_prompt values MUST feature Korean people (Korean person, Korean man, Korean woman, Korean model, etc.). "
                     "Return JSON object with key 'scenes' containing an array."
                 ),
             },

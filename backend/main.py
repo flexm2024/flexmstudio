@@ -20,7 +20,7 @@ from pipeline.audio_gen import generate_audio
 from pipeline.assembler import generate_frames, render_video
 
 app = FastAPI()
-_origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001")
+_origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001,https://shorts.flexmstudio.com")
 _allowed_origins = [o.strip() for o in _origins_env.split(",") if o.strip()]
 
 app.add_middleware(

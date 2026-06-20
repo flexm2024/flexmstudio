@@ -31,6 +31,9 @@ function AdminButtons({ onEdit, onDelete }: { post: Post; onEdit: () => void; on
   )
 }
 
+const GRID_PER_PAGE = 9
+const MOBILE_PER_PAGE = 8
+
 export default function Blog() {
   const { posts, addPost, updatePost, deletePost } = useBlogPosts()
   const { isAdmin } = useAdmin()
@@ -38,6 +41,8 @@ export default function Blog() {
   const [editTarget, setEditTarget] = useState<Post | null>(null)
   const [showEditor, setShowEditor] = useState(false)
   const [activeCategory, setActiveCategory] = useState('전체')
+  const [gridPage, setGridPage] = useState(1)
+  const [mobileCount, setMobileCount] = useState(MOBILE_PER_PAGE)
 
   useMetaTags({
     title: '블로그',
@@ -53,9 +58,20 @@ export default function Blog() {
     if (window.confirm(`"${post.title}" 글을 삭제할까요?`)) deletePost(post.id)
   }
 
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat)
+    setGridPage(1)
+    setMobileCount(MOBILE_PER_PAGE)
+  }
+
   const featured = filtered[0]
   const sideList = filtered.slice(1, 4)
-  const gridPosts = filtered.slice(4, 10)
+  const gridStart = 4 + (gridPage - 1) * GRID_PER_PAGE
+  const gridPosts = filtered.slice(gridStart, gridStart + GRID_PER_PAGE)
+  const totalGridPages = Math.ceil(Math.max(0, filtered.length - 4) / GRID_PER_PAGE)
+
+  const mobileVisible = filtered.slice(0, mobileCount)
+  const hasMobileMore = filtered.length > mobileCount
 
   return (
     <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '5rem var(--page-px)' }}>
@@ -82,7 +98,7 @@ export default function Blog() {
       {/* 카테고리 필터 */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2.5rem' }}>
         {allCategories.map(cat => (
-          <button key={cat} onClick={() => setActiveCategory(cat)} className={`filter-btn${activeCategory === cat ? ' active' : ''}`}>{cat}</button>
+          <button key={cat} onClick={() => handleCategoryChange(cat)} className={`filter-btn${activeCategory === cat ? ' active' : ''}`}>{cat}</button>
         ))}
       </div>
 
@@ -97,8 +113,9 @@ export default function Blog() {
         </div>
       ) : isMobile ? (
         /* ── 모바일: 홈 스타일 카드 ── */
+        <>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.85rem' }}>
-          {filtered.map((post, i) => (
+          {mobileVisible.map((post, i) => (
             <Link key={post.id} to={`/blog/${post.slug || post.id}`} style={{ textDecoration: 'none' }}>
               <article className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: '0', padding: '0.85rem', overflow: 'hidden' }}>
                 {/* 썸네일: 풀 width */}
@@ -131,6 +148,17 @@ export default function Blog() {
             </Link>
           ))}
         </div>
+        {hasMobileMore && (
+          <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+            <button
+              onClick={() => setMobileCount(c => c + MOBILE_PER_PAGE)}
+              style={{ fontSize: '0.85rem', color: 'var(--c-accent)', background: 'transparent', border: '1px solid color-mix(in srgb, var(--c-accent) 40%, transparent)', borderRadius: '8px', padding: '0.6rem 1.8rem', cursor: 'pointer', fontWeight: 600 }}
+            >
+              더 보기 ({filtered.length - mobileCount}개 남음)
+            </button>
+          </div>
+        )}
+        </>
       ) : (
         /* ── PC: featured + side + grid ── */
         <>
@@ -239,6 +267,28 @@ export default function Blog() {
                   </Link>
                 ))}
               </div>
+              {/* 페이지네이션 */}
+              {totalGridPages > 1 && (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.4rem', marginTop: '2rem' }}>
+                  <button
+                    onClick={() => setGridPage(p => p - 1)}
+                    disabled={gridPage === 1}
+                    style={{ fontSize: '0.8rem', padding: '0.45rem 0.9rem', borderRadius: '7px', border: '1px solid var(--c-border)', background: 'var(--c-surface)', color: gridPage === 1 ? 'var(--c-muted)' : 'var(--c-text)', cursor: gridPage === 1 ? 'default' : 'pointer', opacity: gridPage === 1 ? 0.4 : 1 }}
+                  >← 이전</button>
+                  {Array.from({ length: totalGridPages }, (_, i) => i + 1).map(p => (
+                    <button
+                      key={p}
+                      onClick={() => setGridPage(p)}
+                      style={{ fontSize: '0.8rem', padding: '0.45rem 0.75rem', borderRadius: '7px', border: p === gridPage ? '1px solid var(--c-accent)' : '1px solid var(--c-border)', background: p === gridPage ? 'color-mix(in srgb, var(--c-accent) 15%, transparent)' : 'var(--c-surface)', color: p === gridPage ? 'var(--c-accent)' : 'var(--c-text)', cursor: 'pointer', fontWeight: p === gridPage ? 700 : 400 }}
+                    >{p}</button>
+                  ))}
+                  <button
+                    onClick={() => setGridPage(p => p + 1)}
+                    disabled={gridPage === totalGridPages}
+                    style={{ fontSize: '0.8rem', padding: '0.45rem 0.9rem', borderRadius: '7px', border: '1px solid var(--c-border)', background: 'var(--c-surface)', color: gridPage === totalGridPages ? 'var(--c-muted)' : 'var(--c-text)', cursor: gridPage === totalGridPages ? 'default' : 'pointer', opacity: gridPage === totalGridPages ? 0.4 : 1 }}
+                  >다음 →</button>
+                </div>
+              )}
             </>
           )}
         </>

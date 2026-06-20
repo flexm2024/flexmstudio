@@ -68,7 +68,7 @@ export function useMetaTags(opts: MetaOptions) {
     // basic
     setMeta('meta[name="description"]', 'content', desc)
     if (opts.keywords) setMeta('meta[name="keywords"]', 'content', opts.keywords)
-    if (opts.noIndex) setMeta('meta[name="robots"]', 'content', 'noindex,nofollow')
+    setMeta('meta[name="robots"]', 'content', opts.noIndex ? 'noindex,nofollow' : 'index,follow')
 
     // Open Graph
     setMeta('meta[property="og:title"]',       'content', fullTitle)
@@ -98,5 +98,5 @@ export function useMetaTags(opts: MetaOptions) {
     const ldId = 'json-ld-page'
     if (opts.jsonLd) setJsonLd(ldId, opts.jsonLd)
     else removeJsonLd(ldId)
-  }, [opts.title, opts.description, opts.ogType, opts.ogImage, opts.canonical, opts.publishedTime, opts.jsonLd])
+  }, [opts.title, opts.description, opts.ogType, opts.ogImage, opts.canonical, opts.publishedTime, opts.jsonLd, opts.noIndex])
 }

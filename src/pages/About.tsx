@@ -1,30 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGlobe, faCamera, faFilm, faGamepad, faPaintRoller, faPersonRunning } from '@fortawesome/free-solid-svg-icons'
 import { useScrollFadeIn } from '../hooks/useScrollFadeIn'
 import { useMetaTags } from '../hooks/useMetaTags'
 import { useWindowWidth } from '../hooks/useWindowWidth'
-
-const career = [
-  { year: '2019 ~ 2026', role: '가구회사 근무 중', desc: '가구 디자인 및 제작, 영업 관리, 스키퍼 운용 기사로 활동 중' },
-  { year: '2013 ~ 2019', role: '개인사업 · 프리랜서', desc: '인테리어 및 가구 제작 프리랜서 활동' },
-  { year: '2002 ~ 2013', role: 'IT 업계 근무', desc: '게임 서비스 기획팀장으로 12년간 사용자 중심의 서비스를 설계하고 운영' },
-]
-
-const skills = [
-  { label: 'IT · 기획', items: ['운영 기획', '웹사이트 관리', 'CS', 'QA'] },
-  { label: '가구 · 인테리어', items: ['실측 · 현장 관리', '3D 도면 작업', '자재 발주', '제품 A/S'] },
-  { label: '제작 · 가공', items: ['원목 · 고무나무', 'CNC · 레이저', 'MDF 가공', '가구 조립'] },
-  { label: '영업 · 관리', items: ['견적서 작성', '도면 작성', '납품 관리', '생산 지원'] },
-]
-
-const interests = [
-  { icon: faGlobe,         label: '디지털 전환' },
-  { icon: faPaintRoller,   label: '인테리어 디자인' },
-  { icon: faGamepad,       label: '게임 기획' },
-  { icon: faCamera,        label: '사진·영상' },
-  { icon: faFilm,          label: '영화·콘텐츠' },
-  { icon: faPersonRunning, label: '러닝' },
-]
+import { career, skills, interests, aboutStats } from '../data/about'
 
 export default function About() {
   useMetaTags({
@@ -41,7 +19,7 @@ export default function About() {
   const interestRef = useScrollFadeIn()
 
   return (
-    <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '5rem 1.5rem' }}>
+    <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '5rem var(--page-px)' }}>
 
       {/* 헤더 */}
       <div style={{ marginBottom: '3.5rem', position: 'relative', textAlign: 'center' }}>
@@ -81,11 +59,7 @@ export default function About() {
 
         {/* 통계 칩 */}
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.75rem', justifyContent: 'center' }}>
-          {[
-            { num: '24+', label: '경력 연수' },
-            { num: '12Y', label: 'IT 기획' },
-            { num: '3+', label: '분야' },
-          ].map(s => (
+          {aboutStats.map(s => (
             <div key={s.label} style={{
               padding: '0.55rem 1.1rem', borderRadius: '12px',
               background: 'var(--c-surface)', border: '1px solid var(--c-border)',
@@ -158,8 +132,10 @@ export default function About() {
               <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--c-text)', marginBottom: '1.25rem', fontFamily: "'Paperlogy', var(--font-display)" }}>스킬 & 도구</h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.85rem' }}>
                 {skills.map((s, i) => (
-                  <div key={i} className="card" style={{ padding: '1.1rem' }}>
-                    <p style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--c-accent)', fontFamily: "'Paperlogy', var(--font-display)", marginBottom: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</p>
+                  <div key={i} className="card" style={{ padding: '1.25rem 1.1rem 1.1rem' }}>
+                    {/* 상단 액센트 라인 */}
+                    <div style={{ position: 'absolute', top: 0, left: '1.1rem', right: '1.1rem', height: '2px', background: 'linear-gradient(90deg, var(--c-accent), color-mix(in srgb, var(--c-accent-mint) 60%, transparent))', borderRadius: '0 0 4px 4px' }} />
+                    <p style={{ fontSize: '0.67rem', fontWeight: 700, color: 'var(--c-accent)', fontFamily: "'Paperlogy', var(--font-display)", marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{s.label}</p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
                       {s.items.map(item => <span key={item} className="badge">{item}</span>)}
                     </div>
@@ -173,11 +149,13 @@ export default function About() {
           <section>
             <div ref={interestRef} className="scroll-fade">
               <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--c-text)', marginBottom: '1.25rem', fontFamily: "'Paperlogy', var(--font-display)" }}>관심사</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
                 {interests.map((item, i) => (
-                  <div key={i} className="card" style={{ padding: '0.65rem 1.1rem', display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
-                    <FontAwesomeIcon icon={item.icon} style={{ color: 'var(--c-accent)', fontSize: '0.85rem' }} />
-                    <span style={{ fontSize: '0.82rem', color: 'var(--c-text)', fontWeight: 500, fontFamily: "'Paperlogy', var(--font-sans)" }}>{item.label}</span>
+                  <div key={i} className="card" style={{ padding: '0.6rem 1.1rem', display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
+                    <span style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'color-mix(in srgb, var(--c-accent) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--c-accent) 18%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <FontAwesomeIcon icon={item.icon} style={{ color: 'var(--c-accent)', fontSize: '0.78rem' }} />
+                    </span>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--c-text)', fontWeight: 600, fontFamily: "'Paperlogy', var(--font-sans)" }}>{item.label}</span>
                   </div>
                 ))}
               </div>

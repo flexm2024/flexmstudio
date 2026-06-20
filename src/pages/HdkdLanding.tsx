@@ -92,7 +92,7 @@ function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           access_key: 'c98e903a-fbdb-4dfb-bf63-db3a1143a749',
-          subject: `[HDKD 문의] ${form.name}`,
+          subject: `[HD 문의] ${form.name}`,
           from_name: form.name,
           message: `연락처: ${form.phone}\n\n${form.message}`,
         }),
@@ -221,7 +221,7 @@ export default function HdkdLanding() {
           }}>
             <Armchair size={18} color="white" />
           </div>
-          <span style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.02em' }}>HDKD</span>
+          <span style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.02em' }}>HD</span>
           <span style={{ fontSize: '0.7rem', color: C.muted, marginLeft: '2px' }}>가구</span>
         </div>
 
@@ -381,9 +381,9 @@ export default function HdkdLanding() {
             transition={{ duration: 0.6 }}
             style={{ textAlign: 'center', marginBottom: '3.5rem' }}
           >
-            <p style={{ fontSize: '0.75rem', fontWeight: 700, color: C.wood, letterSpacing: '0.1em', marginBottom: '0.75rem' }}>WHY HDKD</p>
+            <p style={{ fontSize: '0.75rem', fontWeight: 700, color: C.wood, letterSpacing: '0.1em', marginBottom: '0.75rem' }}>WHY HD</p>
             <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 900, letterSpacing: '-0.03em', color: C.text }}>
-              HDKD를 선택하는 이유
+              HD를 선택하는 이유
             </h2>
           </motion.div>
 
@@ -504,7 +504,7 @@ export default function HdkdLanding() {
               30년 전통의<br />국내 원목 가구 전문점
             </h2>
             <p style={{ fontSize: '0.92rem', color: C.muted, lineHeight: 1.9, marginBottom: '1rem' }}>
-              HDKD는 1995년 설립 이후 오직 천연 원목만을 사용해 직접 설계하고 제작하는
+              HD는 1995년 설립 이후 오직 천연 원목만을 사용해 직접 설계하고 제작하는
               자체 제작 가구 전문 브랜드입니다.
             </p>
             <p style={{ fontSize: '0.92rem', color: C.muted, lineHeight: 1.9 }}>
@@ -566,7 +566,7 @@ export default function HdkdLanding() {
               <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: C.wood, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Armchair size={15} color="white" />
               </div>
-              <span style={{ fontWeight: 800, fontSize: '1rem', color: 'white' }}>HDKD 가구</span>
+              <span style={{ fontWeight: 800, fontSize: '1rem', color: 'white' }}>HD 가구</span>
             </div>
             <p style={{ fontSize: '0.8rem', lineHeight: 1.8 }}>자연에서 온 가구, 삶에 스며들다</p>
           </div>
@@ -592,7 +592,7 @@ export default function HdkdLanding() {
         </div>
 
         <div style={{ maxWidth: '1100px', margin: '2rem auto 0', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: '0.75rem', textAlign: 'center' }}>
-          © 2026 HDKD 가구. All rights reserved. · 이 페이지는 포트폴리오 목적으로 제작된 샘플입니다.
+          © 2026 HD 가구. All rights reserved. · 이 페이지는 포트폴리오 목적으로 제작된 샘플입니다.
         </div>
       </footer>
 

@@ -18,7 +18,7 @@ export default function Layout() {
   }, [location.pathname])
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--c-bg)', color: 'var(--c-text)', transition: 'background 0.35s ease, color 0.35s ease' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--c-bg)', color: 'var(--c-text)', transition: 'background 0.35s ease, color 0.35s ease', overflowX: 'hidden' }}>
       <Header />
       <main ref={mainRef} className="page-enter" style={{ flex: 1, paddingTop: '4rem' }}>
         <Outlet />

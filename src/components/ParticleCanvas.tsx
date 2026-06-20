@@ -21,13 +21,14 @@ export default function ParticleCanvas() {
     }
 
     const spawn = () => {
-      dots = Array.from({ length: 80 }, () => ({
+      const count = canvas.width < 768 ? 35 : 120
+      dots = Array.from({ length: count }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.35,
         vy: (Math.random() - 0.5) * 0.35,
-        r: Math.random() * 1.8 + 0.6,
-        alpha: Math.random() * 0.5 + 0.2,
+        r: Math.random() * 2.4 + 0.9,
+        alpha: Math.random() * 0.6 + 0.25,
       }))
     }
 
@@ -47,12 +48,12 @@ export default function ParticleCanvas() {
           const dx = dots[i].x - dots[j].x
           const dy = dots[i].y - dots[j].y
           const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 140) {
+          if (dist < 180) {
             ctx.beginPath()
             ctx.moveTo(dots[i].x, dots[i].y)
             ctx.lineTo(dots[j].x, dots[j].y)
-            ctx.strokeStyle = `rgba(79,138,255,${0.12 * (1 - dist / 140)})`
-            ctx.lineWidth = 0.6
+            ctx.strokeStyle = `rgba(79,138,255,${0.18 * (1 - dist / 180)})`
+            ctx.lineWidth = 0.9
             ctx.stroke()
           }
         }
@@ -78,7 +79,7 @@ export default function ParticleCanvas() {
   return (
     <canvas
       ref={ref}
-      style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', opacity: 0.7 }}
+      style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', opacity: 1 }}
     />
   )
 }

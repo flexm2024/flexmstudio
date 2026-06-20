@@ -35,7 +35,7 @@ export default function Footer() {
           <div>
             <h4 style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--c-text)', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', transition: 'color 0.35s' }}>연락처</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              {[['mailto:necc1321@gmail.com', 'necc1321@gmail.com'], ['https://github.com', 'GitHub'], ['https://linkedin.com', 'LinkedIn']].map(([href, label]) => (
+              {[['mailto:necc1321@gmail.com', 'necc1321@gmail.com']].map(([href, label]) => (
                 <li key={label}>
                   <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
                     style={{ textDecoration: 'none', fontSize: '0.8rem', color: 'var(--c-muted)', transition: 'color 0.2s' }}

@@ -34,8 +34,21 @@ function AdminButtons({ onEdit, onDelete }: { post: Post; onEdit: () => void; on
 const GRID_PER_PAGE = 9
 const MOBILE_PER_PAGE = 8
 
+function SkeletonCard() {
+  return (
+    <div className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', animation: 'blog-skeleton-pulse 1.5s ease-in-out infinite' }}>
+      <div style={{ height: '200px', background: 'var(--c-border)', opacity: 0.2 }} />
+      <div style={{ padding: '1rem 1.1rem 1.1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <div style={{ height: '0.65rem', width: '30%', borderRadius: '4px', background: 'var(--c-border)', opacity: 0.2 }} />
+        <div style={{ height: '0.85rem', width: '85%', borderRadius: '4px', background: 'var(--c-border)', opacity: 0.25 }} />
+        <div style={{ height: '0.75rem', width: '70%', borderRadius: '4px', background: 'var(--c-border)', opacity: 0.2 }} />
+      </div>
+    </div>
+  )
+}
+
 export default function Blog() {
-  const { posts, addPost, updatePost, deletePost } = useBlogPosts()
+  const { posts, serverLoaded, addPost, updatePost, deletePost } = useBlogPosts()
   const { isAdmin } = useAdmin()
   const { isMobile } = useWindowWidth()
   const [editTarget, setEditTarget] = useState<Post | null>(null)
@@ -102,8 +115,60 @@ export default function Blog() {
         ))}
       </div>
 
-      {/* 포스트 목록 */}
-      {filtered.length === 0 ? (
+      {!serverLoaded && filtered.length === 0 ? (
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '1.25rem' }}>
+          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+        </div>
+      ) : !serverLoaded ? (
+        <div style={{ opacity: 0.5, transition: 'opacity 0.3s ease', pointerEvents: 'none' }}>
+          {isMobile ? (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.85rem' }}>
+              {filtered.slice(0, MOBILE_PER_PAGE).map((post, i) => (
+                <Link key={post.id} to={`/blog/${post.slug || post.id}`} style={{ textDecoration: 'none' }}>
+                  <article className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: '0', padding: '0.85rem', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '160px', borderRadius: '10px', overflow: 'hidden', position: 'relative', background: COVER_VARIANTS[i % COVER_VARIANTS.length], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem', color: 'var(--c-accent)', marginBottom: '0.85rem' }}>
+                      {post.coverImage
+                        ? <img src={post.coverImage} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        : <FontAwesomeIcon icon={getIcon(post.icon)} />
+                      }
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                      <h2 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--c-text)', lineHeight: 1.45, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.title}</h2>
+                      <p style={{ fontSize: '0.76rem', color: 'var(--c-muted)', lineHeight: 1.6, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.excerpt}</p>
+                      <span style={{ fontSize: '0.68rem', color: 'var(--c-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.1rem' }}>{post.date}</span>
+                    </div>
+                  </article>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '3rem', alignItems: 'stretch' }}>
+                {filtered.slice(0, 4).map((post, _i) => (
+                  <Link key={post.id} to={`/blog/${post.slug || post.id}`} style={{ textDecoration: 'none', display: 'flex', height: '100%' }}>
+                    <article className="card" style={{ overflow: 'hidden', padding: '1rem', display: 'flex', flexDirection: 'column', width: '100%' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--c-text)', lineHeight: 1.4 }}>{post.title}</h3>
+                      <p style={{ fontSize: '0.78rem', color: 'var(--c-muted)', lineHeight: 1.65, flex: 1 }}>{post.excerpt}</p>
+                      <span style={{ fontSize: '0.68rem', color: 'var(--c-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.5rem' }}>{post.date}</span>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+                {filtered.slice(4).map((post, _i) => (
+                  <Link key={post.id} to={`/blog/${post.slug || post.id}`} style={{ textDecoration: 'none', display: 'flex', height: '100%' }}>
+                    <article className="card" style={{ overflow: 'hidden', padding: '1rem', display: 'flex', flexDirection: 'column', width: '100%' }}>
+                      <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--c-text)', lineHeight: 1.4 }}>{post.title}</h3>
+                      <p style={{ fontSize: '0.75rem', color: 'var(--c-muted)', lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
+                      <span style={{ fontSize: '0.65rem', color: 'var(--c-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.4rem' }}>{post.date}</span>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      ) : filtered.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '5rem 0', color: 'var(--c-muted)' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
             <FontAwesomeIcon icon={faInbox} />

@@ -46,10 +46,19 @@ export function useResources() {
         }
         return
       }
+      // 로컬에는 있지만 서버에 아직 반영 안 된 리소스 병합 (optimistic write 보존)
+      const localRaw = localStorage.getItem(RESOURCE_KEY)
+      if (localRaw) {
+        const local = JSON.parse(localRaw) as Resource[]
+        const serverIds = new Set(data.map(r => r.id))
+        for (const r of local) {
+          if (!serverIds.has(r.id)) data.push(r)
+        }
+      }
       setResources(data)
       localStorage.setItem(RESOURCE_KEY, JSON.stringify(data))
       localStorage.setItem(SEED_VER_KEY, RESOURCE_SEED_VERSION)
-    } catch {}
+    } catch (e) { console.error('Resources sync failed:', e) }
   }, [])
 
   useEffect(() => {

@@ -47,9 +47,18 @@ export function usePortfolioProjects() {
         }
         return
       }
+      // 로컬에는 있지만 서버에 아직 반영 안 된 프로젝트 병합 (optimistic write 보존)
+      const localRaw = localStorage.getItem(PORTFOLIO_KEY)
+      if (localRaw) {
+        const local = JSON.parse(localRaw) as Project[]
+        const serverIds = new Set(data.map(p => p.id))
+        for (const p of local) {
+          if (!serverIds.has(p.id)) data.push(p)
+        }
+      }
       setProjects(data)
       localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(data))
-    } catch {}
+    } catch (e) { console.error('Portfolio sync failed:', e) }
   }, [])
 
   useEffect(() => {

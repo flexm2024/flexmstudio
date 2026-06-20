@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>강아지 사료 추천 2026 완전 정복 — 성분부터 브랜드까지 한 번에</title>
+  <meta name="description" content="말티푸 콩이와 7년을 함께한 반려인이 직접 정리한 2026 강아지 사료 완전 가이드. 성분 읽는 법, 브랜드 TOP 10, 연령별 선택까지." />
+  <meta name="keywords" content="강아지사료추천, 강아지사료, 반려견사료, 사료성분, 무곡물사료, 강아지알러지, 오리젠, 카르나4, 지위픽" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <style>
+    /* ── 디자인 토큰 (flexmstudio.com 동일) ── */
+    :root {
+      --c-bg:          #f4f7ff;
+      --c-bg-sub:      #eaeffc;
+      --c-surface:     #ffffff;
+      --c-surface2:    #e2e9f8;
+      --c-border:      rgba(40,96,255,0.13);
+      --c-text:        #0b1120;
+      --c-muted:       #4a5680;
+      --c-accent:      #2860ff;
+      --c-accent-dark: #1a4fe0;
+      --c-accent-light:#5585ff;
+      --c-accent-mint: #20cc80;
+      --c-warning:     #f0a020;
+      --c-danger:      #ff4060;
+      --c-card-shadow: rgba(40,96,255,0.07);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --c-bg:          #09090b;
+        --c-bg-sub:      #0f0f12;
+        --c-surface:     #18181c;
+        --c-surface2:    #232328;
+        --c-border:      rgba(255,255,255,0.07);
+        --c-text:        #f2f2f4;
+        --c-muted:       #80808a;
+        --c-accent:      #6b8fff;
+        --c-accent-dark: #5275f0;
+        --c-accent-light:#8aaaff;
+        --c-accent-mint: #3ecf8e;
+        --c-warning:     #f5b942;
+        --c-danger:      #ff5c72;
+        --c-card-shadow: rgba(0,0,0,0.45);
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Paperlogy', 'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: var(--c-bg);
+      color: var(--c-text);
+      line-height: 1.75;
+      word-break: keep-all;
+      font-size: 1rem;
+    }
+
+    /* ── 레이아웃 ── */
+    .wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5rem;
+    }
+
+    /* ── 헤더 ── */
+    .post-header { margin-bottom: 2.5rem; }
+
+    .post-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      background: color-mix(in srgb, var(--c-accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--c-accent) 25%, transparent);
+      border-radius: 999px;
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.1rem);
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--c-text);
+      margin-bottom: 1rem;
+    }
+
+    .post-lead {
+      font-size: 1.05rem;
+      color: var(--c-muted);
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+
+    .accent-bar {
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--c-accent), var(--c-accent-mint));
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.78rem;
+      color: var(--c-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .post-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    /* ── 목차 ── */
+    .toc {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-left: 3px solid var(--c-accent);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+      box-shadow: 0 4px 20px var(--c-card-shadow);
+    }
+
+    .toc-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      padding: 0;
+    }
+
+    .toc li {
+      counter-increment: toc;
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--c-border);
+      font-size: 0.88rem;
+    }
+
+    .toc li:last-child { border-bottom: none; }
+
+    .toc li::before {
+      content: counter(toc, decimal-leading-zero);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--c-accent);
+      min-width: 1.6rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .toc a {
+      color: var(--c-text);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .toc a:hover { color: var(--c-accent); }
+
+    /* ── 섹션 제목 ── */
+    h2 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--c-text);
+      padding-left: 0.9rem;
+      border-left: 4px solid var(--c-accent);
+      margin: 3rem 0 1rem;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--c-accent);
+      margin: 2rem 0 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h3::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--c-border);
+    }
+
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--c-text);
+      margin: 1.75rem 0 0.6rem;
+    }
+
+    /* ── 본문 ── */
+    p {
+      font-size: 0.97rem;
+      line-height: 1.85;
+      color: var(--c-text);
+      margin-bottom: 1rem;
+    }
+
+    strong { font-weight: 700; color: var(--c-accent); }
+
+    mark {
+      background: color-mix(in srgb, var(--c-accent) 18%, transparent);
+      color: var(--c-accent);
+      padding: 0 4px;
+      border-radius: 3px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 2rem 0;
+    }
+
+    /* ── 카드 박스들 ── */
+    .box {
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+
+    .box-info {
+      background: color-mix(in srgb, var(--c-accent) 8%, var(--c-surface));
+      border: 1px solid color-mix(in srgb, var(--c-accent) 20%, transparent);
+      border-left: 3px solid var(--c-accent);
+      color: var(--c-text);
+    }
+
+    .box-warn {
+      background: color-mix(in srgb, var(--c-warning) 8%, var(--c-surface));
+      border: 1px solid color-mix(in srgb, var(--c-warning) 25%, transparent);
+      border-left: 3px solid var(--c-warning);
+      color: var(--c-text);
+    }
+
+    .box-accent {
+      background: linear-gradient(135deg, color-mix(in srgb, var(--c-accent) 12%, transparent), color-mix(in srgb, var(--c-accent-mint) 8%, transparent));
+      border: 1px solid color-mix(in srgb, var(--c-accent) 20%, transparent);
+      border-radius: 12px;
+    }
+
+    .box-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .box-info .box-label { color: var(--c-accent); }
+    .box-warn .box-label { color: var(--c-warning); }
+
+    blockquote {
+      border-left: 3px solid var(--c-accent-mint);
+      padding: 0.6rem 1rem;
+      margin: 1.5rem 0;
+      background: color-mix(in srgb, var(--c-accent-mint) 6%, var(--c-surface));
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: var(--c-muted);
+      font-size: 0.92rem;
+    }
+
+    blockquote b { color: var(--c-accent-mint); font-style: normal; }
+
+    /* ── 테이블 ── */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      border: 1px solid var(--c-border);
+      box-shadow: 0 4px 20px var(--c-card-shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead tr {
+      background: linear-gradient(135deg, var(--c-accent), var(--c-accent-dark));
+    }
+
+    thead th {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-top: 1px solid var(--c-border);
+      transition: background 0.15s;
+    }
+
+    tbody tr:nth-child(even) {
+      background: color-mix(in srgb, var(--c-accent) 3%, var(--c-surface));
+    }
+
+    tbody tr:hover {
+      background: color-mix(in srgb, var(--c-accent) 6%, var(--c-surface));
+    }
+
+    td {
+      padding: 0.65rem 1rem;
+      color: var(--c-text);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    td:first-child {
+      font-weight: 600;
+      color: var(--c-accent);
+      white-space: nowrap;
+    }
+
+    /* ── 리스트 ── */
+    ol.brand-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+
+    ol.brand-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 0.92rem;
+      counter-increment: brand;
+      box-shadow: 0 2px 8px var(--c-card-shadow);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    ol.brand-list li:hover {
+      border-color: color-mix(in srgb, var(--c-accent) 40%, transparent);
+      transform: translateX(2px);
+    }
+
+    ol.brand-list li::before {
+      content: counter(brand, decimal-leading-zero);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--c-accent);
+      min-width: 1.8rem;
+      background: color-mix(in srgb, var(--c-accent) 10%, transparent);
+      border-radius: 6px;
+      padding: 0.1rem 0.4rem;
+      text-align: center;
+    }
+
+    ol.brand-list { counter-reset: brand; }
+
+    ul.step-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    ul.step-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    ul.step-list li:last-child { border-bottom: none; }
+
+    ul.step-list li::before {
+      content: '▸';
+      color: var(--c-accent);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+
+    ul.step-list strong { color: var(--c-accent-light); }
+
+    /* ── FAQ ── */
+    .faq-item {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 2px 8px var(--c-card-shadow);
+    }
+
+    .faq-q {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--c-text);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .faq-q-badge {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 6px;
+      background: var(--c-accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .faq-a {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1.25rem;
+    }
+
+    .faq-a-badge {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--c-accent-mint) 20%, var(--c-surface2));
+      color: var(--c-accent-mint);
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .faq-a-text {
+      font-size: 0.88rem;
+      color: var(--c-muted);
+      line-height: 1.75;
+    }
+
+    .faq-a-text .answer-summary {
+      display: block;
+      font-weight: 700;
+      color: var(--c-accent-mint);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ── CTA 박스 ── */
+    .cta-box {
+      background: linear-gradient(135deg, color-mix(in srgb, var(--c-accent) 15%, var(--c-surface)), color-mix(in srgb, var(--c-accent-mint) 8%, var(--c-surface)));
+      border: 1px solid color-mix(in srgb, var(--c-accent) 25%, transparent);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .cta-box p {
+      color: var(--c-text);
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.75;
+    }
+
+    /* ── 태그 ── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--c-border);
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      color: var(--c-muted);
+      background: var(--c-surface2);
+      border: 1px solid var(--c-border);
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+    }
+
+    /* ── 반응형 ── */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      h2 { font-size: 1.2rem; }
+      .wrap { padding: 2rem 1rem 3rem; }
+      thead th, td { padding: 0.55rem 0.7rem; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 헤더 -->
+  <header class="post-header">
+    <span class="post-label">반려견 · 사료 가이드</span>
+    <h1>강아지 사료 추천 2026 완전 정복<br>— 성분부터 브랜드까지 한 번에</h1>
+    <p class="post-lead">우리 강아지가 매일 먹는 사료, 진짜 괜찮은 건지 확인해보신 적 있으세요? 비싸다고 다 좋은 게 아니고, 유명하다고 무조건 맞는 것도 아니에요.</p>
+    <div class="accent-bar"></div>
+    <div class="post-meta">
+      <span>✦ 2026년 기준</span>
+      <span>· 읽는 시간 약 12분</span>
+    </div>
+  </header>
+
+  <!-- 도입부 -->
+  <p>안녕하세요 여러분! 저는 말티푸 '콩이'를 7년째 키우고 있는 평범한 반려인이에요. 솔직히 말하면, 처음 강아지 사료를 고를 때 정말 막막했어요. 마트 가면 종류가 너무 많고, 인터넷 찾으면 정보가 넘쳐나는데 뭘 믿어야 할지... 그러다 보니 그냥 광고 많이 하는 거 사다 먹였는데, 콩이 피부가 빨개지고 귀에서 냄새가 나기 시작하더라고요. 그때부터 제대로 공부하기 시작했어요. 성분표 읽는 법부터, 단백질 함량, 곡물 유무, 알러지 유발 성분까지 — 꽤 오랜 시간이 걸렸지만 이제는 좀 알 것 같아요. 오늘은 그 경험을 바탕으로 2026년 현재 기준 강아지 사료 추천을 제대로 정리해드릴게요.</p>
+
+  <!-- 목차 -->
+  <nav class="toc" aria-label="목차">
+    <div class="toc-title">목차</div>
+    <ol>
+      <li><a href="#ingredients">강아지 사료 성분표 읽는 법 — 뭘 봐야 할까?</a></li>
+      <li><a href="#types">사료 종류별 완벽 비교 — 건사료 vs 습식 vs 생식</a></li>
+      <li><a href="#brands">2026 강아지 사료 브랜드 추천 TOP 10</a></li>
+      <li><a href="#age">연령별·크기별 사료 선택 가이드</a></li>
+      <li><a href="#allergy">알러지 있는 강아지를 위한 사료 선택법</a></li>
+      <li><a href="#tips">사료 교체 시 주의사항 및 급여 꿀팁</a></li>
+    </ol>
+  </nav>
+
+  <!-- 섹션 1 -->
+  <h2 id="ingredients">강아지 사료 성분표 읽는 법 — 뭘 봐야 할까?</h2>
+
+  <p>처음 사료 성분표를 봤을 때, 뭐랄까... 외계어 같았어요. "닭고기 부산물", "옥수수 글루텐", "비타민 E 보충제"... 이게 다 뭐야? 싶었거든요. 근데 알고 보면 그렇게 어렵지 않아요. 핵심만 알면 5초 안에 좋은 사료인지 어느 정도 판단이 가능해요.</p>
+
+  <p>성분표는 <strong>함량이 많은 순서</strong>대로 적혀 있어요. 그러니까 맨 앞에 나오는 성분이 가장 많이 들어간 거예요. 첫 번째 성분이 "닭고기"면 좋은 거고, "옥수수"나 "밀"이면 조금 고민해볼 필요가 있죠. 물론 곡물이 무조건 나쁜 건 아니지만요.</p>
+
+  <blockquote>
+    "부산물(by-product)"이 나쁜 건 아니에요. 하지만 <b>어떤 부산물인지</b>가 중요하죠. 간이나 심장 같은 내장은 오히려 영양가가 높아요.
+  </blockquote>
+
+  <p>피해야 할 성분들도 있어요. "BHA", "BHT" 같은 인공 방부제나 "인공 색소", "설탕" 계열 성분은 가능하면 없는 게 낫고요. "양파", "마늘" 성분이 들어간 사료는 절대 안 돼요. 강아지한테 독이거든요.</p>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ 주의</div>
+    성분표에서 "육류 부산물" 혹은 "가금류 부산물"처럼 출처가 불명확한 표기는 피하는 게 좋아요. 어떤 동물의 어떤 부위인지 명확하게 표기된 제품이 훨씬 신뢰할 수 있답니다.
+  </div>
+
+  <!-- 섹션 2 -->
+  <h2 id="types">사료 종류별 완벽 비교 — 건사료 vs 습식 vs 생식</h2>
+
+  <p>사료 종류가 이렇게 많을 줄 몰랐어요. 처음엔 그냥 "건사료 아니면 캔이지~" 했는데, 생식이니 반습식이니 동결건조니... 점점 복잡해지더라고요. 각각 장단점이 확실히 달라서 우리 강아지 상황에 맞게 고르는 게 중요해요.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>종류</th>
+          <th>특징</th>
+          <th>장점</th>
+          <th>단점</th>
+          <th>추천 대상</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>건사료 (키블)</td>
+          <td>수분 10% 이하, 알갱이 형태</td>
+          <td>보관 편리, 치석 예방, 가격 합리적</td>
+          <td>수분 섭취 부족 가능성</td>
+          <td>건강한 성견, 음수량 충분한 경우</td>
+        </tr>
+        <tr>
+          <td>습식사료 (캔/파우치)</td>
+          <td>수분 70~80%, 부드러운 질감</td>
+          <td>기호성 높음, 수분 보충 용이</td>
+          <td>비용 높음, 치석 쌓임 가능</td>
+          <td>노견, 치아 약한 강아지</td>
+        </tr>
+        <tr>
+          <td>반습식 사료</td>
+          <td>수분 25~35%, 쫄깃한 질감</td>
+          <td>기호성 우수, 영양 균형 양호</td>
+          <td>가격 다소 높음</td>
+          <td>편식하는 강아지, 소화 민감한 경우</td>
+        </tr>
+        <tr>
+          <td>동결건조 / 생식</td>
+          <td>가공 최소화, 원재료 그대로</td>
+          <td>영양소 보존 최대, 자연식에 가까움</td>
+          <td>가격 매우 높음, 보관 주의 필요</td>
+          <td>프리미엄 사료를 원하는 보호자</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>저는 콩이한테 건사료를 기본으로 주고 아침에 반습식을 조금 섞어주는 편이에요. 그러면 기호성도 올라가고 수분 보충도 되고... 나름 밸런스를 맞추는 거죠. 꼭 한 가지만 고집할 필요는 없어요.</p>
+
+  <!-- 섹션 3 -->
+  <h2 id="brands">2026 강아지 사료 브랜드 추천 TOP 10</h2>
+
+  <p>이게 제일 많이 물어보는 부분이죠. "그래서 뭐 사야 해요?" 한 마디로 답하기가 어렵긴 한데... 그래도 제가 직접 써보거나 주변 반려인들 경험을 모아서 정리해봤어요. 예산이나 강아지 상태에 따라 다르지만, 이 중에서 고르면 크게 실망은 없을 거예요.</p>
+
+  <ol class="brand-list">
+    <li><span><strong>카르나4 (Carna4)</strong> — 성분 퀄리티로는 국내 최상위권. 자연식에 가장 가깝고 싹 틔운 씨앗 기반이라 소화도 잘 돼요.</span></li>
+    <li><span><strong>더 어니스트 키친 (The Honest Kitchen)</strong> — 사람이 먹을 수 있는 등급 원료 사용. 반습식 스타일로 기호성이 정말 높아요.</span></li>
+    <li><span><strong>오리젠 (Orijen)</strong> — 고단백 사료의 대명사. 신선 육류 함량이 매우 높아서 활동량 많은 강아지에게 딱이에요.</span></li>
+    <li><span><strong>지위픽 (Ziwipeak)</strong> — 뉴질랜드산 방목 육류 사용. 성분이 깔끔하고 고양이-강아지 겸용으로도 유명해요.</span></li>
+    <li><span><strong>벨칸도 (Belcando)</strong> — 독일 프리미엄 사료. 소화 민감한 강아지들한테 호평이 많아요.</span></li>
+    <li><span><strong>파미나 (Farmina)</strong> — 이탈리아 브랜드. 저온 베이킹 공법으로 영양소 파괴가 적고, 곡물/무곡물 라인 둘 다 있어요.</span></li>
+    <li><span><strong>고 내추럴 (Go! Natural)</strong> — 가성비 좋은 캐나다 브랜드. 단백질 함량 높고 무곡물 라인이 탄탄해요.</span></li>
+    <li><span><strong>몬지 (Monge)</strong> — 이탈리아산으로 가성비와 성분 균형이 좋아요. 한국에서도 접근성이 좋은 편이에요.</span></li>
+    <li><span><strong>인섹트업 하이포알러지</strong> — 국내 브랜드. 곤충 단백질 기반으로 알러지 강아지에게 요즘 핫해요.</span></li>
+    <li><span><strong>ANF 식스프리</strong> — 6가지 주요 알러지 성분이 빠진 사료. 피부 예민하거나 불안한 보호자들한테 인기 많아요.</span></li>
+  </ol>
+
+  <div class="box box-info">
+    <div class="box-label">📝 메모</div>
+    유명 브랜드라도 우리 강아지와 맞지 않을 수 있어요. 처음 새 사료를 줄 때는 소량으로 시작해서 대변 상태, 피부, 활동량 변화를 2~3주 관찰하는 게 좋아요.
+  </div>
+
+  <!-- 섹션 4 -->
+  <h2 id="age">연령별·크기별 사료 선택 가이드</h2>
+
+  <p>강아지도 나이를 먹어요. 당연한 말인데, 사료 고를 때 이걸 간과하는 경우가 은근히 많더라고요. 퍼피용 사료를 성견이 계속 먹거나, 반대로 어린 강아지한테 시니어 사료를 주는 경우도 봤어요. 나이에 맞는 영양 비율이 따로 있으니까, 꼭 확인하고 사야 해요.</p>
+
+  <h3>🐾 연령별 핵심 포인트</h3>
+
+  <p><strong>퍼피 (생후 ~12개월)</strong>는 성장기라 칼슘, 인, DHA 함량이 중요해요. 뼈와 뇌 발달에 직결되니까요. 반면 <strong>시니어 (7세 이상)</strong>는 신장 부담을 줄이기 위해 단백질과 인 함량을 조절한 사료가 필요해요. 관절 건강을 위해 글루코사민, 콘드로이틴이 들어간 사료도 고려해볼 만하고요.</p>
+
+  <p>크기도 중요해요. 소형견은 작은 알갱이 사이즈, 대형견은 큰 알갱이가 치석 예방에 도움이 돼요. 소형견은 단위 체중당 칼로리 소모가 커서 에너지 밀도가 높은 사료가 좋고, 대형견은 관절 보호를 위해 칼로리 조절이 더 필요하답니다.</p>
+
+  <div class="box box-info">
+    <div class="box-label">💡 포인트</div>
+    "전연령" 표기 사료도 있지만, 가능하면 해당 연령에 특화된 제품이 영양 밸런스 면에서 더 정확해요.
+  </div>
+
+  <!-- 섹션 5 -->
+  <h2 id="allergy">알러지 있는 강아지를 위한 사료 선택법</h2>
+
+  <p>콩이가 피부가 빨개지고 귀에서 냄새 나기 시작했을 때, 수의사 선생님이 가장 먼저 의심한 게 사료 알러지였어요. 강아지 알러지의 주요 원인 중 하나가 바로 먹거리거든요.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>알러지 유발 성분</th>
+          <th>주요 증상</th>
+          <th>대체 성분</th>
+          <th>추천 사료 유형</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>닭고기</td>
+          <td>피부 가려움, 귀 염증</td>
+          <td>오리고기, 연어, 칠면조</td>
+          <td>단일 단백질 사료</td>
+        </tr>
+        <tr>
+          <td>밀 / 옥수수</td>
+          <td>소화 불량, 피부 발적</td>
+          <td>고구마, 완두콩, 감자</td>
+          <td>무곡물(Grain-Free) 사료</td>
+        </tr>
+        <tr>
+          <td>소고기</td>
+          <td>구토, 설사, 피부 트러블</td>
+          <td>양고기, 토끼고기, 곤충 단백질</td>
+          <td>하이포알러지 사료</td>
+        </tr>
+        <tr>
+          <td>유제품</td>
+          <td>복부 팽만, 묽은 변</td>
+          <td>식물성 지방, 오메가 오일</td>
+          <td>유제품 무첨가 사료</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>알러지 사료로 바꿀 때는 <mark>최소 8~12주는 유지</mark>해야 제대로 된 효과를 볼 수 있어요. 그 전에 포기하면 진짜 원인을 못 찾을 수도 있거든요. 저도 처음엔 2주 만에 "효과 없다"고 다른 사료로 바꿨다가 수의사한테 혼났어요 😅</p>
+
+  <!-- 섹션 6 -->
+  <h2 id="tips">사료 교체 시 주의사항 및 급여 꿀팁</h2>
+
+  <p>사료 바꾸는 게 쉬울 것 같죠? 근데 생각보다 섬세하게 해야 해요. 갑자기 바꾸면 장이 적응을 못해서 설사나 구토가 생길 수 있거든요. 저도 처음에 그냥 새 사료로 확 바꿨다가 콩이가 사흘 내내 배 아파했어요. 진짜 마음이 쪼그라들더라고요.</p>
+
+  <h4>📌 사료 교체 7~10일 전환 법칙</h4>
+
+  <ul class="step-list">
+    <li><strong>1~2일차</strong>: 기존 사료 75% + 새 사료 25%</li>
+    <li><strong>3~4일차</strong>: 기존 사료 50% + 새 사료 50%</li>
+    <li><strong>5~7일차</strong>: 기존 사료 25% + 새 사료 75%</li>
+    <li><strong>8일차~</strong>: 새 사료 100%로 완전 전환</li>
+    <li>전환 중 구토·설사 시 속도를 더 늦추거나 수의사 상담 권장</li>
+    <li>노령견이나 소화 민감한 강아지는 14일 이상 천천히 전환하는 것이 안전해요</li>
+  </ul>
+
+  <h4>🍽️ 급여량 &amp; 보관 꿀팁</h4>
+
+  <ul class="step-list">
+    <li>포장지의 급여량 표는 최대치 기준이 많아요 — 체형·활동량에 맞게 10~20% 줄여서 시작하세요</li>
+    <li>개봉 후 건사료는 밀폐 용기에 담아 서늘한 곳에 보관 (냉장 ✕, 상온 밀봉 ○)</li>
+    <li>대용량 구매보다 소용량을 자주 구매하는 게 신선도 유지에 더 좋아요</li>
+    <li>물은 항상 신선하게, 충분히 — 건사료 급여 시 수분 보충이 특히 중요해요</li>
+  </ul>
+
+  <div class="cta-box">
+    <p>💡 가장 좋은 사료는 <strong>'우리 강아지가 잘 먹고, 잘 싸고, 활기찬'</strong> 사료예요.<br>비싸다고 다 좋은 게 아니고, 유명하다고 다 맞는 게 아니에요.<br>지금 강아지 상태를 가장 잘 아는 건 바로 보호자인 여러분이에요.</p>
+  </div>
+
+  <!-- FAQ -->
+  <h2>자주 묻는 질문 (FAQ)</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <div class="faq-q-badge">Q</div>
+      강아지 사료, 얼마나 자주 바꿔줘야 하나요?
+    </div>
+    <div class="faq-a">
+      <div class="faq-a-badge">A</div>
+      <div class="faq-a-text">
+        꼭 자주 바꿀 필요는 없어요. 지금 사료가 잘 맞는다면 굳이 바꿀 이유가 없죠. 다만 같은 단백질 원료만 계속 먹으면 알러지가 생길 수 있다는 의견도 있어서, 3~6개월에 한 번 정도 다른 단백질 원료 사료로 로테이션하는 방법도 있어요. 단, 전환은 항상 천천히!
+        <span class="answer-summary">→ 핵심은 "지금 잘 맞으면 유지, 문제가 생기면 교체"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <div class="faq-q-badge">Q</div>
+      무곡물(Grain-Free) 사료가 무조건 더 좋은 건가요?
+    </div>
+    <div class="faq-a">
+      <div class="faq-a-badge">A</div>
+      <div class="faq-a-text">
+        아니에요. 곡물 알러지가 없는 강아지라면 고품질 곡물이 포함된 사료도 충분히 좋아요. 오히려 무곡물 사료 중 일부가 콩류를 과다 사용해서 심장 문제와 관련이 있다는 미국 FDA 연구도 있었어요.
+        <span class="answer-summary">→ 무곡물보다 중요한 건 "전체 성분의 품질"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <div class="faq-q-badge">Q</div>
+      사료 유통기한이 지나면 절대 먹이면 안 되나요?
+    </div>
+    <div class="faq-a">
+      <div class="faq-a-badge">A</div>
+      <div class="faq-a-text">
+        유통기한이 지난 사료는 영양소가 손실되고 산패가 진행될 수 있어요. 냄새가 이상하거나 기름진 냄새가 나면 절대 먹이지 마세요.
+        <span class="answer-summary">→ 냄새·색 변화가 없더라도 유통기한 초과 사료는 교체하는 게 안전해요</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <div class="faq-q-badge">Q</div>
+      수제 자연식과 시판 사료 중 어느 게 더 좋은가요?
+    </div>
+    <div class="faq-a">
+      <div class="faq-a-badge">A</div>
+      <div class="faq-a-text">
+        수제 자연식이 좋을 수 있지만, 영양 밸런스를 맞추기가 매우 어려워요. 칼슘, 인, 아연, 비타민 D 등 미량 영양소 불균형이 생기면 오히려 건강에 해로울 수 있어요. 신뢰할 수 있는 브랜드의 완전 영양 사료 + 가끔 신선식 토퍼를 추가하는 방식이 현실적으로 좋은 대안이에요.
+        <span class="answer-summary">→ 수제식은 수의사 감수 없이는 주식으로 권하지 않아요</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <div class="faq-q-badge">Q</div>
+      강아지가 사료를 잘 안 먹어요. 어떻게 해야 하나요?
+    </div>
+    <div class="faq-a">
+      <div class="faq-a-badge">A</div>
+      <div class="faq-a-text">
+        편식의 원인은 다양해요. 사료가 입에 안 맞는 경우도 있지만, 간식을 너무 많이 줘서 사료를 안 먹는 경우가 더 많아요. 우선 간식을 줄이고, 밥그릇을 15분 후에 치우는 식으로 '배고프면 먹는다'는 습관을 들여보세요.
+        <span class="answer-summary">→ 간식을 줄이고 규칙적인 식사 루틴을 만드는 게 먼저예요</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <div class="faq-q-badge">Q</div>
+      고단백 사료가 신장에 안 좋다는 말이 사실인가요?
+    </div>
+    <div class="faq-a">
+      <div class="faq-a-badge">A</div>
+      <div class="faq-a-text">
+        건강한 강아지에게는 고단백 사료가 신장에 해롭다는 근거가 부족해요. 오히려 고품질 동물성 단백질은 근육 유지와 면역력에 도움이 돼요. 다만 이미 신장 질환이 있는 강아지라면 수의사 처방식 사료를 따라야 해요.
+        <span class="answer-summary">→ 신장 질환이 없는 건강한 강아지라면 고단백 사료는 안전하고 오히려 좋아요</span>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- 마무리 -->
+  <h2>마무리하며 — 우리 강아지 밥그릇, 오늘 한 번 들여다보세요 🐶</h2>
+
+  <p>사료 하나 고르는 게 이렇게 복잡한 일인 줄 몰랐죠? 저도 처음엔 그냥 유명한 거, 광고 많이 하는 거 사다 줬는데... 콩이한테 미안해지더라고요. 그 이후로 성분표를 꼼꼼히 보기 시작했고, 이제는 어느 정도 눈이 생겼어요.</p>
+
+  <p>완벽한 사료는 없어요. 근데 <strong>우리 강아지한테 맞는 사료</strong>는 분명히 있어요. 오늘 소개한 내용이 그걸 찾는 데 조금이라도 도움이 됐으면 좋겠어요. 강아지가 사료를 맛있게 먹고, 대변이 단단하고, 피부가 깨끗하고, 눈빛이 맑다면 — 그게 바로 정답이에요.</p>
+
+  <p>혹시 본인 강아지한테 추천하는 사료가 있거나, 특정 브랜드 경험을 나누고 싶은 분이 계시다면 댓글로 남겨주세요! 다른 반려인들의 생생한 경험이 제일 믿을 만한 정보예요 — 우리 함께 좋은 정보 나눠요 🐾</p>
+
+  <div class="cta-box">
+    <p>📌 이 글이 도움이 됐다면 강아지 키우는 친구, 지인에게 공유해주세요!<br>좋아요와 댓글은 저한테 큰 힘이 돼요 😊</p>
+  </div>
+
+  <!-- 태그 -->
+  <div class="tags">
+    <span class="tag">강아지사료추천</span>
+    <span class="tag">강아지사료</span>
+    <span class="tag">반려견사료</span>
+    <span class="tag">사료성분</span>
+    <span class="tag">무곡물사료</span>
+    <span class="tag">강아지알러지</span>
+    <span class="tag">오리젠</span>
+    <span class="tag">카르나4</span>
+    <span class="tag">지위픽</span>
+    <span class="tag">강아지영양</span>
+  </div>
+
+</div>
+</body>
+</html>

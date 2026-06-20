@@ -1,0 +1,98 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link "FlexM Studio" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img [ref=e8]
+        - generic [ref=e9]: FlexM Studio
+      - navigation [ref=e10]:
+        - link "홈" [ref=e11] [cursor=pointer]:
+          - /url: /
+        - link "소개" [ref=e12] [cursor=pointer]:
+          - /url: /about
+        - link "포트폴리오" [ref=e13] [cursor=pointer]:
+          - /url: /portfolio
+        - link "블로그" [ref=e14] [cursor=pointer]:
+          - /url: /blog
+        - link "자료공유" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+        - link "연락처" [ref=e16] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=e17]:
+        - button "테마 전환" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "관리자" [ref=e22] [cursor=pointer]:
+          - img [ref=e23]
+  - main [ref=e26]:
+    - generic [ref=e27]:
+      - generic [ref=e29]:
+        - heading "블로그" [level=1] [ref=e30]
+        - paragraph [ref=e31]: IT 기획, 디지털 전환, 생산성에 관한 글들
+      - button "전체" [ref=e34] [cursor=pointer]
+      - generic [ref=e35]:
+        - link [ref=e36] [cursor=pointer]:
+          - /url: /blog/IT-기획자가-AI-도구를-활용하는-방법
+          - article [ref=e37]:
+            - img [ref=e39]
+            - generic [ref=e41]:
+              - generic [ref=e42]:
+                - generic [ref=e43]: "#AI"
+                - generic [ref=e44]: "#기획"
+                - generic [ref=e45]: "#생산성"
+              - heading "IT 기획자가 AI 도구를 활용하는 방법" [level=2] [ref=e46]
+              - paragraph [ref=e47]: ChatGPT, Claude 등 AI 도구들을 실무 기획 업무에서 어떻게 활용하고 있는지 경험을 공유합니다.
+              - generic [ref=e48]: 2024-12-10
+        - generic [ref=e49]:
+          - link [ref=e50] [cursor=pointer]:
+            - /url: /blog/디지털-전환-중소기업은-어디서-시작해야-할까
+            - article [ref=e51]:
+              - generic [ref=e52]:
+                - img [ref=e53]
+                - generic [ref=e56]: 디지털 전환, 중소기업은 어디서 시작해야 할까
+              - generic [ref=e57]:
+                - heading "디지털 전환, 중소기업은 어디서 시작해야 할까" [level=3] [ref=e58]
+                - paragraph [ref=e59]: 수십 개 중소기업의 디지털 전환을 돕고 나서 정리한 실전 가이드입니다.
+                - generic [ref=e60]: 2024-11-22
+          - link [ref=e61] [cursor=pointer]:
+            - /url: /blog/좋은-서비스-기획서란-무엇인가
+            - article [ref=e62]:
+              - generic [ref=e63]:
+                - img [ref=e64]
+                - generic [ref=e67]: 좋은 서비스 기획서란 무엇인가
+              - generic [ref=e68]:
+                - heading "좋은 서비스 기획서란 무엇인가" [level=3] [ref=e69]
+                - paragraph [ref=e70]: 10년간 기획서를 써오면서 깨달은, 개발팀이 좋아하는 기획서의 조건.
+                - generic [ref=e71]: 2024-10-15
+  - contentinfo [ref=e72]:
+    - generic [ref=e73]:
+      - generic [ref=e74]:
+        - generic [ref=e75]:
+          - text: FlexM Studio
+          - paragraph [ref=e76]: 나의 디지털 공간입니다.
+        - generic [ref=e77]:
+          - heading "페이지" [level=4] [ref=e78]
+          - list [ref=e79]:
+            - listitem [ref=e80]:
+              - link "홈" [ref=e81] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e82]:
+              - link "소개" [ref=e83] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e84]:
+              - link "포트폴리오" [ref=e85] [cursor=pointer]:
+                - /url: /portfolio
+            - listitem [ref=e86]:
+              - link "자료공유" [ref=e87] [cursor=pointer]:
+                - /url: /resources
+            - listitem [ref=e88]:
+              - link "연락처" [ref=e89] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e90]:
+          - heading "연락처" [level=4] [ref=e91]
+          - list [ref=e92]:
+            - listitem [ref=e93]:
+              - link "necc1321@gmail.com" [ref=e94] [cursor=pointer]:
+                - /url: mailto:necc1321@gmail.com
+      - generic [ref=e95]: © 2026 FlexM Studio. All rights reserved.
+  - button "맨 위로":
+    - img

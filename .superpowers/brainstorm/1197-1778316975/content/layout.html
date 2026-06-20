@@ -1,0 +1,87 @@
+<h2>커버 메이커 모달 레이아웃</h2>
+<p class="subtitle">어떤 구조가 편할까요?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="left-panel" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:12px; background:#0f172a; border-radius:8px 8px 0 0;">
+      <div style="display:flex; gap:8px; height:140px;">
+        <!-- Left controls -->
+        <div style="width:38%; background:#1e293b; border-radius:6px; padding:8px; display:flex; flex-direction:column; gap:5px;">
+          <div style="font-size:8px; color:#94a3b8; letter-spacing:1px; text-transform:uppercase;">템플릿</div>
+          <div style="display:flex; gap:3px; flex-wrap:wrap;">
+            <div style="width:28px; height:18px; background:linear-gradient(135deg,#1a1a2e,#16213e); border-radius:3px; border:1px solid #a78bfa;"></div>
+            <div style="width:28px; height:18px; background:linear-gradient(135deg,#667eea,#f093fb); border-radius:3px;"></div>
+            <div style="width:28px; height:18px; background:linear-gradient(135deg,#ffecd2,#fcb69f); border-radius:3px;"></div>
+            <div style="width:28px; height:18px; background:linear-gradient(135deg,#0f2027,#203a43,#2c5364); border-radius:3px;"></div>
+          </div>
+          <div style="height:1px; background:#334155; margin:2px 0;"></div>
+          <div style="font-size:8px; color:#94a3b8;">배경색 1</div>
+          <div style="height:12px; background:#334155; border-radius:3px;"></div>
+          <div style="font-size:8px; color:#94a3b8;">배경색 2</div>
+          <div style="height:12px; background:#334155; border-radius:3px;"></div>
+          <div style="font-size:8px; color:#94a3b8;">제목 텍스트</div>
+          <div style="height:12px; background:#334155; border-radius:3px;"></div>
+          <div style="font-size:8px; color:#94a3b8;">부제목</div>
+          <div style="height:12px; background:#334155; border-radius:3px;"></div>
+        </div>
+        <!-- Right preview -->
+        <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+          <div style="flex:1; background:linear-gradient(135deg,#1a1a2e,#16213e); border-radius:6px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:3px;">
+            <div style="font-size:7px; color:#a78bfa; letter-spacing:2px;">BLOG</div>
+            <div style="font-size:12px; color:#fff; font-weight:700;">제목 미리보기</div>
+            <div style="font-size:8px; color:#94a3b8;">부제목</div>
+          </div>
+          <div style="display:flex; gap:4px; align-items:center;">
+            <div style="font-size:7px; color:#64748b;">품질</div>
+            <div style="flex:1; height:4px; background:#334155; border-radius:2px; position:relative;">
+              <div style="width:75%; height:100%; background:#a78bfa; border-radius:2px;"></div>
+            </div>
+            <div style="font-size:7px; color:#94a3b8;">85%</div>
+          </div>
+          <div style="display:flex; gap:4px;">
+            <div style="flex:1; background:#334155; border-radius:4px; height:18px; display:flex; align-items:center; justify-content:center; font-size:8px; color:#94a3b8;">다운로드</div>
+            <div style="flex:1; background:#a78bfa; border-radius:4px; height:18px; display:flex; align-items:center; justify-content:center; font-size:8px; color:#fff;">적용</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — 좌측 컨트롤 + 우측 미리보기</h3>
+      <p>컨트롤과 미리보기가 나란히. 조작하면서 바로 결과 확인. 가장 일반적인 에디터 레이아웃.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="top-preview" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:12px; background:#0f172a; border-radius:8px 8px 0 0;">
+      <div style="display:flex; flex-direction:column; gap:6px; height:140px;">
+        <!-- Top preview -->
+        <div style="flex:1; background:linear-gradient(135deg,#1a1a2e,#16213e); border-radius:6px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:2px;">
+          <div style="font-size:7px; color:#a78bfa; letter-spacing:2px;">BLOG</div>
+          <div style="font-size:12px; color:#fff; font-weight:700;">제목 미리보기</div>
+          <div style="font-size:8px; color:#94a3b8;">부제목</div>
+        </div>
+        <!-- Bottom controls -->
+        <div style="background:#1e293b; border-radius:6px; padding:6px; display:flex; gap:8px; align-items:center;">
+          <div style="display:flex; gap:3px;">
+            <div style="width:20px; height:14px; background:linear-gradient(135deg,#1a1a2e,#16213e); border-radius:2px; border:1px solid #a78bfa;"></div>
+            <div style="width:20px; height:14px; background:linear-gradient(135deg,#667eea,#f093fb); border-radius:2px;"></div>
+            <div style="width:20px; height:14px; background:linear-gradient(135deg,#ffecd2,#fcb69f); border-radius:2px;"></div>
+            <div style="width:20px; height:14px; background:linear-gradient(135deg,#0f2027,#2c5364); border-radius:2px;"></div>
+          </div>
+          <div style="width:1px; height:14px; background:#334155;"></div>
+          <div style="height:10px; flex:1; background:#334155; border-radius:2px;"></div>
+          <div style="height:10px; flex:1; background:#334155; border-radius:2px;"></div>
+          <div style="width:1px; height:14px; background:#334155;"></div>
+          <div style="background:#334155; border-radius:3px; padding:2px 6px; font-size:7px; color:#94a3b8;">↓ WebP</div>
+          <div style="background:#a78bfa; border-radius:3px; padding:2px 6px; font-size:7px; color:#fff;">적용</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — 상단 미리보기 + 하단 컨트롤 바</h3>
+      <p>미리보기가 크게 보임. 컨트롤은 한 줄로 압축. 세로 공간 효율적.</p>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,63 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link "FlexM Studio" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img [ref=e8]
+        - generic [ref=e9]: FlexM Studio
+      - navigation [ref=e10]:
+        - link "홈" [ref=e11] [cursor=pointer]:
+          - /url: /
+        - link "소개" [ref=e12] [cursor=pointer]:
+          - /url: /about
+        - link "포트폴리오" [ref=e13] [cursor=pointer]:
+          - /url: /portfolio
+        - link "블로그" [ref=e14] [cursor=pointer]:
+          - /url: /blog
+        - link "자료공유" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+        - link "연락처" [ref=e16] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=e17]:
+        - button "테마 전환" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "관리자" [ref=e22] [cursor=pointer]:
+          - img [ref=e23]
+  - main [ref=e26]:
+    - generic [ref=e27]:
+      - img [ref=e29]
+      - heading "로딩 중..." [level=1] [ref=e31]
+      - paragraph [ref=e32]: 글을 불러오고 있습니다.
+  - contentinfo [ref=e33]:
+    - generic [ref=e34]:
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - text: FlexM Studio
+          - paragraph [ref=e37]: 나의 디지털 공간입니다.
+        - generic [ref=e38]:
+          - heading "페이지" [level=4] [ref=e39]
+          - list [ref=e40]:
+            - listitem [ref=e41]:
+              - link "홈" [ref=e42] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e43]:
+              - link "소개" [ref=e44] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e45]:
+              - link "포트폴리오" [ref=e46] [cursor=pointer]:
+                - /url: /portfolio
+            - listitem [ref=e47]:
+              - link "자료공유" [ref=e48] [cursor=pointer]:
+                - /url: /resources
+            - listitem [ref=e49]:
+              - link "연락처" [ref=e50] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e51]:
+          - heading "연락처" [level=4] [ref=e52]
+          - list [ref=e53]:
+            - listitem [ref=e54]:
+              - link "necc1321@gmail.com" [ref=e55] [cursor=pointer]:
+                - /url: mailto:necc1321@gmail.com
+      - generic [ref=e56]: © 2026 FlexM Studio. All rights reserved.
+  - button "맨 위로":
+    - img

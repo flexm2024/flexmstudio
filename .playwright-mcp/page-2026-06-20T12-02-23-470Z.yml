@@ -1,0 +1,229 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link "FlexM Studio" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img [ref=e8]
+        - generic [ref=e9]: FlexM Studio
+      - navigation [ref=e10]:
+        - link "홈" [ref=e11] [cursor=pointer]:
+          - /url: /
+        - link "소개" [ref=e12] [cursor=pointer]:
+          - /url: /about
+        - link "포트폴리오" [ref=e13] [cursor=pointer]:
+          - /url: /portfolio
+        - link "블로그" [ref=e14] [cursor=pointer]:
+          - /url: /blog
+        - link "자료공유" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+        - link "연락처" [ref=e16] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=e17]:
+        - button "테마 전환" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "관리자" [ref=e22] [cursor=pointer]:
+          - img [ref=e23]
+  - main [ref=e26]:
+    - generic [ref=e27]:
+      - generic [ref=e29]:
+        - heading "블로그" [level=1] [ref=e30]
+        - paragraph [ref=e31]: IT 기획, 디지털 전환, 생산성에 관한 글들
+      - generic [ref=e33]:
+        - button "전체" [ref=e34] [cursor=pointer]
+        - button "AI 산업" [ref=e35] [cursor=pointer]
+        - button "AI · 테크 동향" [ref=e36] [cursor=pointer]
+        - button "AI" [ref=e37] [cursor=pointer]
+        - button "AI 트렌드" [ref=e38] [cursor=pointer]
+        - button "웹앱" [ref=e39] [cursor=pointer]
+      - generic [ref=e40]:
+        - link [ref=e41] [cursor=pointer]:
+          - /url: /blog/AI-토큰-청구서-폭탄-기업들이-갑자기-AI-비용-통제를-외치는-이유
+          - article [ref=e42]:
+            - img [ref=e44]
+            - generic [ref=e46]:
+              - heading "AI 토큰 청구서 폭탄 — 기업들이 갑자기 'AI 비용 통제'를 외치는 이유" [level=2] [ref=e47]
+              - paragraph [ref=e48]: 불과 반년 전만 해도 "더 좋은 모델 빨리 써라"였던 분위기가, 지금은 "도대체 우리가 토큰을 얼마나 쓰는 거야?"로 바뀌었습니다. 우버, 마이크로소프트, 프라이스라인까지 줄줄이 AI 비용 경고등이 켜진 2026년
+              - generic [ref=e49]: 2026-06-20
+        - generic [ref=e50]:
+          - link [ref=e51] [cursor=pointer]:
+            - /url: /blog/AI-해고-물결이-화약고가-되는-이유-기술-업계-부의-양극화
+            - article [ref=e52]:
+              - img "AI 해고 물결이 '화약고'가 되는 이유 — 기술 업계 부의 양극화" [ref=e54]
+              - generic [ref=e55]:
+                - heading "AI 해고 물결이 '화약고'가 되는 이유 — 기술 업계 부의 양극화" [level=3] [ref=e56]
+                - paragraph [ref=e57]: AI가 3개월 연속 감원 사유 1위로 꼽히는 지금, 한쪽에서는 수만 명이 일자리를 잃고 다른 쪽에서는 소수의 AI 내부자가 천문학적 부를 쌓고 있습니다. 이 격차가 왜 단순한 고용 통계를 넘어 사회적 '화약고'로 번
+                - generic [ref=e58]: 2026-06-19
+          - link [ref=e59] [cursor=pointer]:
+            - /url: /blog/베이조스의-프로메테우스-120억-달러-유치-인공-일반-엔지니어의-정체
+            - article [ref=e60]:
+              - 'img "베이조스의 프로메테우스, 120억 달러 유치: ''인공 일반 엔지니어''의 정체" [ref=e62]'
+              - generic [ref=e63]:
+                - 'heading "베이조스의 프로메테우스, 120억 달러 유치: ''인공 일반 엔지니어''의 정체" [level=3] [ref=e64]'
+                - paragraph [ref=e65]: 제프 베이조스가 공동 창업한 피지컬 AI 스타트업 프로메테우스(Prometheus)가 기업가치 410억 달러에 120억 달러를 유치했습니다. 제트엔진부터 신약 화합물까지 설계와 제조를 자동화하겠다는 '인공 일반 엔지
+                - generic [ref=e66]: 2026-06-15
+          - link [ref=e67] [cursor=pointer]:
+            - /url: /blog/github-copilot-token-billing-2026
+            - article [ref=e68]:
+              - img "GitHub Copilot 토큰 과금 완전 해부 — 월 $29가 $750이 될 수 있는 이유" [ref=e70]
+              - generic [ref=e71]:
+                - heading "GitHub Copilot 토큰 과금 완전 해부 — 월 $29가 $750이 될 수 있는 이유" [level=3] [ref=e72]
+                - paragraph [ref=e73]: 2026년 6월 1일, GitHub Copilot이 조용히 과금 방식을 바꿨습니다. 정액제에서 토큰 사용량 기반으로. 일부 개발자는 고지서를 보고 경악했고, 다른 일부는 "별거 아니다"라고 했습니다. 진실은 어디에
+                - generic [ref=e74]: 2026-06-12
+      - heading "지난 블로그 글" [level=2] [ref=e77]
+      - generic [ref=e78]:
+        - link [ref=e79] [cursor=pointer]:
+          - /url: /blog/클로드-페이블5-미토스급-AI-일반공개
+          - article [ref=e80]:
+            - generic [ref=e81]:
+              - img "클로드 페이블 5 완전 정리 — 미토스급 AI가 드디어 일반에 공개됐다" [ref=e82]
+              - generic [ref=e83]:
+                - generic [ref=e84]: Claude
+                - generic [ref=e85]: 페이블5
+            - generic [ref=e86]:
+              - generic [ref=e87]: 2026-06-11
+              - heading "클로드 페이블 5 완전 정리 — 미토스급 AI가 드디어 일반에 공개됐다" [level=3] [ref=e88]
+              - paragraph [ref=e89]: Anthropic이 2026년 6월 9일, 그 동안 '괴물 AI'로 불리던 미토스의 일반 공개 버전인 클로드 페이블 5를 출시했습니다. SWE-Bench 95%, GPT-5.5를 20점 이상 앞서는 코딩 성능, 그리
+              - generic [ref=e90]: 더 읽어보기 →
+        - link [ref=e91] [cursor=pointer]:
+          - /url: /blog/2026년-AI-테크-업계-지금-무슨-일이-벌어지고-있나
+          - article [ref=e92]:
+            - generic [ref=e93]:
+              - img "2026년 AI 테크 업계, 지금 무슨 일이 벌어지고 있나" [ref=e94]
+              - generic [ref=e95]:
+                - generic [ref=e96]: AI트렌드
+                - generic [ref=e97]: 멀티모달
+            - generic [ref=e98]:
+              - generic [ref=e99]: 2026-06-08
+              - heading "2026년 AI 테크 업계, 지금 무슨 일이 벌어지고 있나" [level=3] [ref=e100]
+              - paragraph [ref=e101]: 에이전트 AI의 부상, AI 버블 논쟁, 멀티모달 고도화까지 — 2026년 상반기를 뜨겁게 달군 테크 업계 핵심 트렌드 7가지를 한 곳에 정리했습니다.
+              - generic [ref=e102]: 더 읽어보기 →
+        - link [ref=e103] [cursor=pointer]:
+          - /url: /blog/Claude-Opus-48-완전-분석-더-똑똑한-AI보다-더-믿을-수-있는-AI를-택하다
+          - article [ref=e104]:
+            - generic [ref=e105]:
+              - 'img "Claude Opus 4.8 완전 분석: \"더 똑똑한 AI\"보다 \"더 믿을 수 있는 AI\"를 택하다" [ref=e106]'
+              - generic [ref=e107]:
+                - generic [ref=e108]: Claude Opus 4.8
+                - generic [ref=e109]: Anthropic
+            - generic [ref=e110]:
+              - generic [ref=e111]: 2026-06-07
+              - 'heading "Claude Opus 4.8 완전 분석: \"더 똑똑한 AI\"보다 \"더 믿을 수 있는 AI\"를 택하다" [level=3] [ref=e112]'
+              - paragraph [ref=e113]: 2026년 5월 28일, Anthropic이 플래그십 모델 Claude Opus 4.8을 공개했습니다. 코딩 벤치마크 신기록과 함께, 경쟁의 축을 성능에서 정직성으로 옮긴 이번 업데이트의 핵심을 정리했습니다.
+              - generic [ref=e114]: 더 읽어보기 →
+        - link [ref=e115] [cursor=pointer]:
+          - /url: /blog/Anthropic-IPO-공식-신청-연-매출-AI-수익성-논쟁
+          - article [ref=e116]:
+            - generic [ref=e117]:
+              - img "Anthropic IPO 공식 신청 — 연 매출 5.1조 원, AI 수익성 논쟁에 정면 돌파" [ref=e118]
+              - generic [ref=e119]:
+                - generic [ref=e120]: Anthropic
+                - generic [ref=e121]: IPO
+            - generic [ref=e122]:
+              - generic [ref=e123]: 2026-06-05
+              - heading "Anthropic IPO 공식 신청 — 연 매출 5.1조 원, AI 수익성 논쟁에 정면 돌파" [level=3] [ref=e124]
+              - paragraph [ref=e125]: Claude를 만든 Anthropic이 2026년 6월 IPO 기밀 신청을 제출했습니다. 연간 매출이 반 년 만에 10배 성장했지만, AI 지출 효과에 대한 시장 회의론도 커지고 있습니다. 공동 창립자 Daniela
+              - generic [ref=e126]: 더 읽어보기 →
+        - link [ref=e127] [cursor=pointer]:
+          - /url: /blog/Claude-API-Tool-Use-완전-가이드-AI가-외부-함수를-직접-호출하는-법
+          - article [ref=e128]:
+            - generic [ref=e129]:
+              - img "Claude API Tool Use 완전 가이드 — AI가 외부 함수를 직접 호출하는 법" [ref=e130]
+              - generic [ref=e131]:
+                - generic [ref=e132]: Claude API
+                - generic [ref=e133]: Tool Use
+            - generic [ref=e134]:
+              - generic [ref=e135]: 2026-06-01
+              - heading "Claude API Tool Use 완전 가이드 — AI가 외부 함수를 직접 호출하는 법" [level=3] [ref=e136]
+              - paragraph [ref=e137]: Tool Use(도구 사용, 함수 호출)는 Claude가 텍스트만 생성하는 단계를 넘어 실제 코드, 검색 엔진, 데이터베이스와 상호작용하게 만드는 Anthropic의 핵심 기능입니다. 자율 에이전트를 만들려면 반드시
+              - generic [ref=e138]: 더 읽어보기 →
+        - link [ref=e139] [cursor=pointer]:
+          - /url: /blog/프롬프트-캐싱-완전-가이드-Claude-API-비용을-최대-90-줄이는-법
+          - article [ref=e140]:
+            - generic [ref=e141]:
+              - img "프롬프트 캐싱 완전 가이드 — Claude API 비용을 최대 90% 줄이는 법" [ref=e142]
+              - generic [ref=e143]:
+                - generic [ref=e144]: Claude API
+                - generic [ref=e145]: 프롬프트 캐싱
+            - generic [ref=e146]:
+              - generic [ref=e147]: 2026-05-30
+              - heading "프롬프트 캐싱 완전 가이드 — Claude API 비용을 최대 90% 줄이는 법" [level=3] [ref=e148]
+              - paragraph [ref=e149]: Anthropic의 프롬프트 캐싱(Prompt Caching)은 같은 컨텍스트를 반복 사용하는 요청에서 입력 토큰 비용을 최대 90%, 응답 지연을 최대 85%까지 낮춰줍니다. RAG, 에이전트, 문서 분석처럼 긴
+              - generic [ref=e150]: 더 읽어보기 →
+        - link [ref=e151] [cursor=pointer]:
+          - /url: /blog/MCP-완전-가이드-AI-에이전트와-외부-도구를-연결하는-2026년-표준
+          - article [ref=e152]:
+            - generic [ref=e153]:
+              - img "MCP 완전 가이드 — AI 에이전트와 외부 도구를 연결하는 2026년 표준" [ref=e154]
+              - generic [ref=e155]:
+                - generic [ref=e156]: MCP
+                - generic [ref=e157]: AI 에이전트
+            - generic [ref=e158]:
+              - generic [ref=e159]: 2026-05-29
+              - heading "MCP 완전 가이드 — AI 에이전트와 외부 도구를 연결하는 2026년 표준" [level=3] [ref=e160]
+              - paragraph [ref=e161]: Model Context Protocol(MCP)은 AI가 파일 시스템, 데이터베이스, 외부 API를 일관된 방식으로 다루게 해주는 오픈 표준입니다. 2025년 말 Anthropic이 제안했고, 지금은 OpenAI·
+              - generic [ref=e162]: 더 읽어보기 →
+        - link [ref=e163] [cursor=pointer]:
+          - /url: /blog/AI-코딩-에이전트-실전-가이드-Claude-Code로-개발-속도를-3배-올리는-법
+          - article [ref=e164]:
+            - generic [ref=e165]:
+              - img "AI 코딩 에이전트 실전 가이드 — Claude Code로 개발 속도를 3배 올리는 법" [ref=e166]
+              - generic [ref=e167]:
+                - generic [ref=e168]: Claude Code
+                - generic [ref=e169]: AI 코딩
+            - generic [ref=e170]:
+              - generic [ref=e171]: 2026-05-28
+              - heading "AI 코딩 에이전트 실전 가이드 — Claude Code로 개발 속도를 3배 올리는 법" [level=3] [ref=e172]
+              - paragraph [ref=e173]: 2026년, AI 코딩 에이전트는 이미 현업 개발자의 표준 도구가 됐습니다. Claude Code를 중심으로 실제 프로젝트에서 바로 쓸 수 있는 워크플로와 팁을 정리했습니다.
+              - generic [ref=e174]: 더 읽어보기 →
+        - link [ref=e175] [cursor=pointer]:
+          - /url: /blog/베조스-1000억-달러-펀드-AI로-제조업을-다시-짓는다
+          - article [ref=e176]:
+            - generic [ref=e177]:
+              - img "베조스 1000억 달러 펀드, AI로 제조업을 다시 짓는다" [ref=e178]
+              - generic [ref=e179]:
+                - generic [ref=e180]: 베조스
+                - generic [ref=e181]: AI제조업
+            - generic [ref=e182]:
+              - generic [ref=e183]: 2026-05-25
+              - heading "베조스 1000억 달러 펀드, AI로 제조업을 다시 짓는다" [level=3] [ref=e184]
+              - paragraph [ref=e185]: 아마존 창업자 제프 베조스가 1000억 달러 규모의 새 펀드를 모으고 있다는 보도가 나왔습니다. 목표는 오래된 제조업체를 사들여 AI로 자동화하는 것. 그 한가운데에 'Project Prometheus'가 있습니다.
+              - generic [ref=e186]: 더 읽어보기 →
+      - generic [ref=e187]:
+        - button "← 이전" [disabled] [ref=e188]
+        - button "1" [ref=e189] [cursor=pointer]
+        - button "2" [ref=e190] [cursor=pointer]
+        - button "3" [ref=e191] [cursor=pointer]
+        - button "다음 →" [ref=e192] [cursor=pointer]
+  - contentinfo [ref=e193]:
+    - generic [ref=e194]:
+      - generic [ref=e195]:
+        - generic [ref=e196]:
+          - text: FlexM Studio
+          - paragraph [ref=e197]: 나의 디지털 공간입니다.
+        - generic [ref=e198]:
+          - heading "페이지" [level=4] [ref=e199]
+          - list [ref=e200]:
+            - listitem [ref=e201]:
+              - link "홈" [ref=e202] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e203]:
+              - link "소개" [ref=e204] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e205]:
+              - link "포트폴리오" [ref=e206] [cursor=pointer]:
+                - /url: /portfolio
+            - listitem [ref=e207]:
+              - link "자료공유" [ref=e208] [cursor=pointer]:
+                - /url: /resources
+            - listitem [ref=e209]:
+              - link "연락처" [ref=e210] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e211]:
+          - heading "연락처" [level=4] [ref=e212]
+          - list [ref=e213]:
+            - listitem [ref=e214]:
+              - link "necc1321@gmail.com" [ref=e215] [cursor=pointer]:
+                - /url: mailto:necc1321@gmail.com
+      - generic [ref=e216]: © 2026 FlexM Studio. All rights reserved.
+  - button "맨 위로":
+    - img

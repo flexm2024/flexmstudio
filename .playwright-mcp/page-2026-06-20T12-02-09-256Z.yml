@@ -1,0 +1,210 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link "FlexM Studio" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img [ref=e8]
+        - generic [ref=e9]: FlexM Studio
+      - navigation [ref=e10]:
+        - link "홈" [ref=e11] [cursor=pointer]:
+          - /url: /
+        - link "소개" [ref=e12] [cursor=pointer]:
+          - /url: /about
+        - link "포트폴리오" [ref=e13] [cursor=pointer]:
+          - /url: /portfolio
+        - link "블로그" [ref=e14] [cursor=pointer]:
+          - /url: /blog
+        - link "자료공유" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+        - link "연락처" [ref=e16] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=e17]:
+        - button "테마 전환" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "관리자" [ref=e22] [cursor=pointer]:
+          - img [ref=e23]
+  - main [ref=e26]:
+    - link "← 블로그 목록" [ref=e28] [cursor=pointer]:
+      - /url: /blog
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]: 💸 AI 트렌드
+        - heading "AI 토큰 청구서 폭탄 — 기업들이 갑자기 'AI 비용 통제'를 외치는 이유" [level=1] [ref=e33]
+        - paragraph [ref=e34]: 불과 반년 전만 해도 "더 좋은 모델 빨리 써라"였던 분위기가, 지금은 "도대체 우리가 토큰을 얼마나 쓰는 거야?"로 바뀌었습니다. 우버, 마이크로소프트, 프라이스라인까지 줄줄이 AI 비용 경고등이 켜진 2026년 6월의 이야기를 정리해봤습니다.
+        - generic [ref=e36]:
+          - generic [ref=e37]: ✦ 2026년 6월 기준
+          - generic [ref=e38]: · 읽는 시간 약 6분
+      - paragraph [ref=e39]: 저는 2002년부터 2013년까지 IT 서비스 기획·운영 쪽에서 일했어요. 그때도 비슷한 패턴을 본 적이 있거든요. 새로운 인프라가 나오면 처음엔 다들 "일단 써보자, 빨리 적용하자"로 달려들다가, 몇 달 뒤 청구서를 받아보고 나서야 "이거 누가 승인한 거야?"라는 회의가 열리는 흐름이요. 클라우드 도입 초기에 딱 그랬는데, 2026년 지금 AI 토큰을 두고 똑같은 장면이 반복되고 있더라고요.
+      - paragraph [ref=e40]: TechCrunch가 6월 5일 보도한 기사에 따르면, 우버는 2026년치 AI 코딩 예산을 4월 만에 다 써버렸고, 마이크로소프트는 일부 개발자들에게 부여했던 Claude Code 라이선스를 몇 달 만에 회수했습니다. 프라이스라인 직원은 평범한 커서(Cursor) 계약 갱신 견적이 기존보다 4~5배 비싸게 돌아왔다고 토로했고요. 토큰당 가격은 오히려 떨어졌는데도, 에이전트형 AI 도입이 늘면서 전체 소비량이 그보다 훨씬 빠르게 불어난 게 원인입니다.
+      - paragraph [ref=e41]: 이 글에서는 왜 이런 일이 동시다발로 터졌는지, 그리고 이 혼란을 기회로 보고 뛰어든 새로운 시장은 어떤 모습인지 제 나름의 시선으로 정리해보겠습니다.
+      - navigation [ref=e42]:
+        - generic [ref=e43]: 목차
+        - list [ref=e44]:
+          - listitem [ref=e45]:
+            - link "'토큰맥싱'에서 '비용 통제'로, 분위기가 바뀐 이유" [ref=e46] [cursor=pointer]:
+              - /url: "#s1"
+          - listitem [ref=e47]:
+            - link "실제로 무슨 일이 벌어졌나 — 기업 사례" [ref=e48] [cursor=pointer]:
+              - /url: "#s2"
+          - listitem [ref=e49]:
+            - link "왜 하필 지금 비용이 폭발했나" [ref=e50] [cursor=pointer]:
+              - /url: "#s3"
+          - listitem [ref=e51]:
+            - link "토큰 비용 관리, 새로운 시장이 열리다" [ref=e52] [cursor=pointer]:
+              - /url: "#s4"
+          - listitem [ref=e53]:
+            - link "리눅스 파운데이션이 던진 카드 — 토크노믹스 표준화" [ref=e54] [cursor=pointer]:
+              - /url: "#s5"
+          - listitem [ref=e55]:
+            - link "IT 기획자 출신이 보는 이 사태의 본질" [ref=e56] [cursor=pointer]:
+              - /url: "#s6"
+      - heading "'토큰맥싱'에서 '비용 통제'로, 분위기가 바뀐 이유" [level=2] [ref=e57]
+      - paragraph [ref=e58]:
+        - text: OpenAI의 기업 영업 총괄 알렉산더 엠비리코스는 최근 뉴욕 행사에서, 불과 6개월 전 고객 미팅 주제가 "이 모델이 뭘 할 수 있나, 충분히 좋은가"였다면 지금은 "비용을 얼마나 쓰고 있는지 가시성이 있나, 감사 추적은 가능한가, 토큰 통제 수단은 있나"로 완전히 바뀌었다고 말했습니다.
+        - strong [ref=e59]: FinOps 재단
+        - text: 의 실행이사 J.R. 스토먼트도 비슷한 증언을 했어요. 4~5월쯤부터 기업들로부터 "2026년 전체 토큰 예산을 4월에 이미 3배 초과했다"는 식의 위기감 섞인 연락이 빗발쳤다고 합니다.
+      - generic [ref=e60]:
+        - generic [ref=e61]: ⚠ 배경
+        - text: 지난해 11월, 앤트로픽의 Claude Opus 4.5, OpenAI의 GPT-5.1, 구글의 Gemini 3 Pro가 잇따라 출시되며 에이전틱 기능이 크게 강화됐습니다. 이게 토큰 소비를 폭발적으로 늘린 직접적인 계기로 꼽힙니다.
+      - heading "실제로 무슨 일이 벌어졌나 — 기업 사례" [level=2] [ref=e62]
+      - paragraph [ref=e63]: 기사에 나온 구체적인 사례들을 보면 체감이 확 옵니다. 프라이스라인의 IT 재무 담당 임원 크리스 리드는 AI 도입을 "처음엔 맛만 보여주고 결국 거기에 의존하게 만든다"는 식으로 비유하며, 일부 팀에 토큰 사용 한도를 걸기 시작했다고 밝혔어요. 엔지니어링 운영 플랫폼 Faros AI의 CEO 비탈리 고든은, 한 CTO가 "직원 한 명이 지난달 토큰값으로 4만 달러를 썼는데, 막아야 할지 오히려 다른 직원들도 본받게 해야 할지 모르겠다"고 토로한 일화를 전했습니다.
+      - table [ref=e65]:
+        - rowgroup [ref=e66]:
+          - row "기업/사례 내용" [ref=e67]:
+            - columnheader "기업/사례" [ref=e68]
+            - columnheader "내용" [ref=e69]
+        - rowgroup [ref=e70]:
+          - row "우버 2026년 AI 코딩 예산을 4월 만에 전부 소진" [ref=e71]:
+            - cell "우버" [ref=e72]
+            - cell "2026년 AI 코딩 예산을 4월 만에 전부 소진" [ref=e73]
+          - row "마이크로소프트 일부 개발자 대상 Claude Code 라이선스 부여 후 몇 달 만에 회수" [ref=e74]:
+            - cell "마이크로소프트" [ref=e75]
+            - cell "일부 개발자 대상 Claude Code 라이선스 부여 후 몇 달 만에 회수" [ref=e76]
+          - row "프라이스라인 Cursor 계약 갱신 비용이 기존 대비 4~5배 상승" [ref=e77]:
+            - cell "프라이스라인" [ref=e78]
+            - cell "Cursor 계약 갱신 비용이 기존 대비 4~5배 상승" [ref=e79]
+          - row "익명 기업(Axios 보도 인용) 직원 사용 한도 미설정으로 5억 달러 규모 Claude 청구서 발생" [ref=e80]:
+            - cell "익명 기업(Axios 보도 인용)" [ref=e81]
+            - cell "직원 사용 한도 미설정으로 5억 달러 규모 Claude 청구서 발생" [ref=e82]
+      - heading "왜 하필 지금 비용이 폭발했나" [level=2] [ref=e83]
+      - paragraph [ref=e84]: 엔지니어링 관리 플랫폼 Jellyfish의 리서치 총괄 니콜라스 아콜라노는, 에이전틱 기능 확산으로 개발자 1인당 토큰 소비가 9개월 만에 약 18.6배 늘었다고 밝혔습니다. 같은 회사 조사에서는 토큰을 가장 많이 쓰는 개발자가 적게 쓰는 개발자보다 생산성은 약 2배 높았지만, 그 생산성을 얻기 위해 토큰은 10배를 썼다는 결과도 나왔어요. 즉 더 쓴 만큼 더 잘하긴 하는데, 그 효율 비율 자체는 오히려 나빠지고 있다는 뜻입니다. 3월 Faros AI의 2만 명 개발자 대상 설문에서도 산출물은 늘었지만 버그와 재작업도 함께 늘어난 것으로 나타났습니다.
+      - generic [ref=e85]:
+        - generic [ref=e86]: 💡 포인트
+        - text: 토큰 단가는 떨어졌는데 총 비용은 늘었다는 게 핵심입니다. 가격이 아니라 '소비량'이 문제라는 뜻이고, 이건 사용량 통제 없이는 해결되지 않는 구조적인 문제입니다.
+      - heading "토큰 비용 관리, 새로운 시장이 열리다" [level=2] [ref=e87]
+      - paragraph [ref=e88]: 이 혼란을 비즈니스 기회로 본 곳들도 빠르게 움직이고 있어요. Pay-i처럼 AI 비용 추적·최적화만 전문으로 하는 스타트업부터, Jellyfish·Waydev·Faros AI처럼 AI 에이전트 모니터링으로 ROI를 증명해주는 업체, 그리고 기존 고객 기반을 활용해 기능을 얹는 Ramp·Datadog·New Relic 같은 회사들까지 다양합니다. NEA의 파트너 티퍼니 럭은, AI 코딩 스타트업 Factory가 작업별로 자동으로 가장 적합한 모델을 골라주는 '모델 라우터'를 최근 출시한 사례를 토큰 효율화 흐름의 대표 예시로 꼽았습니다.
+      - list [ref=e89]:
+        - listitem [ref=e90]:
+          - generic [ref=e91]:
+            - strong [ref=e92]: Pay-i
+            - text: — GenAI 투자의 비용·성능을 추적·최적화하는 전문 스타트업
+        - listitem [ref=e93]:
+          - generic [ref=e94]:
+            - strong [ref=e95]: Paid
+            - text: — 구독료 대신 실제 가치 기반으로 사용자에게 과금하도록 돕는 서비스
+        - listitem [ref=e96]:
+          - generic [ref=e97]:
+            - strong [ref=e98]: Jellyfish / Waydev / Faros AI
+            - text: — AI 에이전트 모니터링으로 개발 도구 ROI를 증명
+        - listitem [ref=e99]:
+          - generic [ref=e100]:
+            - strong [ref=e101]: Ramp / Datadog / New Relic
+            - text: — 기존 지출·인프라 관리 서비스에 토큰 단위 관찰 기능 추가
+      - heading "리눅스 파운데이션이 던진 카드 — 토크노믹스 표준화" [level=2] [ref=e102]
+      - paragraph [ref=e103]: 이런 흐름 속에서 리눅스 재단은 이번 주 'Tokenomics Foundation'이라는 새 표준화 기구 출범 계획을 공개했습니다. 과거 FinOps가 클라우드 지출에 했던 역할을, AI 토큰 영역에서 해보겠다는 취지예요. 토큰 비용을 비교할 공통 정의와 프레임워크, 그리고 '지능 단위당 비용'이나 '와트당 토큰' 같은 새로운 경제성 지표를 만드는 게 목표입니다. 정식 출범은 7월로 예정돼 있고요. 세일즈포스의 최고가용성책임자 니샨트 굽타는, 토큰 경제는 기존 클라우드 비용 관리보다 훨씬 추상적이고 불투명해서 완전히 다른 운영 근육이 필요하다고 표현했습니다.
+      - blockquote [ref=e104]: FinOps 재단 J.R. 스토먼트는 클라우드 비용 추적이 월 수억 건 규모의 데이터 문제였다면, 토큰 비용 추적은 월 수조 건 규모의 데이터 문제라고 말합니다. 기존 스프레드시트나 단순 도구로는 더 이상 감당이 안 되는 규모라는 거죠.
+      - heading "IT 기획자 출신이 보는 이 사태의 본질" [level=2] [ref=e105]
+      - paragraph [ref=e106]: 프라이스라인의 크리스 리드는 텔레콤 비용 관리 → 클라우드 비용 관리 → 이제 AI 토큰 비용 관리로 이어지는 패턴이 똑같다고 말했는데, 저도 정확히 같은 생각이에요. 새로운 기술이 나오면 항상 '청구 오류, 감사, 최적화 기회'가 따라온다는 거죠. 가구 업계로 넘어온 지금도, 새 도구를 도입할 때마다 똑같은 원칙을 적용합니다. 일단 쓰게 한 다음 통제하는 게 아니라, 처음부터 사용 한도와 모니터링 체계를 같이 설계하는 거예요. 골드만삭스는 2030년까지 전 세계 토큰 사용량이 지금의 24배로 늘어날 거라 전망했는데, 이 정도 성장 속도라면 비용 거버넌스는 선택이 아니라 필수가 될 수밖에 없어 보입니다.
+      - generic [ref=e107]:
+        - generic [ref=e108]: 📋 핵심 요약
+        - list [ref=e109]:
+          - listitem [ref=e110]: 토큰 단가는 하락했지만 에이전틱 AI 확산으로 전체 소비량이 폭증하면서, 우버·마이크로소프트·프라이스라인 등 주요 기업들이 잇따라 AI 예산 초과를 겪고 있습니다.
+          - listitem [ref=e111]: Jellyfish 조사 기준 개발자 1인당 토큰 소비는 9개월 만에 약 18.6배 증가했고, 생산성 향상폭보다 비용 증가폭이 더 가파른 것으로 나타났습니다.
+          - listitem [ref=e112]: 이 문제를 해결하기 위해 Pay-i, Faros AI 같은 전문 스타트업과 Ramp·Datadog 등 기존 업체들이 토큰 비용 관리 시장에 뛰어들었고, 리눅스 재단은 7월 'Tokenomics Foundation' 정식 출범을 준비 중입니다.
+      - heading "자주 묻는 질문" [level=2] [ref=e113]
+      - generic [ref=e114]:
+        - generic [ref=e115]:
+          - generic [ref=e116]: Q
+          - text: 왜 토큰 단가가 떨어졌는데 기업 AI 비용은 오히려 늘었나요?
+        - generic [ref=e117]:
+          - generic [ref=e118]: A
+          - generic [ref=e119]:
+            - text: 에이전틱 AI 도입이 늘면서 모델이 작업을 처리하기 위해 주고받는 토큰의 '양' 자체가 단가 하락폭보다 훨씬 빠르게 증가했기 때문입니다. Jellyfish 조사에서는 개발자 1인당 소비량이 9개월 만에 약 18.6배 늘었습니다.
+            - generic [ref=e120]: → 단가가 아니라 소비량이 문제입니다.
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - generic [ref=e123]: Q
+          - text: 실제로 예산을 초과한 기업 사례가 있나요?
+        - generic [ref=e124]:
+          - generic [ref=e125]: A
+          - generic [ref=e126]:
+            - text: 우버는 2026년치 AI 코딩 예산을 4월 만에 모두 소진했고, 마이크로소프트는 개발자들에게 부여했던 Claude Code 라이선스를 몇 달 만에 회수했습니다. 어느 기업은 사용 한도를 설정하지 않아 5억 달러 규모의 Claude 청구서를 받기도 했습니다.
+            - generic [ref=e127]: → 우버, 마이크로소프트 등 다수 사례가 보고됐습니다.
+      - generic [ref=e128]:
+        - generic [ref=e129]:
+          - generic [ref=e130]: Q
+          - text: 토큰을 많이 쓰면 그만큼 생산성도 높아지나요?
+        - generic [ref=e131]:
+          - generic [ref=e132]: A
+          - generic [ref=e133]:
+            - text: 어느 정도는 맞습니다. Jellyfish 조사에 따르면 토큰을 가장 많이 쓰는 개발자가 적게 쓰는 개발자보다 생산성이 약 2배 높았습니다. 다만 그 생산성을 얻기 위해 토큰은 10배를 썼다는 점에서, 비용 대비 효율은 오히려 나빠지는 구조입니다.
+            - generic [ref=e134]: → 생산성은 오르지만 비용 효율은 떨어집니다.
+      - generic [ref=e135]:
+        - generic [ref=e136]:
+          - generic [ref=e137]: Q
+          - text: "'Tokenomics Foundation'은 정확히 어떤 조직인가요?"
+        - generic [ref=e138]:
+          - generic [ref=e139]: A
+          - generic [ref=e140]:
+            - text: "리눅스 재단 산하에 새로 만들어지는 표준화 기구로, AI 토큰 사용량·과금에 대한 공통 정의와 지표(예: 지능 단위당 비용, 와트당 토큰)를 만드는 것이 목표입니다. 정식 출범은 2026년 7월로 예정돼 있습니다."
+            - generic [ref=e141]: → AI판 FinOps를 만들겠다는 표준화 기구입니다.
+      - generic [ref=e142]:
+        - generic [ref=e143]:
+          - generic [ref=e144]: Q
+          - text: 기업들은 비용 폭증에 어떻게 대응하고 있나요?
+        - generic [ref=e145]:
+          - generic [ref=e146]: A
+          - generic [ref=e147]:
+            - text: 프라이스라인처럼 일부 팀에 토큰 사용 한도를 직접 거는 곳도 있고, Pay-i·Faros AI 같은 비용 추적·최적화 전문 도구를 도입하는 곳도 있습니다. 작업별로 가장 저렴하고 적합한 모델을 자동 선택하는 '모델 라우터' 도입도 늘어나는 추세입니다.
+            - generic [ref=e148]: → 사용 한도 설정과 비용 관리 도구 도입이 핵심입니다.
+      - paragraph [ref=e150]: AI 도구를 도입하는 속도만큼, 비용을 들여다보는 속도도 같이 챙기시길 바랍니다. 이 글이 도움이 되셨다면 주변에도 공유해주세요 🙌
+      - generic [ref=e151]:
+        - generic [ref=e152]: AI비용
+        - generic [ref=e153]: 토큰맥싱
+        - generic [ref=e154]: FinOps
+        - generic [ref=e155]: AI트렌드2026
+        - generic [ref=e156]: 기업AI도입
+        - generic [ref=e157]: 리눅스재단
+  - contentinfo [ref=e158]:
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - text: FlexM Studio
+          - paragraph [ref=e162]: 나의 디지털 공간입니다.
+        - generic [ref=e163]:
+          - heading "페이지" [level=4] [ref=e164]
+          - list [ref=e165]:
+            - listitem [ref=e166]:
+              - link "홈" [ref=e167] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e168]:
+              - link "소개" [ref=e169] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e170]:
+              - link "포트폴리오" [ref=e171] [cursor=pointer]:
+                - /url: /portfolio
+            - listitem [ref=e172]:
+              - link "자료공유" [ref=e173] [cursor=pointer]:
+                - /url: /resources
+            - listitem [ref=e174]:
+              - link "연락처" [ref=e175] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e176]:
+          - heading "연락처" [level=4] [ref=e177]
+          - list [ref=e178]:
+            - listitem [ref=e179]:
+              - link "necc1321@gmail.com" [ref=e180] [cursor=pointer]:
+                - /url: mailto:necc1321@gmail.com
+      - generic [ref=e181]: © 2026 FlexM Studio. All rights reserved.
+  - button "맨 위로":
+    - img

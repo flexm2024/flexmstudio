@@ -1,0 +1,65 @@
+<h2>프리셋 템플릿 스타일 방향</h2>
+<p class="subtitle">어떤 느낌의 템플릿을 원하시나요?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="minimal" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #f8f8f8;">
+      <div style="width:100%; height:120px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; border-radius: 8px 8px 0 0;">
+        <div style="font-size:11px; color:#a78bfa; letter-spacing:3px; font-family:monospace; text-transform:uppercase;">BLOG</div>
+        <div style="font-size:18px; color:#fff; font-weight:700; font-family:sans-serif;">제목이 여기에</div>
+        <div style="font-size:10px; color:#94a3b8;">부제목 텍스트</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — 미니멀 다크</h3>
+      <p>단색 배경 + 흰 텍스트. 깔끔하고 모던한 느낌. 텍스트 가독성 최고.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="gradient" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #f8f8f8;">
+      <div style="width:100%; height:120px; background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; border-radius: 8px 8px 0 0; position:relative; overflow:hidden;">
+        <div style="position:absolute; inset:0; background: rgba(0,0,0,0.2);"></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.8); letter-spacing:3px; font-family:monospace; text-transform:uppercase; position:relative;">BLOG</div>
+        <div style="font-size:18px; color:#fff; font-weight:800; font-family:sans-serif; position:relative; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">제목이 여기에</div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.7); position:relative;">부제목 텍스트</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — 비비드 그라디언트</h3>
+      <p>선명한 컬러 그라디언트. 눈에 확 들어오고 개성 있음.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="pastel" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #f8f8f8;">
+      <div style="width:100%; height:120px; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; border-radius: 8px 8px 0 0; position:relative;">
+        <div style="position:absolute; top:10px; right:14px; font-size:28px; opacity:0.25;">✦</div>
+        <div style="position:absolute; bottom:8px; left:12px; font-size:20px; opacity:0.2;">◈</div>
+        <div style="font-size:11px; color:#92400e; letter-spacing:3px; font-family:monospace; text-transform:uppercase;">BLOG</div>
+        <div style="font-size:18px; color:#1c1917; font-weight:700; font-family:sans-serif;">제목이 여기에</div>
+        <div style="font-size:10px; color:#78716c;">부제목 텍스트</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — 파스텔 소프트</h3>
+      <p>부드러운 색상 + 다크 텍스트. 따뜻하고 친근한 느낌.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="all" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #f8f8f8;">
+      <div style="width:100%; height:120px; background: #0f172a; display:flex; align-items:center; justify-content:center; gap:6px; border-radius: 8px 8px 0 0; overflow:hidden; position:relative;">
+        <div style="position:absolute; width:60px; height:60px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius:50%; top:-10px; left:-10px; opacity:0.5;"></div>
+        <div style="position:absolute; width:40px; height:40px; background: linear-gradient(135deg, #fcb69f, #ffecd2); border-radius:50%; bottom:-5px; right:20px; opacity:0.4;"></div>
+        <div style="font-size:16px; color:#fff; font-weight:700; font-family:sans-serif; position:relative; z-index:1;">A / B / C 모두 포함</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>D — 전부 다 (3종 이상)</h3>
+      <p>다크, 그라디언트, 파스텔 등 여러 스타일 템플릿 제공.</p>
+    </div>
+  </div>
+
+</div>

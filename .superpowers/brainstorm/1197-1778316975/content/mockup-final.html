@@ -1,0 +1,154 @@
+<h2>커버 이미지 메이커 — 최종 목업</h2>
+<p class="subtitle">BlogEditor 안에서 열리는 모달 전체 구성</p>
+
+<div class="mockup">
+  <div class="mockup-header">CoverImageMaker 모달 (관리자 전용)</div>
+  <div class="mockup-body" style="padding:0; background:#0f172a; border-radius:0 0 8px 8px;">
+
+    <!-- Modal header -->
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #1e293b;">
+      <div style="font-size:13px; font-weight:700; color:#f1f5f9; font-family:sans-serif;">🖼 커버 이미지 만들기</div>
+      <div style="font-size:10px; color:#64748b; background:#1e293b; padding:3px 8px; border-radius:4px;">1200 × 300 px</div>
+    </div>
+
+    <!-- Main body: left panel + right preview -->
+    <div style="display:flex; gap:0; min-height:340px;">
+
+      <!-- LEFT PANEL -->
+      <div style="width:220px; flex-shrink:0; padding:14px; border-right:1px solid #1e293b; display:flex; flex-direction:column; gap:14px; overflow-y:auto;">
+
+        <!-- Templates -->
+        <div>
+          <div style="font-size:9px; color:#64748b; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:7px;">프리셋 템플릿</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+            <div style="height:32px; background:linear-gradient(135deg,#1a1a2e,#16213e); border-radius:4px; border:1.5px solid #a78bfa; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#a78bfa;">다크</span>
+            </div>
+            <div style="height:32px; background:linear-gradient(135deg,#667eea,#f093fb); border-radius:4px; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#fff;">그라디언트</span>
+            </div>
+            <div style="height:32px; background:linear-gradient(135deg,#ffecd2,#fcb69f); border-radius:4px; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#92400e;">파스텔</span>
+            </div>
+            <div style="height:32px; background:linear-gradient(135deg,#0f2027,#203a43,#2c5364); border-radius:4px; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#7dd3fc;">오션</span>
+            </div>
+            <div style="height:32px; background:linear-gradient(135deg,#f7971e,#ffd200); border-radius:4px; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#1c1917;">선셋</span>
+            </div>
+            <div style="height:32px; background:linear-gradient(135deg,#134e5e,#71b280); border-radius:4px; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#fff;">포레스트</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div style="height:1px; background:#1e293b;"></div>
+
+        <!-- BG Colors -->
+        <div>
+          <div style="font-size:9px; color:#64748b; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:7px;">배경 색상</div>
+          <div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;">
+            <div style="width:28px; height:20px; background:linear-gradient(135deg,#1a1a2e,#16213e); border-radius:3px; border:1px solid #334155;"></div>
+            <div style="flex:1; height:24px; background:#1e293b; border-radius:4px; border:1px solid #334155; display:flex;align-items:center;padding:0 8px;">
+              <span style="font-size:9px;color:#94a3b8;">#1a1a2e</span>
+            </div>
+            <span style="font-size:9px;color:#64748b;">색1</span>
+          </div>
+          <div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;">
+            <div style="width:28px; height:20px; background:#16213e; border-radius:3px; border:1px solid #334155;"></div>
+            <div style="flex:1; height:24px; background:#1e293b; border-radius:4px; border:1px solid #334155; display:flex;align-items:center;padding:0 8px;">
+              <span style="font-size:9px;color:#94a3b8;">#16213e</span>
+            </div>
+            <span style="font-size:9px;color:#64748b;">색2</span>
+          </div>
+          <div style="font-size:9px; color:#64748b; margin-bottom:5px;">방향</div>
+          <div style="display:flex; gap:4px;">
+            <div style="flex:1; height:22px; background:#a78bfa; border-radius:3px; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#fff;">→</span>
+            </div>
+            <div style="flex:1; height:22px; background:#1e293b; border-radius:3px; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#94a3b8;">↘</span>
+            </div>
+            <div style="flex:1; height:22px; background:#1e293b; border-radius:3px; display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:8px;color:#94a3b8;">↓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div style="height:1px; background:#1e293b;"></div>
+
+        <!-- Text -->
+        <div>
+          <div style="font-size:9px; color:#64748b; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:7px;">텍스트</div>
+          <div style="font-size:9px; color:#94a3b8; margin-bottom:3px;">제목</div>
+          <div style="height:24px; background:#1e293b; border-radius:4px; border:1px solid #334155; margin-bottom:6px; display:flex;align-items:center;padding:0 8px;">
+            <span style="font-size:9px;color:#f1f5f9;">개 사료 추천 가이드</span>
+          </div>
+          <div style="font-size:9px; color:#94a3b8; margin-bottom:3px;">부제목</div>
+          <div style="height:24px; background:#1e293b; border-radius:4px; border:1px solid #334155; margin-bottom:6px; display:flex;align-items:center;padding:0 8px;">
+            <span style="font-size:9px;color:#64748b;">부제목을 입력하세요</span>
+          </div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <div style="width:20px;height:20px;background:#ffffff;border-radius:3px;border:1px solid #334155;"></div>
+            <span style="font-size:9px;color:#64748b;">텍스트 색상</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div style="height:1px; background:#1e293b;"></div>
+
+        <!-- WebP Quality -->
+        <div>
+          <div style="font-size:9px; color:#64748b; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:7px;">WebP 품질</div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="flex:1; height:4px; background:#1e293b; border-radius:2px; position:relative;">
+              <div style="width:85%; height:100%; background:#a78bfa; border-radius:2px;"></div>
+            </div>
+            <span style="font-size:10px;color:#f1f5f9;font-weight:600;">85%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: PREVIEW -->
+      <div style="flex:1; padding:16px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-size:9px; color:#64748b; letter-spacing:1.5px; text-transform:uppercase;">미리보기 (실제 비율)</div>
+
+        <!-- Canvas preview scaled down -->
+        <div style="width:100%; aspect-ratio:4/1; background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border-radius:8px; border:1px solid #1e293b; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; position:relative; overflow:hidden;">
+          <!-- Subtle decoration -->
+          <div style="position:absolute;width:120px;height:120px;background:radial-gradient(circle,rgba(167,139,250,0.15),transparent);top:-30px;right:20px; border-radius:50%;"></div>
+          <div style="font-size:11px; color:#a78bfa; letter-spacing:3px; font-family:monospace; text-transform:uppercase; position:relative;">BLOG</div>
+          <div style="font-size:22px; color:#fff; font-weight:800; font-family:sans-serif; position:relative;">개 사료 추천 가이드</div>
+          <div style="font-size:12px; color:#94a3b8; position:relative;">부제목을 입력하세요</div>
+        </div>
+
+        <!-- Size info -->
+        <div style="font-size:10px; color:#475569; text-align:center;">
+          실제 출력: 1200 × 300 px · WebP 85% 품질
+        </div>
+
+        <!-- Action buttons -->
+        <div style="display:flex; gap:8px; margin-top:auto;">
+          <button style="flex:1; padding:10px; background:#1e293b; border:1px solid #334155; border-radius:8px; color:#94a3b8; font-size:12px; cursor:pointer; font-family:sans-serif;">↓ WebP 다운로드</button>
+          <button style="flex:1; padding:10px; background:#a78bfa; border:none; border-radius:8px; color:#fff; font-size:12px; font-weight:700; cursor:pointer; font-family:sans-serif;">✓ 커버로 적용</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:1.5rem;">
+  <h3>포함되는 프리셋 6종</h3>
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:0.75rem;">
+    <div style="padding:6px 12px; border-radius:20px; background:linear-gradient(135deg,#1a1a2e,#16213e); color:#a78bfa; font-size:12px;">다크 미드나잇</div>
+    <div style="padding:6px 12px; border-radius:20px; background:linear-gradient(135deg,#667eea,#f093fb); color:#fff; font-size:12px;">비비드 그라디언트</div>
+    <div style="padding:6px 12px; border-radius:20px; background:linear-gradient(135deg,#ffecd2,#fcb69f); color:#92400e; font-size:12px;">파스텔 소프트</div>
+    <div style="padding:6px 12px; border-radius:20px; background:linear-gradient(135deg,#0f2027,#2c5364); color:#7dd3fc; font-size:12px;">딥 오션</div>
+    <div style="padding:6px 12px; border-radius:20px; background:linear-gradient(135deg,#f7971e,#ffd200); color:#1c1917; font-size:12px;">선셋 골드</div>
+    <div style="padding:6px 12px; border-radius:20px; background:linear-gradient(135deg,#134e5e,#71b280); color:#fff; font-size:12px;">포레스트 그린</div>
+  </div>
+</div>

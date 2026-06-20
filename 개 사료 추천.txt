@@ -1,0 +1,377 @@
+<h1 style="font-size: 2.3rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-bottom: 3px solid #1976d2; padding-bottom: 0.3em; font-family: 'Noto Sans KR', sans-serif;">강아지 사료 추천 2026 완전 정복 — 성분부터 브랜드까지 한 번에</h1>
+
+<p style="font-size: 1.21rem; line-height: 1.8; margin-bottom: 1.2em; color: #1565c0; font-weight: 500; font-family: 'Noto Sans KR', sans-serif;">우리 강아지가 매일 먹는 사료, 진짜 괜찮은 건지 확인해보신 적 있으세요? 비싸다고 다 좋은 게 아니고, 유명하다고 무조건 맞는 것도 아니거든요.</p>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">안녕하세요 여러분! 저는 말티푸 '콩이'를 7년째 키우고 있는 평범한 반려인인데요. 솔직히 말하면, 처음 강아지 사료를 고를 때 정말 막막했어요. 마트 가면 종류가 너무 많고, 인터넷 찾으면 정보가 넘쳐나는데 뭘 믿어야 할지... 그러다 보니 그냥 광고 많이 하는 거 사다 먹였는데, 콩이 피부가 빨개지고 귀에서 냄새가 나기 시작하더라고요. 그때부터 제대로 공부하기 시작했어요. 성분표 읽는 법부터, 단백질 함량, 곡물 유무, 알러지 유발 성분까지 — 꽤 오랜 시간이 걸렸지만 이제는 좀 알 것 같아요. 오늘은 그 경험을 바탕으로 2026년 현재 기준 강아지 사료 추천을 제대로 정리해드릴게요.</p>
+
+<!-- 목차 -->
+<div style="border: 1px solid #bbdefb; padding: 1.2em 1.5em; border-radius: 4px; margin: 1.5em 0; background-color: #e3f2fd; font-family: 'Noto Sans KR', sans-serif;">
+  <p style="font-weight: 700; color: #0d47a1; font-size: 1.1rem; margin-bottom: 0.8em;">📋 목차</p>
+  <ol style="margin: 0; padding-left: 1.5em; color: #1565c0;">
+    <li style="margin-bottom: 0.5em;"><a href="#ingredients" style="color: #1565c0; text-decoration: none; font-weight: 500;">강아지 사료 성분표 읽는 법 — 뭘 봐야 할까?</a></li>
+    <li style="margin-bottom: 0.5em;"><a href="#types" style="color: #1565c0; text-decoration: none; font-weight: 500;">사료 종류별 완벽 비교 — 건사료 vs 습식 vs 생식</a></li>
+    <li style="margin-bottom: 0.5em;"><a href="#brands" style="color: #1565c0; text-decoration: none; font-weight: 500;">2026 강아지 사료 브랜드 추천 TOP 10</a></li>
+    <li style="margin-bottom: 0.5em;"><a href="#age" style="color: #1565c0; text-decoration: none; font-weight: 500;">연령별·크기별 사료 선택 가이드</a></li>
+    <li style="margin-bottom: 0.5em;"><a href="#allergy" style="color: #1565c0; text-decoration: none; font-weight: 500;">알러지 있는 강아지를 위한 사료 선택법</a></li>
+    <li style="margin-bottom: 0.5em;"><a href="#tips" style="color: #1565c0; text-decoration: none; font-weight: 500;">사료 교체 시 주의사항 및 급여 꿀팁</a></li>
+  </ol>
+</div>
+<!-- 섹션 1 -->
+<h2 id="ingredients" style="font-size: 1.9rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-left: 5px solid #2979ff; padding-left: 0.8em; font-family: 'Noto Sans KR', sans-serif;">강아지 사료 성분표 읽는 법 — 뭘 봐야 할까?</h2>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+처음 사료 성분표를 봤을 때, 뭐랄까... 외계어 같았어요. "닭고기 부산물", "옥수수 글루텐", "비타민 E 보충제"... 이게 다 뭐야? 싶었거든요. 근데 알고 보면 그렇게 어렵지 않아요. 핵심만 알면 5초 안에 좋은 사료인지 아닌지 어느 정도 판단이 가능하답니다.
+</p>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+성분표는 <strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">함량이 많은 순서</strong>대로 적혀 있어요. 그러니까 맨 앞에 나오는 성분이 가장 많이 들어간 거예요. 첫 번째 성분이 "닭고기"면 좋은 거고, "옥수수"나 "밀"이면 조금 고민해볼 필요가 있죠. 물론 곡물이 무조건 나쁜 건 아니지만요.
+</p>
+
+<div style="border-left: 4px solid #2979ff; padding: 0.5em 1em; margin: 1.5em 0; font-style: italic; color: #1565c0; background-color: #f5f9ff; font-family: 'Noto Sans KR', sans-serif;">
+"부산물(by-product)"이 나쁜 건 아니에요. 하지만 <b style="font-weight: 700; color: #2196f3; font-family: 'Noto Sans KR', sans-serif;">어떤 부산물인지</b>가 중요하죠. 간이나 심장 같은 내장은 오히려 영양가가 높아요.
+</div>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+피해야 할 성분들도 있어요. "BHA", "BHT" 같은 인공 방부제나 "인공 색소", "설탕" 계열 성분은 가능하면 없는 게 낫고요. 아, 그리고 "양파", "마늘" 성분이 들어간 사료는 절대 안 돼요. 강아지한테 독이거든요.
+</p>
+
+<div style="border-left: 4px solid #ff5722; padding: 1em; border-radius: 4px; margin: 1.5em 0; background-color: #fff3e0; color: #e64a19; font-family: 'Noto Sans KR', sans-serif;">
+  <div style="font-weight: 700; margin-bottom: 0.5em; font-size: 1.1rem;">⚠️ 주의</div>
+  <p style="margin: 0; line-height: 1.6;">성분표에서 "육류 부산물" 혹은 "가금류 부산물"처럼 출처가 불명확한 표기는 피하는 게 좋아요. 어떤 동물의 어떤 부위인지 명확하게 표기된 제품이 훨씬 신뢰할 수 있답니다.</p>
+</div>
+
+
+<!-- 섹션 2 -->
+<h2 id="types" style="font-size: 1.9rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-left: 5px solid #2979ff; padding-left: 0.8em; font-family: 'Noto Sans KR', sans-serif;">사료 종류별 완벽 비교 — 건사료 vs 습식 vs 생식</h2>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+사료 종류가 이렇게 많을 줄 몰랐어요. 처음엔 그냥 "건사료 아니면 캔이지~" 했는데, 생식이니 반습식이니 동결건조니... 점점 복잡해지더라고요. 각각 장단점이 확실히 달라서 우리 강아지 상황에 맞게 고르는 게 중요해요.
+</p>
+
+<table style="width: 100%; border-collapse: collapse; margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">종류</th>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">특징</th>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">장점</th>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">단점</th>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">추천 대상</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em; font-weight: 600; color: #0d47a1;">건사료 (키블)</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">수분 10% 이하, 알갱이 형태</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">보관 편리, 치석 예방, 가격 합리적</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">수분 섭취 부족 가능성</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">건강한 성견, 음수량 충분한 경우</td>
+    </tr>
+    <tr style="background-color: #e3f2fd;">
+      <td style="border: 1px solid #bbdefb; padding: 0.6em; font-weight: 600; color: #0d47a1;">습식사료 (캔/파우치)</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">수분 70~80%, 부드러운 질감</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">기호성 높음, 수분 보충 용이</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">비용 높음, 치석 쌓임 가능</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">노견, 치아 약한 강아지, 음수량 부족한 경우</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em; font-weight: 600; color: #0d47a1;">반습식 사료</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">수분 25~35%, 쫄깃한 질감</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">기호성 우수, 영양 균형 양호</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">가격 다소 높음</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">편식하는 강아지, 소화 민감한 경우</td>
+    </tr>
+    <tr style="background-color: #e3f2fd;">
+      <td style="border: 1px solid #bbdefb; padding: 0.6em; font-weight: 600; color: #0d47a1;">동결건조 / 생식</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">가공 최소화, 원재료 그대로</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">영양소 보존 최대, 자연식에 가까움</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">가격 매우 높음, 보관 주의 필요</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">프리미엄 사료를 원하는 보호자</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+저는 콩이한테 건사료를 기본으로 주고 아침에 반습식을 조금 섞어주는 편이에요. 그러면 기호성도 올라가고 수분 보충도 되고... 뭐랄까, 나름 밸런스를 맞추는 거죠. 꼭 한 가지만 고집할 필요는 없어요.
+</p>
+
+
+<!-- 섹션 3 -->
+<h2 id="brands" style="font-size: 1.9rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-left: 5px solid #2979ff; padding-left: 0.8em; font-family: 'Noto Sans KR', sans-serif;">2026 강아지 사료 브랜드 추천 TOP 10</h2>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+이게 제일 많이 물어보는 부분이죠. "그래서 뭐 사야 해요?" 한 마디로 답하기가 어렵긴 한데... 그래도 제가 직접 써보거나 주변 반려인들 경험을 모아서 정리해봤어요. 예산이나 강아지 상태에 따라 다르지만, 이 중에서 고르면 크게 실망은 없을 거예요.
+</p>
+
+<ol style="margin-bottom: 1.2em; padding-left: 2em; color: #333; font-family: 'Noto Sans KR', sans-serif; font-size: 1.05rem; line-height: 1.9;">
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">카르나4 (Carna4)</strong> — 성분 퀄리티로는 국내 최상위권. 자연식에 가장 가깝고 싹 틔운 씨앗 기반이라 소화도 잘 돼요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">디어니스트 키친 (The Honest Kitchen)</strong> — 사람이 먹을 수 있는 등급 원료 사용. 반습식 스타일로 기호성이 정말 높아요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">오리젠 (Orijen)</strong> — 고단백 사료의 대명사. 신선 육류 함량이 매우 높아서 활동량 많은 강아지에게 딱이에요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">지위픽 (Ziwipeak)</strong> — 뉴질랜드산 방목 육류 사용. 특히 고양이-강아지 겸용으로도 유명하고 성분이 깔끔해요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">벨칸도 (Belcando)</strong> — 독일 프리미엄 사료. 소화 민감한 강아지들한테 호평이 많아요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">파미나 (Farmina)</strong> — 이탈리아 브랜드. 저온 베이킹 공법으로 영양소 파괴가 적고, 곡물/무곡물 라인 둘 다 있어요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">고네이티브 (Go! Natural)</strong> — 가성비 좋은 캐나다 브랜드. 단백질 함량 높고 무곡물 라인이 탄탄해요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">몬지 (Monge)</strong> — 이탈리아산으로 가성비와 성분 균형이 좋아요. 한국에서도 접근성이 좋은 편이에요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">인섹트업 하이포알러지</strong> — 국내 브랜드. 곤충 단백질 기반으로 알러지 강아지에게 요즘 핫해요.</li>
+  <li style="margin-bottom: 0.8em; position: relative;"><strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">ANF 식스프리</strong> — 6가지 주요 알러지 성분이 빠진 사료. 피부 예민하거나 이것저것 먹이기 불안한 보호자들한테 인기 많아요.</li>
+</ol>
+
+<div style="border-left: 4px solid #1565c0; padding: 1em; border-radius: 4px; margin: 1.5em 0; background-color: #e3f2fd; color: #0d47a1; font-family: 'Noto Sans KR', sans-serif;">
+  <div style="font-weight: 700; margin-bottom: 0.5em; font-size: 1.1rem;">📝 메모</div>
+  <p style="margin: 0; line-height: 1.6;">유명 브랜드라도 우리 강아지와 맞지 않을 수 있어요. 처음 새 사료를 줄 때는 소량으로 시작해서 대변 상태, 피부, 활동량 변화를 2~3주 관찰하는 게 좋아요.</p>
+</div>
+<!-- 섹션 4 -->
+<h2 id="age" style="font-size: 1.9rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-left: 5px solid #2979ff; padding-left: 0.8em; font-family: 'Noto Sans KR', sans-serif;">연령별·크기별 사료 선택 가이드</h2>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+강아지도 나이를 먹어요. 당연한 말인데, 사료 고를 때 이걸 간과하는 경우가 은근히 많더라고요. 퍼피용 사료를 성견이 계속 먹거나, 반대로 어린 강아지한테 시니어 사료를 주는 경우도 봤어요. 나이에 맞는 영양 비율이 따로 있으니까, 꼭 확인하고 사야 해요.
+</p>
+
+<h3 style="font-size: 1.6rem; font-weight: 700; color: #ffffff; background-color: #1565c0; padding: 0.5em 1em; border-radius: 4px; width: 100%; box-sizing: border-box; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; font-family: 'Noto Sans KR', sans-serif;">🐾 연령별 핵심 포인트</h3>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+<strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">퍼피 (생후 ~12개월)</strong>는 성장기라 칼슘, 인, DHA 함량이 중요해요. 뼈와 뇌 발달에 직결되니까요. 반면 <strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">시니어 (7세 이상)</strong>는 신장 부담을 줄이기 위해 단백질과 인 함량을 조절한 사료가 필요해요. 관절 건강을 위해 글루코사민, 콘드로이틴이 들어간 사료도 고려해볼 만하고요.
+</p>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+크기도 중요해요. 소형견은 작은 알갱이 사이즈, 대형견은 큰 알갱이가 치석 예방에 도움이 돼요. 그리고 소형견은 단위 체중당 칼로리 소모가 커서 에너지 밀도가 높은 사료가 좋고, 대형견은 관절 보호를 위해 칼로리 조절이 더 필요하답니다.
+</p>
+
+<p style="font-size: 1.21rem; line-height: 1.8; margin-bottom: 1.2em; color: #1565c0; font-weight: 500; font-family: 'Noto Sans KR', sans-serif;">
+"전연령" 표기 사료도 있지만, 가능하면 해당 연령에 특화된 제품이 영양 밸런스 면에서 더 정확해요.
+</p>
+
+
+<!-- 섹션 5 -->
+<h2 id="allergy" style="font-size: 1.9rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-left: 5px solid #2979ff; padding-left: 0.8em; font-family: 'Noto Sans KR', sans-serif;">알러지 있는 강아지를 위한 사료 선택법</h2>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+콩이가 피부가 빨개지고 귀에서 냄새 나기 시작했을 때, 수의사 선생님이 가장 먼저 의심한 게 사료 알러지였어요. 강아지 알러지의 주요 원인 중 하나가 바로 먹거리거든요. 흔한 알러지 유발 성분이 있는데, 아래 표를 보면 한눈에 파악할 수 있어요.
+</p>
+
+<table style="width: 100%; border-collapse: collapse; margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">알러지 유발 성분</th>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">주요 증상</th>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">대체 성분</th>
+      <th style="border: 1px solid #bbdefb; padding: 0.7em; text-align: left; background-color: #2979ff; color: white; font-weight: 700;">추천 사료 유형</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">닭고기</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">피부 가려움, 귀 염증</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">오리고기, 연어, 칠면조</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">단일 단백질 사료</td>
+    </tr>
+    <tr style="background-color: #e3f2fd;">
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">밀 / 옥수수</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">소화 불량, 피부 발적</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">고구마, 완두콩, 감자</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">무곡물(Grain-Free) 사료</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">소고기</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">구토, 설사, 피부 트러블</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">양고기, 토끼고기, 곤충 단백질</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">하이포알러지 사료</td>
+    </tr>
+    <tr style="background-color: #e3f2fd;">
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">유제품</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">복부 팽만, 묽은 변</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">식물성 지방, 오메가 오일</td>
+      <td style="border: 1px solid #bbdefb; padding: 0.6em;">유제품 무첨가 사료</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+알러지 사료로 바꿀 때는 <mark style="background-color: #bbdefb; color: #1565c0; padding: 0 3px; border-radius: 2px; font-family: 'Noto Sans KR', sans-serif;">최소 8~12주는 유지</mark>해야 제대로 된 효과를 볼 수 있어요. 그 전에 포기하면 진짜 원인을 못 찾을 수도 있거든요. 저도 처음엔 2주 만에 "효과 없다"고 다른 사료로 바꿨다가 수의사한테 혼났어요 😅
+</p>
+
+
+<!-- 섹션 6 -->
+<h2 id="tips" style="font-size: 1.9rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-left: 5px solid #2979ff; padding-left: 0.8em; font-family: 'Noto Sans KR', sans-serif;">사료 교체 시 주의사항 및 급여 꿀팁</h2>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+사료 바꾸는 게 쉬울 것 같죠? 근데 생각보다 섬세하게 해야 해요. 갑자기 바꾸면 장이 적응을 못해서 설사나 구토가 생길 수 있거든요. 저도 처음에 그냥 새 사료로 확 바꿨다가 콩이가 사흘 내내 배 아파했어요. 진짜 마음이 쪼그라들더라고요.
+</p>
+
+<h4 style="font-size: 1.3rem; font-weight: 700; color: #2196f3; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; font-style: italic; font-family: 'Noto Sans KR', sans-serif;">📌 사료 교체 7~10일 전환 법칙</h4>
+
+<ul style="margin-bottom: 1.2em; padding-left: 2em; list-style-type: none; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    <strong style="font-weight: 700; color: #1565c0;">1~2일차</strong>: 기존 사료 75% + 새 사료 25%
+  </li>
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    <strong style="font-weight: 700; color: #1565c0;">3~4일차</strong>: 기존 사료 50% + 새 사료 50%
+  </li>
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    <strong style="font-weight: 700; color: #1565c0;">5~7일차</strong>: 기존 사료 25% + 새 사료 75%
+  </li>
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    <strong style="font-weight: 700; color: #1565c0;">8일차~</strong>: 새 사료 100%로 완전 전환
+  </li>
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    전환 중 구토·설사 시 속도를 더 늦추거나 수의사 상담 권장
+  </li>
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    노령견이나 소화 민감한 강아지는 14일 이상 천천히 전환하는 것이 안전해요
+  </li>
+</ul>
+
+<h4 style="font-size: 1.3rem; font-weight: 700; color: #2196f3; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; font-style: italic; font-family: 'Noto Sans KR', sans-serif;">🍽️ 급여량 & 보관 꿀팁</h4>
+
+<ul style="margin-bottom: 1.2em; padding-left: 2em; list-style-type: none; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    포장지의 급여량 표는 최대치 기준이 많아요 — 우리 강아지 체형·활동량에 맞게 10~20% 줄여서 시작하세요
+  </li>
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    개봉 후 건사료는 밀폐 용기에 담아 서늘한 곳에 보관 (냉장 X, 상온 밀봉 O)
+  </li>
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    대용량 구매보다 소용량을 자주 구매하는 게 신선도 유지에 더 좋아요
+  </li>
+  <li style="margin-bottom: 0.7em; position: relative; font-size: 1.05rem;">
+    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #2979ff; margin-right: 10px; position: absolute; left: -20px; top: 8px;"></span>
+    물은 항상 신선하게, 충분히 — 건사료 급여 시 수분 보충이 특히 중요해요
+  </li>
+</ul>
+
+<div style="background-color: #2979ff; color: white; padding: 1em; border-radius: 4px; margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <p style="margin: 0; line-height: 1.6; font-weight: 600;">💡 가장 좋은 사료는 '우리 강아지가 잘 먹고, 잘 싸고, 활기찬' 사료예요. 비싸다고 다 좋은 게 아니고, 유명하다고 다 맞는 게 아니에요. 지금 강아지 상태를 가장 잘 아는 건 바로 보호자인 여러분이에요.</p>
+</div>
+
+<h2 style="font-size: 1.9rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-left: 5px solid #2979ff; padding-left: 0.8em; font-family: 'Noto Sans KR', sans-serif;">자주 묻는 질문 (FAQ)</h2>
+
+<!-- Q1 -->
+<div style="margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <div style="font-weight: 700; color: #2979ff; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #2979ff; color: white; border-radius: 50%; margin-right: 8px;">Q</span>
+    강아지 사료, 얼마나 자주 바꿔줘야 하나요?
+  </div>
+  <div style="margin-left: 32px; margin-bottom: 1em;">
+    <p style="margin: 0; line-height: 1.6; color: #333;">꼭 자주 바꿀 필요는 없어요. 지금 사료가 잘 맞는다면 굳이 바꿀 이유가 없죠. 다만 같은 단백질 원료만 계속 먹으면 알러지가 생길 수 있다는 의견도 있어서, 3~6개월에 한 번 정도 다른 단백질 원료 사료로 로테이션하는 방법도 있어요. 단, 전환은 항상 천천히!</p>
+  </div>
+  <div style="font-weight: 700; color: #1565c0; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #1565c0; color: white; border-radius: 50%; margin-right: 8px;">A</span>
+    핵심은 "지금 잘 맞으면 유지, 문제가 생기면 교체"예요.
+  </div>
+</div>
+
+<hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(33, 150, 243, 0), rgba(33, 150, 243, 0.75), rgba(33, 150, 243, 0)); margin: 1.5em 0;">
+
+<!-- Q2 -->
+<div style="margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <div style="font-weight: 700; color: #2979ff; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #2979ff; color: white; border-radius: 50%; margin-right: 8px;">Q</span>
+    무곡물(Grain-Free) 사료가 무조건 더 좋은 건가요?
+  </div>
+  <div style="margin-left: 32px; margin-bottom: 1em;">
+    <p style="margin: 0; line-height: 1.6; color: #333;">아니에요, 무조건은 아니에요. 곡물 알러지가 없는 강아지라면 고품질 곡물이 포함된 사료도 충분히 좋아요. 오히려 무곡물 사료 중 일부가 콩류(완두콩, 렌틸콩)를 과다 사용해서 심장 문제와 관련이 있다는 미국 FDA 연구도 있었어요. 성분 전체를 꼼꼼히 보는 게 중요해요.</p>
+  </div>
+  <div style="font-weight: 700; color: #1565c0; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #1565c0; color: white; border-radius: 50%; margin-right: 8px;">A</span>
+    무곡물보다 중요한 건 "전체 성분의 품질"이에요.
+  </div>
+</div>
+
+<hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(33, 150, 243, 0), rgba(33, 150, 243, 0.75), rgba(33, 150, 243, 0)); margin: 1.5em 0;">
+
+<!-- Q3 -->
+<div style="margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <div style="font-weight: 700; color: #2979ff; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #2979ff; color: white; border-radius: 50%; margin-right: 8px;">Q</span>
+    사료 유통기한이 지나면 절대 먹이면 안 되나요?
+  </div>
+  <div style="margin-left: 32px; margin-bottom: 1em;">
+    <p style="margin: 0; line-height: 1.6; color: #333;">유통기한이 지난 사료는 영양소가 손실되고 산패가 진행될 수 있어요. 냄새가 이상하거나 기름진 냄새가 나면 절대 먹이지 마세요. 유통기한 직전이라면 소량씩 빨리 소비하거나, 아직 정상 상태라면 조심스럽게 며칠 이내 사용은 가능하지만, 원칙적으로는 유통기한 내 소비를 권장해요.</p>
+  </div>
+  <div style="font-weight: 700; color: #1565c0; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #1565c0; color: white; border-radius: 50%; margin-right: 8px;">A</span>
+    냄새와 색 변화가 없더라도 유통기한 초과 사료는 교체하는 게 안전해요.
+  </div>
+</div>
+
+<hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(33, 150, 243, 0), rgba(33, 150, 243, 0.75), rgba(33, 150, 243, 0)); margin: 1.5em 0;">
+
+<!-- Q4 -->
+<div style="margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <div style="font-weight: 700; color: #2979ff; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #2979ff; color: white; border-radius: 50%; margin-right: 8px;">Q</span>
+    수제 자연식과 시판 사료 중 어느 게 더 좋은가요?
+  </div>
+  <div style="margin-left: 32px; margin-bottom: 1em;">
+    <p style="margin: 0; line-height: 1.6; color: #333;">수제 자연식이 좋을 수 있지만, 제대로 영양 밸런스를 맞추기가 매우 어려워요. 칼슘, 인, 아연, 비타민 D 등 미량 영양소 불균형이 생기면 오히려 건강에 해로울 수 있거든요. 전문 수의사 영양 상담 없이 수제식을 주식으로 하는 건 위험할 수 있어요. 신뢰할 수 있는 브랜드의 완전 영양 사료 + 가끔 신선식 토퍼를 추가하는 방식이 현실적으로 좋은 대안이에요.</p>
+  </div>
+  <div style="font-weight: 700; color: #1565c0; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #1565c0; color: white; border-radius: 50%; margin-right: 8px;">A</span>
+    수제식은 영양사 또는 수의사 감수 없이는 주식으로 권하지 않아요.
+  </div>
+</div>
+
+<hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(33, 150, 243, 0), rgba(33, 150, 243, 0.75), rgba(33, 150, 243, 0)); margin: 1.5em 0;">
+
+<!-- Q5 -->
+<div style="margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <div style="font-weight: 700; color: #2979ff; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #2979ff; color: white; border-radius: 50%; margin-right: 8px;">Q</span>
+    강아지가 사료를 잘 안 먹어요. 어떻게 해야 하나요?
+  </div>
+  <div style="margin-left: 32px; margin-bottom: 1em;">
+    <p style="margin: 0; line-height: 1.6; color: #333;">편식의 원인은 다양해요. 사료가 입에 안 맞는 경우도 있지만, 간식을 너무 많이 줘서 사료를 안 먹는 경우가 더 많아요. 우선 간식을 줄이고, 밥그릇을 15분 후에 치우는 식으로 '배고프면 먹는다'는 습관을 들여보세요. 그래도 이틀 이상 안 먹으면 건강 문제일 수 있으니 수의사 상담이 필요해요.</p>
+  </div>
+  <div style="font-weight: 700; color: #1565c0; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #1565c0; color: white; border-radius: 50%; margin-right: 8px;">A</span>
+    간식을 줄이고 규칙적인 식사 루틴을 만드는 게 먼저예요.
+  </div>
+</div>
+
+<hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(33, 150, 243, 0), rgba(33, 150, 243, 0.75), rgba(33, 150, 243, 0)); margin: 1.5em 0;">
+
+<!-- Q6 -->
+<div style="margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <div style="font-weight: 700; color: #2979ff; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #2979ff; color: white; border-radius: 50%; margin-right: 8px;">Q</span>
+    고단백 사료가 신장에 안 좋다는 말이 사실인가요?
+  </div>
+  <div style="margin-left: 32px; margin-bottom: 1em;">
+    <p style="margin: 0; line-height: 1.6; color: #333;">건강한 강아지에게는 고단백 사료가 신장에 해롭다는 근거가 부족해요. 오히려 고품질 동물성 단백질은 근육 유지와 면역력에 도움이 돼요. 다만 이미 신장 질환이 있는 강아지라면 얘기가 달라져요. 그 경우엔 수의사 처방식 사료를 따라야 해요. 건강한 성견이라면 고단백 사료 걱정 안 하셔도 돼요.</p>
+  </div>
+  <div style="font-weight: 700; color: #1565c0; margin-bottom: 0.5em; font-size: 1.1rem;">
+    <span style="display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background-color: #1565c0; color: white; border-radius: 50%; margin-right: 8px;">A</span>
+    신장 질환이 없는 건강한 강아지라면 고단백 사료는 안전하고 오히려 좋아요.
+  </div>
+</div>
+<hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(33, 150, 243, 0), rgba(33, 150, 243, 0.75), rgba(33, 150, 243, 0)); margin: 2em 0;">
+
+<h2 style="font-size: 1.9rem; font-weight: 700; color: #0d47a1; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.2; border-left: 5px solid #2979ff; padding-left: 0.8em; font-family: 'Noto Sans KR', sans-serif;">마무리하며 — 우리 강아지 밥그릇, 오늘 한 번 들여다보세요 🐶</h2>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+사료 하나 고르는 게 이렇게 복잡한 일인 줄 몰랐죠? 저도 처음엔 그냥 유명한 거, 광고 많이 하는 거 사다 줬는데... 콩이한테 미안해지더라고요. 그 이후로 성분표를 꼼꼼히 보기 시작했고, 이제는 어느 정도 눈이 생겼어요.
+</p>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+완벽한 사료는 없어요. 근데 <strong style="font-weight: 700; color: #1565c0; font-family: 'Noto Sans KR', sans-serif;">우리 강아지한테 맞는 사료</strong>는 분명히 있어요. 오늘 소개한 내용이 그걸 찾는 데 조금이라도 도움이 됐으면 좋겠어요. 강아지가 사료를 맛있게 먹고, 대변이 단단하고, 피부가 깨끗하고, 눈빛이 맑다면 — 그게 바로 정답이에요.
+</p>
+
+<p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.2em; color: #333; font-family: 'Noto Sans KR', sans-serif;">
+혹시 본인 강아지한테 추천하는 사료가 있거나, 특정 브랜드 경험을 나누고 싶은 분이 계시다면 댓글로 남겨주세요! 저도 계속 배우고 있거든요. 다른 반려인들의 생생한 경험이 제일 믿을 만한 정보예요 — 우리 함께 좋은 정보 나눠요 🐾
+</p>
+
+<div style="background-color: #2979ff; color: white; padding: 1em; border-radius: 4px; margin: 1.5em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <p style="margin: 0; line-height: 1.6; font-weight: 600;">📌 이 글이 도움이 됐다면 강아지 키우는 친구, 지인에게 공유해주세요! 좋아요와 댓글은 저한테 큰 힘이 돼요 😊</p>
+</div>
+
+<p style="font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.2em; color: #888; font-family: 'Noto Sans KR', sans-serif;">
+태그: 강아지사료추천, 강아지사료, 반려견사료, 사료성분, 무곡물사료, 강아지알러지, 오리젠, 카르나4, 지위픽, 강아지영양
+</p>

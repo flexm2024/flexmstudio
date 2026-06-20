@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { generateSlug } from '../lib/seo'
 import { type Post, BLOG_KEY } from '../data/blog'
+import { getPreloadedPosts } from '../data/blogCache'
 
 export type { Post }
 
@@ -26,8 +27,13 @@ function getToken() {
 }
 
 export function useBlogPosts() {
-  const [posts, setPosts] = useState<Post[]>(loadCache)
-  const [serverLoaded, setServerLoaded] = useState(false)
+  const preloaded = getPreloadedPosts()
+  const [posts, setPosts] = useState<Post[]>(() => {
+    // preload된 데이터가 있으면 즉시 사용 (가장 빠름)
+    if (preloaded && preloaded.length > 0) return preloaded.map(ensureSlug)
+    return loadCache()
+  })
+  const [serverLoaded, setServerLoaded] = useState(!!(preloaded && preloaded.length > 0))
   const lastWriteRef = useRef(0)
 
   const syncFromServer = useCallback(async () => {

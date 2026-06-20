@@ -1,4 +1,3 @@
-import { BLOG_SEEDS } from '../../src/data/blog'
 import type { Post } from '../../src/data/blog'
 
 interface KV {
@@ -47,8 +46,7 @@ export const onRequest = async (ctx: any): Promise<Response> => {
   const migrate = url.searchParams.get('migrate') === '1'
 
   if (request.method === 'GET') {
-    const posts = await getPosts(env)
-    return json(posts.length > 0 ? posts : BLOG_SEEDS)
+    return json(await getPosts(env))
   }
 
   // 마이그레이션은 KV가 비어있을 때 인증 없이 허용
@@ -67,23 +65,20 @@ export const onRequest = async (ctx: any): Promise<Response> => {
   if (request.method === 'POST') {
     const body = await request.json() as Post
     const current = await getPosts(env)
-    const base = current.length > 0 ? current : BLOG_SEEDS
-    await env.APP_KV.put(BLOG_KV_KEY, JSON.stringify([body, ...base]))
+    await env.APP_KV.put(BLOG_KV_KEY, JSON.stringify([body, ...current]))
     return json(body, 201)
   }
 
   if (request.method === 'PUT' && id) {
     const body = await request.json() as Partial<Post>
     const posts = await getPosts(env)
-    const base = posts.length > 0 ? posts : BLOG_SEEDS
-    await env.APP_KV.put(BLOG_KV_KEY, JSON.stringify(base.map(p => p.id === id ? { ...p, ...body } : p)))
+    await env.APP_KV.put(BLOG_KV_KEY, JSON.stringify(posts.map(p => p.id === id ? { ...p, ...body } : p)))
     return json({ ok: true })
   }
 
   if (request.method === 'DELETE' && id) {
     const posts = await getPosts(env)
-    const base = posts.length > 0 ? posts : BLOG_SEEDS
-    await env.APP_KV.put(BLOG_KV_KEY, JSON.stringify(base.filter(p => p.id !== id)))
+    await env.APP_KV.put(BLOG_KV_KEY, JSON.stringify(posts.filter(p => p.id !== id)))
     return json({ ok: true })
   }
 

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { generateSlug } from '../lib/seo'
-import { type Post, BLOG_KEY, BLOG_SEEDS } from '../data/blog'
+import { type Post, BLOG_KEY } from '../data/blog'
 
 export type { Post }
 
@@ -18,14 +18,12 @@ function loadCache(): Post[] {
     const raw = localStorage.getItem(BLOG_KEY)
     if (raw) return (JSON.parse(raw) as Post[]).map(ensureSlug)
   } catch {}
-  return BLOG_SEEDS.map(ensureSlug)
+  return []
 }
 
 function getToken() {
   return sessionStorage.getItem('adm_token') ?? ''
 }
-
-const SEED_IDS = new Set(['1', '2', '3'])
 
 export function useBlogPosts() {
   const [posts, setPosts] = useState<Post[]>(loadCache)
@@ -37,24 +35,7 @@ export function useBlogPosts() {
     if (Date.now() - lastWriteRef.current < 5000) return
     try {
       const data: Post[] = await fetch('/api/blog').then(r => r.json())
-      if (data.length === 0) {
-        const raw = localStorage.getItem(BLOG_KEY)
-        if (raw) {
-          const localPosts = JSON.parse(raw) as Post[]
-          const hasExtra = localPosts.some((p: Post) => !SEED_IDS.has(p.id))
-          if (hasExtra) {
-            await fetch('/api/blog?migrate=1', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(localPosts),
-            })
-            const mapped = localPosts.map(ensureSlug)
-            setPosts(mapped)
-            localStorage.setItem(BLOG_KEY, JSON.stringify(mapped))
-          }
-        }
-        return
-      }
+      if (data.length === 0) return
       const mapped = data.map(ensureSlug)
       // 로컬에는 있지만 서버에 아직 반영 안 된 글 병합 (optimistic write 보존)
       const localRaw = localStorage.getItem(BLOG_KEY)

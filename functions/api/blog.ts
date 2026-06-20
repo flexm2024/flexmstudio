@@ -11,10 +11,63 @@ interface Env {
 }
 
 const BLOG_KV_KEY = 'blog_posts'
+const SITE_URL = 'https://flexmstudio.com'
 const CORS = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), { status, headers: CORS })
+}
+
+function escapeXml(text: string): string {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;')
+}
+
+function toRssDate(dateStr: string): string {
+  const d = new Date(dateStr)
+  return isNaN(d.getTime()) ? new Date().toUTCString() : d.toUTCString()
+}
+
+async function rssResponse(env: Env): Promise<Response> {
+  let posts = await getPosts(env)
+  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  const items = posts.slice(0, 20).map(p => {
+    const slug = p.slug || p.id
+    const link = `${SITE_URL}/blog/${encodeURIComponent(slug)}`
+    const desc = escapeXml(p.excerpt || '')
+    const img = p.coverImage ? `<br/><img src="${escapeXml(p.coverImage)}" alt="${escapeXml(p.title)}" style="max-width:100%;height:auto;margin-top:0.5rem"/>` : ''
+    const content = p.content ? `<description><![CDATA[${desc}${img}]]></description>` : `<description>${desc}</description>`
+    return `    <item>
+      <title>${escapeXml(p.title)}</title>
+      <link>${link}</link>
+      <guid isPermaLink="true">${link}</guid>
+      ${content}
+      <pubDate>${toRssDate(p.date)}</pubDate>
+    </item>`
+  }).join('\n')
+  const now = new Date().toUTCString()
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FlexM Studio Blog</title>
+    <link>${SITE_URL}</link>
+    <description>IT 기획, 디지털 전환, 생산성에 관한 글들</description>
+    <language>ko</language>
+    <lastBuildDate>${now}</lastBuildDate>
+    <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>${SITE_URL}/favicon.svg</url>
+      <title>FlexM Studio Blog</title>
+      <link>${SITE_URL}</link>
+    </image>
+${items}
+  </channel>
+</rss>`
+  return new Response(xml, {
+    headers: {
+      'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 'public, max-age=3600',
+    },
+  })
 }
 
 async function storedPw(env: Env) {
@@ -53,6 +106,7 @@ export const onRequest = async (ctx: Ctx): Promise<Response> => {
   const migrate = url.searchParams.get('migrate') === '1'
 
   if (request.method === 'GET') {
+    if (url.searchParams.get('format') === 'rss') return rssResponse(env)
     return json(await getPosts(env))
   }
 

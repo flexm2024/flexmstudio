@@ -3,16 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { useAdmin } from '../context/AdminContext'
 
-interface Props { onClose: () => void; onSuccess: () => void }
+interface Props { onClose: () => void; onSuccess: () => void; onForgotPassword: () => void }
 
-export default function AdminLoginModal({ onClose, onSuccess }: Props) {
+export default function AdminLoginModal({ onClose, onSuccess, onForgotPassword }: Props) {
   const { login } = useAdmin()
   const [pw, setPw] = useState('')
   const [error, setError] = useState('')
 
-  const handleSubmit = (e: FormEvent) => {
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (login(pw)) { onSuccess() }
+    setLoading(true)
+    const ok = await login(pw)
+    setLoading(false)
+    if (ok) { onSuccess() }
     else { setError('비밀번호가 올바르지 않습니다.'); setPw('') }
   }
 
@@ -46,7 +51,13 @@ export default function AdminLoginModal({ onClose, onSuccess }: Props) {
 
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
             <button type="button" onClick={onClose} className="btn-secondary" style={{ flex: 1, fontSize: '0.85rem', padding: '0.6rem 1rem' }}>취소</button>
-            <button type="submit" className="btn-primary" style={{ flex: 1, fontSize: '0.85rem', padding: '0.6rem 1rem' }}>로그인</button>
+            <button type="submit" disabled={loading} className="btn-primary" style={{ flex: 1, fontSize: '0.85rem', padding: '0.6rem 1rem' }}>{loading ? '확인 중...' : '로그인'}</button>
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
+            <button type="button" onClick={onForgotPassword} style={{ background: 'none', border: 'none', color: 'var(--c-muted)', fontSize: '0.75rem', cursor: 'pointer', padding: 0, fontFamily: 'var(--font-sans)', transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = 'var(--c-accent)' }} onMouseLeave={e => { e.currentTarget.style.color = 'var(--c-muted)' }}>
+              비밀번호를 잊으셨나요?
+            </button>
           </div>
         </form>
       </div>

@@ -94,6 +94,9 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
   const [icon, setIcon] = useState(post?.icon ?? 'pen-to-square')
   const [coverImage, setCoverImage] = useState(post?.coverImage ?? '')
   const [coverText, setCoverText] = useState(post?.coverText ?? '')
+  const [category, setCategory] = useState(post?.category ?? '')
+  const [tags, setTags] = useState<string[]>(post?.tags ?? [])
+  const [tagInput, setTagInput] = useState('')
   const [content, setContent] = useState(post?.content ?? '')
   const [slug, setSlug] = useState(post?.slug ?? '')
   const [contentType, setContentType] = useState<ContentType>(post?.contentType ?? 'richtext')
@@ -234,6 +237,17 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
     e.target.value = ''
   }
 
+  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault()
+      const val = tagInput.trim().replace(/,$/, '')
+      if (val && !tags.includes(val)) setTags(prev => [...prev, val])
+      setTagInput('')
+    } else if (e.key === 'Backspace' && !tagInput && tags.length > 0) {
+      setTags(prev => prev.slice(0, -1))
+    }
+  }
+
   const handleSubmit = (e?: FormEvent) => {
     e?.preventDefault()
     // iframe 편집 모드면 iframe에서 최종 콘텐츠 추출
@@ -249,10 +263,11 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
     onSave({
       icon, coverImage,
       coverText: coverText.trim(),
+      category: category.trim() || undefined,
       title,
       excerpt,
       slug: slug.trim() || generateSlug(title),
-      tags: [],
+      tags,
       content: trimmed,
       contentType: finalType,
     })
@@ -278,7 +293,7 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
     <>
       {showCoverMaker && (
         <CoverImageMaker
-          initialTitle={extractMeta(content, contentType).title}
+          initialTitle=""
           onApply={(dataUrl) => setCoverImage(dataUrl)}
           onClose={() => setShowCoverMaker(false)}
         />
@@ -399,6 +414,51 @@ export default function BlogEditor({ post, onSave, onClose }: Props) {
               onFocus={e => focusStyle(e, 'coverText')}
               onBlur={e => blurStyle(e, 'coverText')}
             />
+          </div>
+
+          {/* 카테고리 + 태그 */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--c-muted)', marginBottom: '0.4rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                카테고리
+              </label>
+              <input
+                type="text"
+                value={category}
+                onChange={e => setCategory(e.target.value)}
+                placeholder="예: IT기획, AI도구, 일상"
+                style={inputStyle('category')}
+                onFocus={e => focusStyle(e, 'category')}
+                onBlur={e => blurStyle(e, 'category')}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--c-muted)', marginBottom: '0.4rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                태그 <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(Enter 또는 쉼표로 추가)</span>
+              </label>
+              <div
+                style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', alignItems: 'center', minHeight: '42px', padding: '0.4rem 0.75rem', borderRadius: '10px', background: 'var(--c-surface2)', border: '1px solid var(--c-border)', cursor: 'text', transition: 'border-color 0.2s' }}
+                onFocusCapture={e => (e.currentTarget.style.borderColor = 'var(--c-accent)')}
+                onBlurCapture={e => (e.currentTarget.style.borderColor = 'var(--c-border)')}
+                onClick={() => document.getElementById('tag-input')?.focus()}
+              >
+                {tags.map(tag => (
+                  <span key={tag} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.72rem', background: 'color-mix(in srgb, var(--c-accent) 15%, transparent)', color: 'var(--c-accent)', border: '1px solid color-mix(in srgb, var(--c-accent) 30%, transparent)', borderRadius: '6px', padding: '0.15rem 0.45rem', fontWeight: 600 }}>
+                    #{tag}
+                    <button type="button" onClick={() => setTags(prev => prev.filter(t => t !== tag))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--c-accent)', padding: 0, lineHeight: 1, fontSize: '0.75rem' }}>×</button>
+                  </span>
+                ))}
+                <input
+                  id="tag-input"
+                  type="text"
+                  value={tagInput}
+                  onChange={e => setTagInput(e.target.value)}
+                  onKeyDown={handleTagKeyDown}
+                  placeholder={tags.length === 0 ? '태그 입력...' : ''}
+                  style={{ flex: 1, minWidth: '80px', background: 'transparent', border: 'none', outline: 'none', color: 'var(--c-text)', fontSize: '0.82rem', padding: '0.1rem 0' }}
+                />
+              </div>
+            </div>
           </div>
 
           {/* 슬러그 */}

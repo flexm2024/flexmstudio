@@ -12,14 +12,19 @@ export default function AdminChangePasswordModal({ onClose }: Props) {
   const [confirmPw, setConfirmPw] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setError('')
 
     if (newPw.length < 4) { setError('새 비밀번호는 4자 이상이어야 합니다.'); return }
     if (newPw !== confirmPw) { setError('새 비밀번호가 일치하지 않습니다.'); return }
-    if (!changePassword(currentPw, newPw)) { setError('현재 비밀번호가 올바르지 않습니다.'); return }
+
+    setLoading(true)
+    const ok = await changePassword(currentPw, newPw)
+    setLoading(false)
+    if (!ok) { setError('현재 비밀번호가 올바르지 않습니다.'); return }
 
     setSuccess(true)
     setTimeout(onClose, 1500)
@@ -88,7 +93,7 @@ export default function AdminChangePasswordModal({ onClose }: Props) {
 
             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
               <button type="button" onClick={onClose} className="btn-secondary" style={{ flex: 1, fontSize: '0.85rem', padding: '0.6rem 1rem' }}>취소</button>
-              <button type="submit" className="btn-primary" style={{ flex: 1, fontSize: '0.85rem', padding: '0.6rem 1rem' }}>변경하기</button>
+              <button type="submit" disabled={loading} className="btn-primary" style={{ flex: 1, fontSize: '0.85rem', padding: '0.6rem 1rem' }}>{loading ? '저장 중...' : '변경하기'}</button>
             </div>
           </form>
         )}

@@ -65,6 +65,15 @@ export default function BlogPost() {
   })
 
   if (!post) {
+    if (!serverLoaded) {
+      return (
+        <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '5rem var(--page-px)', textAlign: 'center' }}>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem', color: 'var(--c-muted)' }}><FontAwesomeIcon icon={faInbox} /></div>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--c-text)', marginBottom: '0.75rem', fontFamily: 'var(--font-display)' }}>로딩 중...</h1>
+          <p style={{ color: 'var(--c-muted)', marginBottom: '2rem' }}>글을 불러오고 있습니다.</p>
+        </div>
+      )
+    }
     return (
       <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '5rem var(--page-px)', textAlign: 'center' }}>
         <div style={{ fontSize: '4rem', marginBottom: '1rem', color: 'var(--c-muted)' }}><FontAwesomeIcon icon={faInbox} /></div>

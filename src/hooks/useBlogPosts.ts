@@ -56,6 +56,15 @@ export function useBlogPosts() {
         return
       }
       const mapped = data.map(ensureSlug)
+      // 로컬에는 있지만 서버에 아직 반영 안 된 글 병합 (optimistic write 보존)
+      const localRaw = localStorage.getItem(BLOG_KEY)
+      if (localRaw) {
+        const local = JSON.parse(localRaw) as Post[]
+        const serverIds = new Set(mapped.map(p => p.id))
+        for (const p of local) {
+          if (!serverIds.has(p.id)) mapped.push(ensureSlug(p))
+        }
+      }
       setPosts(mapped)
       localStorage.setItem(BLOG_KEY, JSON.stringify(mapped))
     } catch {

@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#ffffff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="잔업정산">
+<title>잔업 정산기</title>
+<link rel="manifest" id="manifest-placeholder">
+<link rel="apple-touch-icon" id="apple-icon">
+<meta name="apple-mobile-web-app-title" content="잔업정산기">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg:       #f4f6fb;
+  --surface:  #ffffff;
+  --card:     #f9fafc;
+  --border:   #e4e8f0;
+  --accent:   #3b6bfa;
+  --green:    #16a34a;
+  --gold:     #d97706;
+  --red:      #dc2626;
+  --sat:      #2563eb;
+  --sun:      #dc2626;
+  --text:     #1e2640;
+  --sub:      #5a6680;
+  --muted:    #9aa3b8;
+  --radius:   14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ═══ 헤더 ═══ */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 8px rgba(0,0,0,.06);
+  padding: 0 16px;
+  padding-top: env(safe-area-inset-top);
+  flex-shrink: 0;
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  gap: 12px;
+}
+.app-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+.app-title span { color: var(--accent); }
+
+.year-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px 8px;
+  margin-left: auto;
+}
+.yc-btn {
+  background: none; border: none; color: var(--sub);
+  width: 24px; height: 24px; border-radius: 6px;
+  font-size: 11px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.yc-btn:active { background: var(--border); }
+.yc-year { font-size: 13px; font-weight: 700; color: var(--text); min-width: 36px; text-align: center; }
+
+/* ═══ 하단 네비게이션 ═══ */
+.bottom-nav {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 12px rgba(0,0,0,.07);
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+  flex-shrink: 0;
+}
+.nav-btn {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px; padding: 10px 4px;
+  border: none; background: none; color: var(--muted);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px; cursor: pointer;
+  transition: color .2s;
+  position: relative;
+}
+.nav-btn .nav-icon { font-size: 20px; line-height: 1; }
+.nav-btn.active { color: var(--accent); }
+.nav-btn.active.green-nav { color: var(--green); }
+.nav-btn.active.gold-nav { color: var(--gold); }
+.nav-btn::after {
+  content: '';
+  position: absolute; top: 0; left: 20%; right: 20%;
+  height: 2px; border-radius: 0 0 2px 2px;
+  background: transparent; transition: background .2s;
+}
+.nav-btn.active::after { background: var(--accent); }
+.nav-btn.active.green-nav::after { background: var(--green); }
+.nav-btn.active.gold-nav::after { background: var(--gold); }
+
+/* ═══ 월 탭바 ═══ */
+.month-tabs {
+  background: var(--surface);
+  display: flex;
+  overflow-x: auto;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+.month-tabs::-webkit-scrollbar { display: none; }
+.month-tab {
+  flex-shrink: 0; padding: 10px 16px;
+  border: none; background: none;
+  color: var(--muted); font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; border-bottom: 2px solid transparent;
+  white-space: nowrap; transition: all .2s;
+}
+.month-tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); font-weight: 700; }
+
+/* ═══ 스크롤 영역 ═══ */
+.content {
+  flex: 1; overflow-y: auto;
+  padding: 16px;
+  padding-bottom: 20px;
+}
+.view { display: none; }
+.view.active { display: block; }
+
+/* ═══ 요약 카드 ═══ */
+.summary-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.summary-label {
+  font-size: 16px; color: var(--text); font-weight: 700;
+  margin-bottom: 14px; letter-spacing: -0.5px;
+}
+.salary-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.salary-row label { font-size: 12px; color: var(--sub); white-space: nowrap; }
+.salary-input-wrap { flex: 1; position: relative; }
+.salary-display {
+  width: 100%; background: transparent;
+  border: none; outline: none;
+  border-radius: 0; padding: 0;
+  font-size: 14px; font-weight: 700; color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  text-align: right; cursor: pointer;
+  transition: none;
+}
+.salary-display:focus { outline: none; }
+.salary-real { display: none; }
+.salary-row span { font-size: 13px; color: var(--sub); }
+
+/* 기본급 + 총수령액 한 줄 */
+.top-summary-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+/* 기본급 박스 */
+.salary-group {
+  display: flex; flex-direction: column; gap: 0px;
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 6px 10px; min-width: 0;
+}
+.salary-group label { font-size: 10px; color: var(--sub); white-space: nowrap; }
+.salary-month-tag {
+  display: inline-block;
+  background: rgba(59,107,250,.1);
+  color: var(--accent);
+  font-size: 9px; font-weight: 700;
+  border-radius: 4px; padding: 1px 5px;
+  margin-left: 2px; vertical-align: middle;
+}
+.salary-edit-btn {
+  background: none; border: 1.5px solid var(--border);
+  border-radius: 8px; padding: 4px 10px;
+  font-size: 11px; font-weight: 600; color: var(--sub);
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: all .15s;
+}
+.salary-edit-btn.editing {
+  border-color: var(--accent); color: var(--accent);
+  background: rgba(59,107,250,.06);
+}
+.salary-edit-btn:active { opacity: .7; }
+/* 잠금 상태: input 비활성 */
+.salary-display.locked {
+  pointer-events: none;
+  color: var(--text);
+  background: transparent;
+}
+.salary-group .salary-input-wrap { flex: 1; min-width: 0; }
+.salary-group .salary-unit-row { display: flex; align-items: center; gap: 4px; justify-content: flex-end; }
+.salary-group span { font-size: 11px; color: var(--sub); white-space: nowrap; flex-shrink: 0; }
+/* 총수령액 박스 - 기본급과 동일 크기 */
+.final-group {
+  display: flex; flex-direction: column; gap: 0px;
+  background: #fff5f5; border: 1.5px solid rgba(220,38,38,.25);
+  border-radius: 10px; padding: 6px 10px; min-width: 0;
+  justify-content: space-between;
+}
+.final-group .fg-label {
+  font-size: 10px; color: var(--sub); white-space: nowrap;
+  height: 20px; display: flex; align-items: center;
+}
+.final-group .fg-bottom { display: flex; align-items: center; gap: 4px; }
+.final-group .fg-value {
+  font-size: 15px; font-weight: 700; color: var(--red);
+  line-height: 1; min-width: 0; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; flex: 1;
+  text-align: right;
+}
+.final-group .fg-unit { font-size: 11px; color: var(--sub); white-space: nowrap; flex-shrink: 0; }
+.divider-v { display: none; }
+
+/* 잔업 한 줄 */
+.ot-inline-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.ot-item {
+  flex: 1; display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 12px;
+}
+.ot-item .oi-label { font-size: 11px; color: var(--sub); }
+.ot-item .oi-val-wrap { display: flex; align-items: baseline; gap: 3px; }
+.ot-item .oi-val { font-size: 16px; font-weight: 700; color: var(--text); }
+.ot-item .oi-val.accent { color: var(--accent); }
+.ot-item .oi-unit { font-size: 11px; color: var(--muted); }
+
+/* 기존 stats-grid 제거 */
+.stats-grid { display: none; }
+.stat-box { display: none; }
+
+/* ═══ 달력 ═══ */
+.cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.cal-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.cal-mode-btn {
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--sub); border-radius: 8px; padding: 5px 12px;
+  font-size: 12px; font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; transition: all .2s;
+}
+.cal-mode-btn.editing {
+  background: rgba(79,128,255,.15);
+  border-color: var(--accent); color: var(--accent);
+}
+.weekday-row {
+  display: grid; grid-template-columns: repeat(7,1fr);
+  gap: 3px; margin-bottom: 3px;
+}
+.wd-label {
+  text-align: center; font-size: 10px; font-weight: 700;
+  padding: 4px 0; color: var(--muted);
+}
+.wd-label.sun { color: var(--sun); }
+.wd-label.sat { color: var(--sat); }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+
+/* 날짜 카드 — 보기 모드 */
+.day-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 5px 3px;
+  text-align: center; min-height: 58px;
+  display: flex; flex-direction: column;
+  align-items: center; transition: all .2s;
+}
+.day-card.empty { background: transparent; border-color: transparent; box-shadow: none; }
+.day-card.sat { border-color: rgba(37,99,235,.18); background: rgba(37,99,235,.04); }
+.day-card.sun { border-color: rgba(220,38,38,.18); background: rgba(220,38,38,.04); }
+.day-card.today { border-color: var(--accent); border-width: 2px; box-shadow: 0 0 0 2px rgba(59,107,250,.12); }
+.day-card.has-ot { border-color: var(--border); background: #fff; }
+.day-card.sat.has-ot { border-color: rgba(37,99,235,.18); background: rgba(37,99,235,.04); }
+.day-card.sun.has-ot { border-color: rgba(220,38,38,.18); background: rgba(220,38,38,.04); }
+
+.day-num {
+  font-size: 11px; font-weight: 600; color: var(--sub);
+  line-height: 1; margin-bottom: 4px; margin-top: 2px;
+}
+.day-card.today .day-num {
+  color: var(--accent) !important;
+  font-size: 12px; font-weight: 800;
+  position: relative;
+  margin: 2px auto 4px;
+}
+/* 오늘 날짜 아래 점 표시 */
+.day-card.today .day-num::after {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 2px auto 0;
+}
+.day-card.sat .day-num { color: var(--sat); }
+.day-card.sun .day-num { color: var(--sun); }
+.day-card.today.sat .day-num { color: var(--sat) !important; }
+.day-card.today.sun .day-num { color: var(--sun) !important; }
+.day-card.today.sat .day-num::after,
+.day-card.today.sun .day-num::after { background: var(--accent); }
+
+/* ot-display, ot-unit 숨김 - input이 직접 표시 */
+.ot-display { display: none; }
+.ot-unit { display: none; }
+
+/* 잔업 입력 - 항상 보임 */
+.ot-input {
+  width: 100%; background: transparent;
+  border: none;
+  border-radius: 5px; padding: 2px 1px;
+  font-size: 13px; font-weight: 700;
+  text-align: center; color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  -moz-appearance: textfield;
+  display: block;
+}
+.ot-input::-webkit-inner-spin-button,
+.ot-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.ot-input:focus {
+  outline: none;
+  background: #fff;
+  border: 1.5px solid var(--accent);
+  border-radius: 5px;
+}
+/* 값 있을 때 파란 배경으로 */
+.day-card.has-ot .ot-input {
+  color: #fff; background: var(--accent);
+  border-radius: 20px; padding: 3px 7px;
+  cursor: default;
+}
+.day-card.has-ot .ot-input:focus {
+  color: #fff; background: var(--accent);
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  padding: 3px 7px;
+}
+/* 수정 모드에서는 편집 가능하게 */
+.editing-mode .day-card.has-ot .ot-input,
+.cal-grid.editing-mode .day-card.has-ot .ot-input {
+  cursor: text;
+}
+.editing-mode .day-card.has-ot .ot-input:focus {
+  color: var(--text) !important;
+  background: #fff !important;
+  border: 1.5px solid var(--accent) !important;
+  border-radius: 5px !important;
+  padding: 4px 2px !important;
+}
+/* 편집(삭제) 모드 - 입력란 테두리 강조 */
+/* 수정 모드: 모든 입력칸 테두리 강조 */
+.editing-mode .ot-input {
+  border: 1.5px solid var(--accent) !important;
+  background: #eaf4fe !important;
+  border-radius: 5px !important;
+  color: var(--text) !important;
+  padding: 4px 2px !important;
+}
+
+/* 편집 모드 확인 버튼 바 */
+.edit-bar { display: none !important; }
+.edit-bar-UNUSED {
+  display: none;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.edit-bar.visible { display: flex; }
+.edit-bar-text { font-size: 13px; color: var(--sub); }
+.edit-bar-text strong { color: var(--accent); }
+.edit-btns { display: flex; gap: 8px; }
+.btn-cancel {
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--sub); border-radius: 9px; padding: 8px 16px;
+  font-size: 13px; font-weight: 600; font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; transition: all .2s;
+}
+.btn-cancel:active { background: var(--border); }
+.btn-confirm {
+  background: var(--accent); border: none;
+  color: white; border-radius: 9px; padding: 8px 18px;
+  font-size: 13px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; transition: all .2s;
+  box-shadow: 0 2px 8px rgba(79,128,255,.35);
+}
+.btn-confirm:active { opacity: .85; }
+
+/* ═══ 연간정산 ═══ */
+.section-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px; margin-bottom: 14px;
+}
+.section-title {
+  font-size: 18px; font-weight: 700; color: var(--text);
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+/* 연간 정산 테이블 - 이미지 스타일 */
+.annual-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.annual-table thead tr {
+  border-bottom: 2px solid var(--border);
+  background: var(--bg);
+}
+.annual-table th {
+  padding: 10px 8px; text-align: right;
+  color: var(--sub); font-weight: 700; font-size: 12px;
+  background: var(--bg);
+}
+.annual-table th:first-child { text-align: left; }
+.annual-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.annual-table tbody tr:hover { background: var(--bg); }
+.annual-table td {
+  padding: 11px 8px; text-align: right;
+  color: var(--text); font-size: 13px;
+}
+.annual-table td:first-child { text-align: left; font-weight: 700; color: var(--text); }
+.annual-table td:not(:first-child) { color: var(--sub); }
+.annual-table tbody tr td:nth-child(2) { font-weight: 500; }
+/* 잔업 있는 행 강조 */
+.annual-table tbody tr.has-data td { color: var(--text); }
+.annual-table tbody tr.has-data td:first-child { color: var(--accent); }
+/* 합계 행 */
+.annual-table tfoot tr {
+  border-top: 2px solid var(--gold);
+  background: rgba(245,158,11,.04);
+}
+.annual-table tfoot td {
+  font-weight: 700; font-size: 14px; padding: 12px 8px;
+  color: var(--gold);
+}
+.annual-table tfoot td:first-child { color: var(--text); }
+/* annual-boxes 제거 (합계에 통합) */
+.annual-boxes { display: none; }
+.abox { display: none; }
+
+/* ═══ 연차 ═══ */
+.tenure-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 14px; }
+.tbox {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 6px; text-align: center;
+}
+.tbox.green { border-color: rgba(34,197,94,.3); background: rgba(34,197,94,.06); }
+.tbox .tl { font-size: 10px; color: var(--muted); margin-bottom: 5px; }
+.tbox .tv { font-size: 16px; font-weight: 700; color: var(--text); }
+.tbox.green .tv { color: var(--green); }
+.tbox .tu { font-size: 10px; color: var(--muted); }
+
+.join-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.join-row label { font-size: 12px; color: var(--sub); white-space: nowrap; }
+.join-row input[type=date] {
+  flex: 1; background: #fff;
+  border: 1.5px solid var(--border); border-radius: 9px;
+  padding: 8px 10px; font-size: 14px; color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.join-row input[type=date]:focus { outline: none; border-color: var(--green); }
+
+.leave-summary {
+  display: none;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px; margin-bottom: 14px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.05);
+}
+.leave-summary.visible { display: flex; align-items: center; gap: 16px; }
+
+/* 왼쪽: 도넛 + 잔여 강조 */
+.leave-summary-top {
+  display: flex; align-items: center; gap: 12px;
+  flex-shrink: 0;
+}
+.donut-wrap { position: relative; flex-shrink: 0; }
+.donut-wrap svg { display: block; }
+.donut-center {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%); text-align: center;
+}
+.donut-center .dn { font-size: 20px; font-weight: 800; color: var(--green); line-height: 1; }
+.donut-center .dl { font-size: 9px; color: var(--muted); margin-top: 3px; }
+.leave-remain-info { flex: 1; }
+.leave-remain-info .ri-label { font-size: 11px; color: var(--sub); margin-bottom: 4px; }
+.leave-remain-info .ri-value { font-size: 28px; font-weight: 800; color: var(--green); line-height: 1; }
+.leave-remain-info .ri-unit { font-size: 13px; color: var(--sub); margin-left: 2px; }
+
+/* 우측: 총발생/사용 2칸 */
+.leave-stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1;
+}
+.ls-box {
+  background: var(--bg); border-radius: 10px;
+  padding: 10px 12px; text-align: center;
+}
+.ls-box.used-box { background: #fff5f5; }
+.ls-box .ls-label { font-size: 10px; color: var(--muted); margin-bottom: 5px; }
+.ls-box .ls-val { font-size: 18px; font-weight: 700; color: var(--text); }
+.ls-box.used-box .ls-val { color: var(--red); }
+.ls-box .ls-unit { font-size: 10px; color: var(--muted); }
+
+.timeline-scroll { /* no scroll - toggle instead */ }
+.tl-toggle-btn {
+  display: flex; align-items: center; gap: 4px;
+  background: none; border: 1.5px solid var(--border);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 11px; font-weight: 600; color: var(--sub);
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; transition: all .2s; white-space: nowrap;
+}
+.tl-toggle-btn:active { background: var(--bg); }
+.tl-toggle-btn.expanded { border-color: var(--accent); color: var(--accent); }
+.tl-header {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 12px;
+}
+.timeline { position: relative; padding-left: 18px; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 1px; background: var(--border); border-left: 1px dashed var(--border); }
+.tl-item { position: relative; padding: 0 0 12px 12px; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot { position: absolute; left: -12px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: var(--border); border: 1.5px solid var(--surface); }
+.tl-item.past .tl-dot { background: var(--green); }
+.tl-item.now .tl-dot { background: var(--accent); box-shadow: 0 0 0 3px rgba(79,128,255,.2); }
+.tl-date { font-size: 10px; color: var(--muted); }
+.tl-item.past .tl-date { color: var(--green); }
+.tl-item.now .tl-date { color: var(--accent); font-weight: 700; }
+.tl-desc { font-size: 12px; font-weight: 600; color: var(--sub); margin-top: 2px; }
+.tl-item.past .tl-desc { color: var(--text); }
+
+.use-form { margin-bottom: 14px; }
+.use-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.use-row input, .use-row select {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 9px; padding: 9px 10px; font-size: 13px;
+  color: var(--text); font-family: 'Noto Sans KR', sans-serif;
+}
+.use-row input[type=date], .use-row input[type=text] { flex: 1; }
+.use-row input:focus, .use-row select:focus { outline: none; border-color: var(--green); }
+.use-row select option { background: var(--surface); }
+.btn-add {
+  background: var(--green); border: none; color: white;
+  border-radius: 9px; padding: 9px 16px; font-size: 13px;
+  font-weight: 700; font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+}
+.btn-add:active { opacity: .85; }
+
+.leave-list { /* toggle instead of scroll */ }
+.leave-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.leave-item:last-child { border-bottom: none; }
+.li-date { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+.li-memo { font-size: 13px; font-weight: 600; color: var(--text); }
+.li-right { display: flex; align-items: center; gap: 8px; }
+.li-badge {
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.3);
+  color: var(--gold); font-size: 11px; font-weight: 700;
+  border-radius: 6px; padding: 2px 8px; white-space: nowrap;
+}
+.li-del {
+  background: none; border: none; color: var(--muted);
+  font-size: 15px; cursor: pointer; padding: 2px;
+  transition: color .2s;
+}
+.li-del:active { color: var(--red); }
+.no-leave { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 0; }
+
+  /* ═══ 데이터 관리 모달 ═══ */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(30,38,64,.5);
+    backdrop-filter: blur(4px);
+    z-index: 300;
+    align-items: flex-end; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-sheet {
+    background: #fff;
+    border-radius: 24px 24px 0 0;
+    width: 100%; max-width: 520px;
+    padding: 8px 20px max(24px,env(safe-area-inset-bottom));
+    animation: slideUp .3s cubic-bezier(.32,0,.67,0);
+    box-shadow: 0 -4px 32px rgba(0,0,0,.12);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: var(--border); border-radius: 2px;
+    margin: 10px auto 18px;
+  }
+  .modal-title {
+    font-size: 17px; font-weight: 800; color: var(--text);
+    margin-bottom: 18px; letter-spacing: -0.5px;
+  }
+  .data-btn-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+  .data-btn {
+    display: flex; align-items: center; gap: 14px;
+    padding: 15px 16px; border-radius: 14px;
+    border: 1.5px solid var(--border);
+    background: var(--bg); cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-align: left; transition: all .15s;
+    width: 100%;
+  }
+  .data-btn:active { transform: scale(.98); opacity: .85; }
+  .data-btn.export {
+    border-color: rgba(59,107,250,.3);
+    background: linear-gradient(135deg, rgba(59,107,250,.06), rgba(99,140,255,.03));
+  }
+  .data-btn.import {
+    border-color: rgba(34,197,94,.3);
+    background: linear-gradient(135deg, rgba(34,197,94,.06), rgba(16,185,129,.03));
+  }
+  .data-btn.danger {
+    border-color: rgba(220,38,38,.25);
+    background: linear-gradient(135deg, rgba(220,38,38,.05), rgba(239,68,68,.02));
+  }
+  .db-icon-wrap {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .export .db-icon-wrap { background: rgba(59,107,250,.1); }
+  .import .db-icon-wrap { background: rgba(34,197,94,.1); }
+  .danger .db-icon-wrap { background: rgba(220,38,38,.08); }
+  .db-text { flex: 1; }
+  .db-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .export .db-title { color: var(--accent); }
+  .import .db-title { color: var(--green); }
+  .danger .db-title { color: var(--red); }
+  .db-desc { font-size: 11px; color: var(--muted); }
+  .db-arrow { font-size: 14px; color: var(--border); flex-shrink: 0; }
+  .modal-close {
+    width: 100%; padding: 14px;
+    border: 1.5px solid var(--border);
+    background: #fff; border-radius: 14px;
+    font-size: 14px; font-weight: 600; color: var(--sub);
+    font-family: 'Noto Sans KR', sans-serif; cursor: pointer;
+    transition: background .15s;
+  }
+  .modal-close:active { background: var(--bg); }
+</style>
+</head>
+<body>
+
+<!-- ═══ 헤더 ═══ -->
+<div class="header">
+  <div class="header-top">
+    <div class="app-title">잔업<span>정산기</span></div>
+    <div class="year-ctrl">
+      <button class="yc-btn" onclick="changeYear(-1)">◀</button>
+      <span class="yc-year" id="yearLabel"></span>
+      <button class="yc-btn" onclick="changeYear(1)">▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 월 탭바 (잔업 모드일 때만) ═══ -->
+<div class="month-tabs" id="monthTabs"></div>
+
+<!-- ═══ 편집 확인 바 ═══ -->
+<!-- edit-bar 제거됨 (달력 하단 완료 버튼으로 대체) -->
+<div id="editBar" style="display:none"></div>
+
+<!-- ═══ 컨텐츠 ═══ -->
+<div class="content" id="mainContent">
+
+  <!-- 잔업 뷰 -->
+  <div class="view active" id="view-ot">
+
+    <!-- 월간 요약 -->
+    <div class="summary-card">
+      <div class="summary-label">📅 <span id="curMonthLabel">?</span>월 정산 요약</div>
+
+      <!-- 기본급 + 총수령액 한 줄 -->
+      <div class="top-summary-row">
+        <div class="salary-group">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+            <label>기본급 <span class="salary-month-tag" id="salaryMonthTag"></span></label>
+            <button class="salary-edit-btn" id="salaryEditBtn" onclick="toggleSalaryEdit()">✎ 수정</button>
+          </div>
+          <div class="salary-unit-row">
+            <div class="salary-input-wrap">
+              <input class="salary-display locked" id="salaryDisplay" type="text" value="" placeholder="기본급 입력"
+                inputmode="numeric" onfocus="salaryFocus()" onblur="salaryBlur()" oninput="salaryInput()" readonly>
+              <input class="salary-real" id="baseSalary" type="number" value="">
+            </div>
+            <span>원</span>
+          </div>
+        </div>
+        <div class="divider-v"></div>
+        <div class="final-group">
+          <div class="fg-label">총 수령액</div>
+          <div class="fg-bottom">
+            <div class="fg-value" id="finalAmt">0</div>
+            <div class="fg-unit">원</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 잔업시간 + 잔업수당 한 줄 -->
+      <div class="ot-inline-row">
+        <div class="ot-item">
+          <span class="oi-label">잔업 시간</span>
+          <div class="oi-val-wrap">
+            <span class="oi-val accent" id="totalH">0</span>
+            <span class="oi-unit">시간</span>
+          </div>
+        </div>
+        <div class="ot-item">
+          <span class="oi-label">잔업 수당</span>
+          <div class="oi-val-wrap">
+            <span class="oi-val" id="otPay">0</span>
+            <span class="oi-unit">원</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 달력 영역 -->
+    <div id="calArea"></div>
+
+  </div>
+
+  <!-- 연간정산 뷰 -->
+  <div class="view" id="view-annual">
+    <div class="section-card">
+      <div class="section-title">📊 연간 정산 요약</div>
+      <table class="annual-table">
+        <thead>
+          <tr><th>월</th><th>잔업h</th><th>수당(원)</th><th>수령액(원)</th></tr>
+        </thead>
+        <tbody id="annualBody"></tbody>
+        <tfoot>
+          <tr>
+            <td>합계</td>
+            <td id="aTotalH">-</td>
+            <td id="aTotalOt">-</td>
+            <td id="aTotalFin">-</td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="annual-boxes">
+        <div class="abox"><div class="al">연간 잔업 시간</div><div class="av" id="aBoxH">0h</div></div>
+        <div class="abox"><div class="al">수당 합계</div><div class="av" id="aBoxOt">0원</div></div>
+        <div class="abox full"><div class="al">연간 총 수령액</div><div class="av" id="aBoxFin">0원</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 연차 뷰 -->
+  <div class="view" id="view-leave">
+
+    <div class="section-card">
+      <div class="section-title">🗓️ 입사 정보</div>
+      <div class="join-row">
+        <label>입사일</label>
+        <input type="date" id="joinDate" oninput="onJoinChange()">
+      </div>
+      <div class="tenure-grid">
+        <div class="tbox"><div class="tl">근속 연수</div><div class="tv" id="tenureY">-</div><div class="tu">년</div></div>
+        <div class="tbox"><div class="tl">근속 개월</div><div class="tv" id="tenureM">-</div><div class="tu">개월</div></div>
+        <div class="tbox green"><div class="tl">총 발생 연차</div><div class="tv" id="totalLeave">-</div><div class="tu">일</div></div>
+      </div>
+    </div>
+
+    <div class="leave-summary" id="leaveSummary">
+      <!-- 상단: 도넛 + 잔여 강조 -->
+      <div class="leave-summary-top">
+        <div class="donut-wrap">
+          <svg width="72" height="72" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="28" fill="none" stroke="#e8f5e9" stroke-width="9"/>
+            <circle id="donutArc" cx="38" cy="38" r="28" fill="none" stroke="#22c55e" stroke-width="9"
+              stroke-linecap="round" stroke-dasharray="175.9" stroke-dashoffset="175.9"
+              transform="rotate(-90 38 38)" style="transition:stroke-dashoffset .6s"/>
+          </svg>
+          <div class="donut-center">
+            <div class="dn" id="donutNum">0</div>
+            <div class="dl">잔여</div>
+          </div>
+        </div>
+        <div class="leave-remain-info">
+          <div class="ri-label">사용 가능한 연차</div>
+          <div><span class="ri-value" id="riRemain">0</span><span class="ri-unit">일</span></div>
+        </div>
+      </div>
+      <!-- 우측: 총발생/사용 2칸 -->
+      <div class="leave-stats-grid">
+        <div class="ls-box">
+          <div class="ls-label">총 발생</div>
+          <div class="ls-val" id="lsTotal">0</div>
+          <div class="ls-unit">일</div>
+        </div>
+        <div class="ls-box used-box">
+          <div class="ls-label">사용</div>
+          <div class="ls-val" id="lsUsed">0</div>
+          <div class="ls-unit">일</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card" id="timelineCard" style="display:none">
+      <div class="tl-header">
+        <div class="section-title" style="margin-bottom:0">📈 연차 발생 타임라인</div>
+        <button class="tl-toggle-btn" id="tlToggleBtn" onclick="toggleTimeline()">
+          <span id="tlToggleIcon">▼</span>
+          <span id="tlToggleText">전체보기</span>
+        </button>
+      </div>
+      <div id="tlCollapsed"></div>
+      <div id="tlExpanded" style="display:none"><div class="timeline" id="leaveTimeline"></div></div>
+    </div>
+
+    <div class="section-card">
+      <div class="tl-header">
+        <div class="section-title" style="margin-bottom:0">✏️ 연차 사용 기록</div>
+        <button class="tl-toggle-btn" id="lvToggleBtn" onclick="toggleLeaveList()">
+          <span id="lvToggleIcon">▼</span>
+          <span id="lvToggleText">전체보기</span>
+        </button>
+      </div>
+      <div class="use-form">
+        <div class="use-row">
+          <input type="date" id="useDate">
+          <select id="useDays" style="width:90px">
+            <option value="1">1일</option>
+            <option value="0.5am">오전반차</option>
+            <option value="0.5pm">오후반차</option>
+          </select>
+        </div>
+        <div class="use-row">
+          <input type="text" id="useMemo" placeholder="메모 (병원, 여행 등)">
+          <button class="btn-add" onclick="addLeave()">+ 추가</button>
+        </div>
+      </div>
+      <div id="lvCollapsed"></div>
+      <div id="lvExpanded" style="display:none">
+        <div class="leave-list" id="leaveList"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ═══ 하단 네비게이션 ═══ -->
+<div class="bottom-nav">
+  <button class="nav-btn active" id="nav-ot" onclick="switchView('ot')">
+    <span class="nav-icon">📋</span>잔업기록
+  </button>
+  <button class="nav-btn gold-nav" id="nav-annual" onclick="switchView('annual')">
+    <span class="nav-icon">📊</span>연간정산
+  </button>
+  <button class="nav-btn green-nav" id="nav-leave" onclick="switchView('leave')">
+    <span class="nav-icon">🌿</span>연차
+  </button>
+  <button class="nav-btn" onclick="openDataModal()">
+    <span class="nav-icon">💾</span>데이터
+  </button>
+</div>
+
+<!-- 데이터 관리 모달 -->
+<div class="modal-overlay" id="dataModal" onclick="closeDataModalOutside(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">데이터 관리</div>
+    <div class="data-btn-group">
+      <button class="data-btn export" onclick="exportData()">
+        <div class="db-icon-wrap">📤</div>
+        <div class="db-text">
+          <div class="db-title">데이터 내보내기</div>
+          <div class="db-desc">잔업·연차 기록을 JSON 파일로 저장</div>
+        </div>
+        <span class="db-arrow">›</span>
+      </button>
+      <button class="data-btn import" onclick="document.getElementById('importFile').click()">
+        <div class="db-icon-wrap">📥</div>
+        <div class="db-text">
+          <div class="db-title">데이터 불러오기</div>
+          <div class="db-desc">저장된 JSON 파일로 데이터 복원</div>
+        </div>
+        <span class="db-arrow">›</span>
+      </button>
+      <button class="data-btn danger" onclick="resetData()">
+        <div class="db-icon-wrap">🗑️</div>
+        <div class="db-text">
+          <div class="db-title">데이터 초기화</div>
+          <div class="db-desc">모든 데이터 삭제 후 초기화</div>
+        </div>
+        <span class="db-arrow">›</span>
+      </button>
+    </div>
+    <button class="modal-close" onclick="closeDataModal()">닫기</button>
+  </div>
+</div>
+<input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+
+<script>
+// ═══ 상태 ═══
+let YEAR = new Date().getFullYear();
+let curMonth = new Date().getMonth() + 1;
+let curView = 'ot';
+let isEditing = false;
+let editSnapshot = {};
+let leaveUses = [];
+let salaryByMonth = {}; // { '2026-3': 3302200, '2026-4': 3500000 }
+
+// ═══ 연도 ═══
+function updateYearLabel() {
+  document.getElementById('yearLabel').innerText = YEAR;
+}
+function changeYear(d) {
+  YEAR += d;
+  updateYearLabel();
+  buildAll();
+  loadHours();
+  if (curView === 'ot') showCalMonth(curMonth);
+  else if (curView === 'annual') renderAnnual();
+}
+
+// ═══ 탭바 & 달력 생성 ═══
+function buildAll() {
+  const tabs = document.getElementById('monthTabs');
+  const cal = document.getElementById('calArea');
+  tabs.innerHTML = '';
+  cal.innerHTML = '';
+
+  for (let m = 1; m <= 12; m++) {
+    tabs.innerHTML += `<button class="month-tab" onclick="showCalMonth(${m})" id="mtab${m}">${m}월</button>`;
+
+    const firstDay = new Date(YEAR, m-1, 1).getDay();
+    const lastDate = new Date(YEAR, m, 0).getDate();
+    const today = new Date();
+    const isCurMonth = today.getFullYear() === YEAR && today.getMonth()+1 === m;
+
+    const wdHdr = ['일','월','화','수','목','금','토'].map((d,i) =>
+      `<div class="wd-label ${i===0?'sun':i===6?'sat':''}">${d}</div>`
+    ).join('');
+
+    let cells = '';
+    for (let e = 0; e < firstDay; e++) cells += `<div class="day-card empty"></div>`;
+    for (let d = 1; d <= lastDate; d++) {
+      const dow = (firstDay + d - 1) % 7;
+      const isSat = dow === 6, isSun = dow === 0;
+      const isToday = isCurMonth && today.getDate() === d;
+      const cls = [isSat?'sat':isSun?'sun':'', isToday?'today':''].filter(Boolean).join(' ');
+      cells += `<div class="day-card ${cls}" id="dc${m}_${d}">
+        <div class="day-num">${d}</div>
+        <div class="ot-display" id="disp${m}_${d}">-</div>
+        <div class="ot-unit" id="unit${m}_${d}"></div>
+        <input class="ot-input" type="number" inputmode="decimal" min="0" max="24" step="0.5"
+          id="inp${m}_${d}" placeholder="-"
+          oninput="onDirectInput(this,${m},${d})"
+          onblur="onDirectBlur(this,${m},${d})">
+      </div>`;
+    }
+
+    cal.innerHTML += `<div id="cal${m}" style="display:none">
+      <div class="cal-header">
+        <div class="cal-title">${YEAR}년 ${m}월</div>
+        <button class="cal-mode-btn" id="editBtn${m}" onclick="toggleEdit(${m})">✎ 수정</button>
+      </div>
+      <div class="weekday-row">${wdHdr}</div>
+      <div class="cal-grid">${cells}</div>
+    </div>`;
+  }
+}
+
+// ═══ 달력 월 전환 ═══
+function showCalMonth(m) {
+  if (isEditing) cancelEdit();
+  document.querySelectorAll('[id^="cal"]').forEach(el => { if(el.id.match(/^cal\d+$/)) el.style.display = 'none'; });
+  document.querySelectorAll('.month-tab').forEach(b => b.classList.remove('active'));
+  const calEl = document.getElementById('cal' + m);
+  if (calEl) calEl.style.display = 'block';
+  const tabEl = document.getElementById('mtab' + m);
+  if (tabEl) { tabEl.classList.add('active'); tabEl.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
+  curMonth = m;
+  document.getElementById('curMonthLabel').innerText = m;
+  // 해당 월 기본급 불러오기
+  loadSalaryForMonth(m);
+  updateDispAll(m);
+  calc();
+}
+
+// ═══ 직접 입력 ═══
+function onDirectInput(el, m, d) {
+  const existing = getHourVal(m, d);
+  if (existing > 0 && !isEditing) {
+    // 기존 값 있으면 수정 불가 → 원래 값으로 되돌림
+    el.value = existing;
+    return;
+  }
+  if (isEditing) return; // 수정 모드는 저장 버튼으로
+  const v = Number(el.value) || 0;
+  setHourVal(m, d, v);
+  const dc = document.getElementById(`dc${m}_${d}`);
+  if (dc) dc.classList.toggle('has-ot', v > 0);
+  saveData();
+  calc();
+}
+function onDirectBlur(el, m, d) {
+  const existing = getHourVal(m, d);
+  if (existing > 0 && !isEditing) {
+    // 기존 값 있는 칸 → 원래 값 복원
+    el.value = existing;
+    return;
+  }
+  if (isEditing) return;
+  const v = Number(el.value) || 0;
+  if (v === 0) el.value = '';
+  const dc = document.getElementById(`dc${m}_${d}`);
+  if (dc) dc.classList.toggle('has-ot', v > 0);
+}
+
+// ═══ 수정 모드 시작 ═══
+function startEdit(m) {
+  if (isEditing) { confirmEdit(); return; }
+  isEditing = true;
+  // 스냅샷 저장 (취소 시 복원용)
+  editSnapshot = {};
+  for (let d = 1; d <= 31; d++) {
+    editSnapshot[d] = getHourVal(m, d);
+  }
+  // UI 전환
+  const grid = document.getElementById('cal' + m)?.querySelector('.cal-grid');
+  if (grid) grid.classList.add('editing-mode');
+  const btn = document.getElementById('editBtn' + m);
+  if (btn) { btn.classList.add('editing'); btn.innerText = '✓ 완료'; }
+  document.getElementById('editBar').classList.add('visible');
+}
+
+function toggleEdit(m) {
+  if (isEditing) { confirmEdit(); return; }
+  isEditing = true;
+  // 스냅샷 저장
+  editSnapshot = {};
+  for (let d = 1; d <= 31; d++) {
+    const inp = document.getElementById(`inp${m}_${d}`);
+    if (inp) editSnapshot[d] = inp.value;
+  }
+  // UI 전환
+  document.getElementById('cal' + m).querySelector('.cal-grid').classList.add('editing-mode');
+  document.getElementById('editBtn' + m).classList.add('editing');
+  document.getElementById('editBtn' + m).innerText = '✓ 완료';
+  document.getElementById('editBar').classList.add('visible');
+  // input에 현재 값 채우기
+  for (let d = 1; d <= 31; d++) {
+    const disp = document.getElementById(`disp${m}_${d}`);
+    const inp = document.getElementById(`inp${m}_${d}`);
+    if (!inp) continue;
+    const stored = getHourVal(m, d);
+    inp.value = stored > 0 ? stored : '';
+  }
+}
+
+function confirmEdit() {
+  const m = curMonth;
+  // input 값 → hourData 반영
+  for (let d = 1; d <= 31; d++) {
+    const inp = document.getElementById(`inp${m}_${d}`);
+    if (inp) {
+      const v = Number(inp.value) || 0;
+      setHourVal(m, d, v);
+    }
+  }
+  finishEdit(m);
+  saveData();
+  updateDispAll(m);
+  calc();
+}
+
+function cancelEdit() {
+  const m = curMonth;
+  // 스냅샷으로 복원
+  for (let d = 1; d <= 31; d++) {
+    const v = editSnapshot[d] || 0;
+    setHourVal(m, d, v);
+  }
+  finishEdit(m);
+  updateDispAll(m);
+  calc();
+}
+
+function finishEdit(m) {
+  isEditing = false;
+  const grid = document.getElementById('cal' + m)?.querySelector('.cal-grid');
+  if (grid) grid.classList.remove('editing-mode');
+  const btn = document.getElementById('editBtn' + m);
+  if (btn) { btn.classList.remove('editing'); btn.innerText = '✎ 수정'; }
+  document.getElementById('editBar').classList.remove('visible');
+}
+
+// ═══ 시간 저장소 (년-월-일 키) ═══
+const hourData = {}; // { '2026-3-22': 2.5 }
+function hourKey(m, d) { return `${YEAR}-${m}-${d}`; }
+function getHourVal(m, d) { return hourData[hourKey(m,d)] || 0; }
+function setHourVal(m, d, v) {
+  const k = hourKey(m,d);
+  if (v > 0) hourData[k] = v; else delete hourData[k];
+  // day-card has-ot 클래스
+  const dc = document.getElementById(`dc${m}_${d}`);
+  if (dc) dc.classList.toggle('has-ot', v > 0);
+}
+
+function updateDispAll(m) {
+  for (let d = 1; d <= 31; d++) {
+    const inp = document.getElementById(`inp${m}_${d}`);
+    const dc = document.getElementById(`dc${m}_${d}`);
+    if (!inp) continue;
+    const v = getHourVal(m, d);
+    inp.value = v > 0 ? v : '';
+    if (dc) dc.classList.toggle('has-ot', v > 0);
+  }
+}
+
+// ═══ 계산 ═══
+function getMonthHours(m) {
+  let h = 0;
+  for (let d = 1; d <= 31; d++) h += getHourVal(m, d);
+  return h;
+}
+
+// 해당 월 기본급 가져오기 (없으면 이전 달에서 상속)
+function getEffectiveSalary(m) {
+  let val = salaryByMonth[`${YEAR}-${m}`];
+  if (val) return Number(val);
+  for (let i = m-1; i >= 1; i--) {
+    if (salaryByMonth[`${YEAR}-${i}`]) return Number(salaryByMonth[`${YEAR}-${i}`]);
+  }
+  for (let i = 12; i >= 1; i--) {
+    if (salaryByMonth[`${YEAR-1}-${i}`]) return Number(salaryByMonth[`${YEAR-1}-${i}`]);
+  }
+  return 0;
+}
+
+function calc() {
+  const salary = getEffectiveSalary(curMonth);
+  const hourly = salary / 209;
+  const h = getMonthHours(curMonth);
+  const ot = Math.floor(h * hourly * 1.5);
+  document.getElementById('totalH').innerText = h;
+  document.getElementById('otPay').innerText = ot.toLocaleString();
+  document.getElementById('finalAmt').innerText = salary > 0 ? (salary + ot).toLocaleString() : '-';
+}
+
+function renderAnnual() {
+  const tbody = document.getElementById('annualBody');
+  tbody.innerHTML = '';
+  let tH = 0, tOt = 0, tFin = 0;
+  for (let m = 1; m <= 12; m++) {
+    const mSalary = getEffectiveSalary(m);
+    const hourly = mSalary / 209;
+    const h = getMonthHours(m);
+    const ot = Math.floor(h * hourly * 1.5);
+    const fin = mSalary + ot;
+    tH += h; tOt += ot; tFin += fin;
+    tbody.innerHTML += `<tr class="${h>0?'has-data':''}"><td>${m}월</td><td>${h||0}</td><td>${ot.toLocaleString()}</td><td>${mSalary>0?fin.toLocaleString():'-'}</td></tr>`;
+  }
+  document.getElementById('aTotalH').innerText = tH;
+  document.getElementById('aTotalOt').innerText = tOt.toLocaleString();
+  document.getElementById('aTotalFin').innerText = tFin.toLocaleString();
+  document.getElementById('aBoxH').innerText = tH + 'h';
+  document.getElementById('aBoxOt').innerText = tOt.toLocaleString() + '원';
+  document.getElementById('aBoxFin').innerText = tFin.toLocaleString() + '원';
+}
+
+// ═══ 기본급 콤마 포맷 ═══
+function loadSalaryForMonth(m) {
+  const tag = document.getElementById('salaryMonthTag');
+  const inp = document.getElementById('salaryDisplay');
+  const btn = document.getElementById('salaryEditBtn');
+
+  // 수정 모드 리셋
+  salaryEditing = false;
+  inp.setAttribute('readonly', true);
+  inp.classList.add('locked');
+  if (btn) { btn.classList.remove('editing'); btn.innerText = '✎ 수정'; }
+
+  // 해당 월 값 찾기 → 없으면 가장 최근 달 값 자동 채움
+  let val = salaryByMonth[`${YEAR}-${m}`];
+  let inherited = false;
+  if (!val) {
+    for (let i = m-1; i >= 1; i--) {
+      if (salaryByMonth[`${YEAR}-${i}`]) { val = salaryByMonth[`${YEAR}-${i}`]; inherited = true; break; }
+    }
+    if (!val) {
+      for (let i = 12; i >= 1; i--) {
+        if (salaryByMonth[`${YEAR-1}-${i}`]) { val = salaryByMonth[`${YEAR-1}-${i}`]; inherited = true; break; }
+      }
+    }
+  }
+
+  if (val) {
+    document.getElementById('baseSalary').value = val;
+    inp.value = Number(val).toLocaleString();
+    if (tag) {
+      tag.innerText = m + '월';
+      // 이 달 직접 저장된 값이면 파란색, 이전 달에서 따라온 값이면 회색
+      tag.style.background = inherited ? 'rgba(156,163,175,.15)' : 'rgba(59,107,250,.1)';
+      tag.style.color = inherited ? 'var(--muted)' : 'var(--accent)';
+    }
+  } else {
+    document.getElementById('baseSalary').value = '';
+    inp.value = '';
+    if (tag) { tag.innerText = m+'월'; tag.style.background='rgba(156,163,175,.15)'; tag.style.color='var(--muted)'; }
+  }
+}
+
+let salaryEditing = false;
+
+function toggleSalaryEdit() {
+  const inp = document.getElementById('salaryDisplay');
+  const btn = document.getElementById('salaryEditBtn');
+  if (!salaryEditing) {
+    // 잠금 해제
+    salaryEditing = true;
+    inp.removeAttribute('readonly');
+    inp.classList.remove('locked');
+    btn.classList.add('editing');
+    btn.innerText = '✓ 완료';
+    // 숫자만 표시 (콤마 제거)
+    const val = salaryByMonth[`${YEAR}-${curMonth}`];
+    inp.value = val ? Number(val).toString() : '';
+    inp.focus();
+    inp.select();
+  } else {
+    // 저장 & 잠금
+    salaryEditing = false;
+    inp.setAttribute('readonly', true);
+    inp.classList.add('locked');
+    btn.classList.remove('editing');
+    btn.innerText = '✎ 수정';
+    // blur 처리로 저장
+    const raw = inp.value.replace(/[^0-9]/g,'');
+    const num = Number(raw) || 0;
+    const key = `${YEAR}-${curMonth}`;
+    const tag = document.getElementById('salaryMonthTag');
+    if (num > 0) {
+      salaryByMonth[key] = num;
+      document.getElementById('baseSalary').value = num;
+      inp.value = num.toLocaleString();
+      if (tag) { tag.innerText = curMonth+'월'; tag.style.background='rgba(59,107,250,.1)'; tag.style.color='var(--accent)'; }
+    } else if (salaryByMonth[key]) {
+      // 빈 칸이면 이전 값 유지
+      inp.value = Number(salaryByMonth[key]).toLocaleString();
+    }
+    saveData();
+    calc();
+  }
+}
+
+function salaryFocus() {
+  if (!salaryEditing) return;
+  const val = salaryByMonth[`${YEAR}-${curMonth}`];
+  document.getElementById('salaryDisplay').value = val ? Number(val).toString() : '';
+}
+function salaryBlur() {
+  if (!salaryEditing) return; // 잠금 상태면 무시
+}
+function salaryInput() {
+  // 숫자만 허용
+  let v = document.getElementById('salaryDisplay').value.replace(/[^0-9]/g,'');
+  document.getElementById('salaryDisplay').value = v;
+  document.getElementById('baseSalary').value = Number(v) || 0;
+}
+
+// ═══ 뷰 전환 ═══
+function switchView(view) {
+  if (isEditing) cancelEdit();
+  curView = view;
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('nav-' + view).classList.add('active');
+  document.getElementById('monthTabs').style.display = view === 'ot' ? 'flex' : 'none';
+  document.getElementById('editBar').style.display = view === 'ot' ? '' : 'none';
+  if (view === 'annual') renderAnnual();
+  if (view === 'leave') renderLeave();
+  if (view === 'ot') calc();
+}
+
+// ═══ 연차 ═══
+function onJoinChange() { saveData(); renderLeave(); }
+
+function calcLeaveEvents(joinDate) {
+  const events = [];
+  const join = new Date(joinDate); join.setHours(0,0,0,0);
+  for (let m = 1; m <= 11; m++) {
+    const d = new Date(join); d.setMonth(d.getMonth() + m);
+    events.push({ date: new Date(d), label: `${m}개월 만근`, days: 1 });
+  }
+  for (let y = 1; y <= 30; y++) {
+    const d = new Date(join); d.setFullYear(d.getFullYear() + y);
+    const days = Math.min(15 + Math.floor((y-1)/2), 25);
+    events.push({ date: new Date(d), label: `${y}년차 연차`, days });
+  }
+  return events.sort((a,b) => a.date - b.date);
+}
+
+function renderLeave() {
+  const jv = document.getElementById('joinDate').value;
+  if (!jv) return;
+  const join = new Date(jv); join.setHours(0,0,0,0);
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (join > today) return;
+
+  let yrs = today.getFullYear() - join.getFullYear();
+  let mos = today.getMonth() - join.getMonth();
+  if (today.getDate() < join.getDate()) mos--;
+  if (mos < 0) { yrs--; mos += 12; }
+  document.getElementById('tenureY').innerText = yrs;
+  document.getElementById('tenureM').innerText = yrs*12 + mos;
+
+  const events = calcLeaveEvents(jv);
+  const total = events.filter(e => e.date <= today).reduce((s,e) => s+e.days, 0);
+  document.getElementById('totalLeave').innerText = total;
+
+  const used = leaveUses.reduce((s,u) => s + Number(u.days), 0);
+  const remain = Math.max(total - used, 0);
+
+  document.getElementById('leaveSummary').classList.toggle('visible', total > 0);
+  document.getElementById('lsTotal').innerText = total;
+  document.getElementById('lsUsed').innerText = used;
+  const lsRemainEl = document.getElementById('lsRemain');
+  if (lsRemainEl) lsRemainEl.innerText = remain;
+  document.getElementById('donutNum').innerText = remain;
+  const riEl = document.getElementById('riRemain');
+  if (riEl) riEl.innerText = remain;
+  const circ = 175.9;
+  const pct = total > 0 ? remain / total : 0;
+  document.getElementById('donutArc').setAttribute('stroke-dashoffset', circ - circ*pct);
+
+  document.getElementById('timelineCard').style.display = 'block';
+
+  // 발생한 연차만 표시 (오늘 이전), 최신순 전체 (스크롤로 확인)
+  const pastAll = events.filter(e => e.date <= today).sort((a,b) => b.date - a.date);
+
+  function makeTlItem(e) {
+    const ds = `${e.date.getFullYear()}.${String(e.date.getMonth()+1).padStart(2,'0')}.${String(e.date.getDate()).padStart(2,'0')}`;
+    return `<div class="tl-item past"><div class="tl-dot"></div><div class="tl-date">${ds} ✅</div><div class="tl-desc">${e.label} +${e.days}일</div></div>`;
+  }
+
+  const noEvt = '<div style="text-align:center;color:var(--muted);font-size:13px;padding:12px 0">아직 발생한 연차가 없어요</div>';
+
+  // 접힌 상태: 최신 1개만 timeline 없이 심플하게
+  const collapsed = document.getElementById('tlCollapsed');
+  if (pastAll.length === 0) {
+    collapsed.innerHTML = noEvt;
+  } else {
+    const e = pastAll[0];
+    const ds = `${e.date.getFullYear()}.${String(e.date.getMonth()+1).padStart(2,'0')}.${String(e.date.getDate()).padStart(2,'0')}`;
+    collapsed.innerHTML = `<div style="display:flex;align-items:center;gap:8px;padding:4px 0">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;display:inline-block"></span>
+      <span style="font-size:12px;color:var(--muted)">${ds} ✅</span>
+      <span style="font-size:12px;font-weight:600;color:var(--text)">${e.label} +${e.days}일</span>
+      ${pastAll.length > 1 ? `<span style="font-size:11px;color:var(--muted)">외 ${pastAll.length-1}개</span>` : ''}
+    </div>`;
+  }
+
+  // 펼친 상태: 전체 타임라인
+  document.getElementById('leaveTimeline').innerHTML = pastAll.length === 0
+    ? noEvt
+    : `<div class="timeline">${pastAll.map(makeTlItem).join('')}</div>`;
+
+  renderLeaveList();
+}
+
+function toggleTimeline() {
+  const collapsed = document.getElementById('tlCollapsed');
+  const expanded = document.getElementById('tlExpanded');
+  const btn = document.getElementById('tlToggleBtn');
+  const icon = document.getElementById('tlToggleIcon');
+  const text = document.getElementById('tlToggleText');
+  const isOpen = expanded.style.display !== 'none';
+  if (isOpen) {
+    collapsed.style.display = 'block';
+    expanded.style.display = 'none';
+    btn.classList.remove('expanded');
+    icon.innerText = '▼';
+    text.innerText = '전체보기';
+  } else {
+    collapsed.style.display = 'none';
+    expanded.style.display = 'block';
+    btn.classList.add('expanded');
+    icon.innerText = '▲';
+    text.innerText = '접기';
+  }
+}
+
+function makeLvBadge(u) {
+  return u.type==='0.5am' ? '오전반차' : u.type==='0.5pm' ? '오후반차' : u.days===0.5 ? '반차' : u.days+'일';
+}
+function makeLvItem(u, i) {
+  return `<div class="leave-item">
+    <div><div class="li-date">${u.date}</div><div class="li-memo">${u.memo||'(메모 없음)'}</div></div>
+    <div class="li-right">
+      <span class="li-badge">${makeLvBadge(u)}</span>
+      <button class="li-del" onclick="delLeave(${i})">✕</button>
+    </div>
+  </div>`;
+}
+
+function toggleLeaveList() {
+  const collapsed = document.getElementById('lvCollapsed');
+  const expanded = document.getElementById('lvExpanded');
+  const btn = document.getElementById('lvToggleBtn');
+  const icon = document.getElementById('lvToggleIcon');
+  const text = document.getElementById('lvToggleText');
+  const isOpen = expanded.style.display !== 'none';
+  if (isOpen) {
+    collapsed.style.display = 'block';
+    expanded.style.display = 'none';
+    btn.classList.remove('expanded');
+    icon.innerText = '▼';
+    text.innerText = '전체보기';
+  } else {
+    collapsed.style.display = 'none';
+    expanded.style.display = 'block';
+    btn.classList.add('expanded');
+    icon.innerText = '▲';
+    text.innerText = '접기';
+  }
+}
+
+function renderLeaveList() {
+  const collapsed = document.getElementById('lvCollapsed');
+  const list = document.getElementById('leaveList');
+  const noMsg = '<div class="no-leave">아직 사용한 연차가 없어요 🌱</div>';
+
+  if (!leaveUses.length) {
+    collapsed.innerHTML = noMsg;
+    if (list) list.innerHTML = noMsg;
+    // 토글 버튼 숨기기
+    const btn = document.getElementById('lvToggleBtn');
+    if (btn) btn.style.display = 'none';
+    return;
+  }
+
+  // 토글 버튼 보이기
+  const btn = document.getElementById('lvToggleBtn');
+  if (btn) btn.style.display = 'flex';
+
+  const sorted = [...leaveUses].sort((a,b) => new Date(b.date)-new Date(a.date));
+
+  // 접힌 상태: 최신 1개 + 나머지 개수
+  const first = sorted[0];
+  collapsed.innerHTML = `<div class="leave-item">
+    <div><div class="li-date">${first.date}</div><div class="li-memo">${first.memo||'(메모 없음)'}</div></div>
+    <div class="li-right">
+      <span class="li-badge">${makeLvBadge(first)}</span>
+      ${sorted.length > 1 ? `<span style="font-size:11px;color:var(--muted);margin-left:4px">외 ${sorted.length-1}개</span>` : ''}
+    </div>
+  </div>`;
+
+  // 펼친 상태: 전체 (sorted 기준 idx 사용)
+  if (list) list.innerHTML = sorted.map((u, i) => makeLvItem(u, i)).join('');
+}
+
+function addLeave() {
+  const date = document.getElementById('useDate').value;
+  const typeVal = document.getElementById('useDays').value;
+  const memo = document.getElementById('useMemo').value.trim();
+  if (!date) { alert('날짜를 선택해 주세요'); return; }
+  const dayNum = (typeVal === '0.5am' || typeVal === '0.5pm') ? 0.5 : Number(typeVal);
+  leaveUses.push({ date, days: dayNum, type: typeVal, memo });
+  leaveUses.sort((a,b) => new Date(a.date)-new Date(b.date));
+  document.getElementById('useDate').value = '';
+  document.getElementById('useMemo').value = '';
+  saveData(); renderLeave();
+}
+
+function delLeave(idx) {
+  const sorted = [...leaveUses].sort((a,b) => new Date(b.date)-new Date(a.date));
+  const t = sorted[idx];
+  const typeLabel = t.type==='0.5am' ? '오전반차' : t.type==='0.5pm' ? '오후반차' : t.days===0.5 ? '반차' : t.days+'일';
+  const confirm = window.confirm(`삭제하시겠어요?\n\n📅 ${t.date}  ${typeLabel}${t.memo ? '\n📝 ' + t.memo : ''}`);
+  if (!confirm) return;
+  const i = leaveUses.findIndex(u => u.date===t.date && u.days===t.days && u.memo===t.memo);
+  if (i !== -1) leaveUses.splice(i, 1);
+  saveData(); renderLeave();
+}
+
+// ═══ 저장/불러오기 ═══
+function saveData() {
+  const allHours = {};
+  Object.entries(hourData).forEach(([k,v]) => { allHours[k] = v; });
+  localStorage.setItem('ot3-hours', JSON.stringify(allHours));
+
+  const common = {
+    salaryByMonth,
+    joinDate: document.getElementById('joinDate').value,
+    leaveUses
+  };
+  localStorage.setItem('ot3-common', JSON.stringify(common));
+}
+
+function loadData() {
+  try {
+    const hRaw = localStorage.getItem('ot3-hours');
+    if (hRaw) Object.assign(hourData, JSON.parse(hRaw));
+  } catch(e) {}
+  try {
+    const cRaw = localStorage.getItem('ot3-common');
+    if (cRaw) {
+      const d = JSON.parse(cRaw);
+      // 월별 기본급 복원
+      if (d.salaryByMonth) Object.assign(salaryByMonth, d.salaryByMonth);
+      // 구버전 호환: salary 단일값
+      if (d.salary && !d.salaryByMonth) salaryByMonth[`${YEAR}-${curMonth}`] = Number(d.salary);
+      if (d.joinDate) document.getElementById('joinDate').value = d.joinDate;
+      if (d.leaveUses) leaveUses = d.leaveUses;
+    }
+  } catch(e) {}
+}
+
+function loadHours() {
+  for (let m = 1; m <= 12; m++) updateDispAll(m);
+}
+
+// ═══ 데이터 관리 ═══
+function openDataModal() {
+  document.getElementById('dataModal').classList.add('open');
+}
+function closeDataModal() {
+  document.getElementById('dataModal').classList.remove('open');
+}
+function closeDataModalOutside(e) {
+  if (e.target === document.getElementById('dataModal')) closeDataModal();
+}
+
+function exportData() {
+  // 전체 hourData + common 수집
+  const common = {
+    salary: document.getElementById('baseSalary').value,
+    joinDate: document.getElementById('joinDate').value,
+    leaveUses
+  };
+  const exportObj = {
+    version: '1.0',
+    exportedAt: new Date().toISOString(),
+    common,
+    hours: hourData
+  };
+  const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const today = new Date();
+  const dateStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
+  a.href = url;
+  a.download = `잔업정산_데이터_${dateStr}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  closeDataModal();
+  alert('데이터가 저장되었어요! 📁\n파일명: 잔업정산_데이터_' + dateStr + '.json');
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!data.common || !data.hours) throw new Error('형식 오류');
+      if (!confirm(`데이터를 불러올까요?\n⚠️ 현재 데이터가 덮어쓰여집니다.\n\n내보낸 날짜: ${data.exportedAt ? data.exportedAt.slice(0,10) : '알 수 없음'}`)) return;
+      // common 복원
+      if (data.common.salary) {
+        document.getElementById('baseSalary').value = data.common.salary;
+        document.getElementById('salaryDisplay').value = Number(data.common.salary).toLocaleString();
+      }
+      if (data.common.joinDate) document.getElementById('joinDate').value = data.common.joinDate;
+      if (data.common.leaveUses) leaveUses = data.common.leaveUses;
+      // hours 복원
+      Object.keys(hourData).forEach(k => delete hourData[k]);
+      Object.assign(hourData, data.hours);
+      // localStorage 저장
+      localStorage.setItem('ot3-hours', JSON.stringify(hourData));
+      localStorage.setItem('ot3-common', JSON.stringify({
+        salary: data.common.salary,
+        joinDate: data.common.joinDate,
+        leaveUses: data.common.leaveUses || []
+      }));
+      // UI 갱신
+      buildAll();
+      loadHours();
+      showCalMonth(curMonth);
+      if (document.getElementById('joinDate').value) renderLeave();
+      closeDataModal();
+      alert('데이터를 성공적으로 불러왔어요! ✅');
+    } catch(err) {
+      alert('파일을 읽을 수 없어요.\n잔업정산기에서 내보낸 JSON 파일인지 확인해 주세요.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function resetData() {
+  if (!confirm('⚠️ 정말 초기화할까요?\n\n모든 잔업 기록, 연차 데이터가 삭제됩니다.\n이 작업은 되돌릴 수 없어요.')) return;
+
+  // localStorage 전부 삭제
+  localStorage.removeItem('ot3-hours');
+  localStorage.removeItem('ot3-common');
+
+  // 메모리 초기화
+  Object.keys(hourData).forEach(k => delete hourData[k]);
+  leaveUses = [];
+
+  // UI 초기화 - 잔업
+  Object.keys(salaryByMonth).forEach(k => delete salaryByMonth[k]);
+  document.getElementById('baseSalary').value = '';
+  document.getElementById('salaryDisplay').value = '';
+  document.getElementById('finalAmt').innerText = '0';
+  document.getElementById('totalH').innerText = '0';
+  document.getElementById('otPay').innerText = '0';
+
+  // UI 초기화 - 연차
+  document.getElementById('joinDate').value = '';
+  document.getElementById('tenureY').innerText = '-';
+  document.getElementById('tenureM').innerText = '-';
+  document.getElementById('totalLeave').innerText = '-';
+  document.getElementById('leaveSummary').classList.remove('visible');
+  document.getElementById('timelineCard').style.display = 'none';
+  document.getElementById('leaveTimeline').innerHTML = '';
+  const tlCol = document.getElementById('tlCollapsed');
+  const tlExp = document.getElementById('tlExpanded');
+  if (tlCol) { tlCol.innerHTML = ''; tlCol.style.display = 'block'; }
+  if (tlExp) tlExp.style.display = 'none';
+  const tlBtn = document.getElementById('tlToggleBtn');
+  if (tlBtn) { tlBtn.classList.remove('expanded'); }
+  const tlIcon = document.getElementById('tlToggleIcon');
+  const tlText = document.getElementById('tlToggleText');
+  if (tlIcon) tlIcon.innerText = '▼';
+  if (tlText) tlText.innerText = '전체보기';
+  document.getElementById('leaveList').innerHTML = '<div class="no-leave">아직 사용한 연차가 없어요 🌱</div>';
+  const lvCol = document.getElementById('lvCollapsed');
+  const lvExp = document.getElementById('lvExpanded');
+  if (lvCol) { lvCol.innerHTML = ''; lvCol.style.display = 'block'; }
+  if (lvExp) lvExp.style.display = 'none';
+  const lvBtn = document.getElementById('lvToggleBtn');
+  if (lvBtn) { lvBtn.classList.remove('expanded'); lvBtn.style.display = 'none'; }
+  const lsTotal = document.getElementById('lsTotal');
+  const lsUsed = document.getElementById('lsUsed');
+  const donutNum = document.getElementById('donutNum');
+  const riRemain = document.getElementById('riRemain');
+  if (lsTotal) lsTotal.innerText = '0';
+  if (lsUsed) lsUsed.innerText = '0';
+  if (donutNum) donutNum.innerText = '0';
+  if (riRemain) riRemain.innerText = '0';
+  document.getElementById('donutArc').setAttribute('stroke-dashoffset', '175.9');
+
+  // 달력 재빌드
+  buildAll();
+  showCalMonth(curMonth);
+  closeDataModal();
+  alert('초기화 완료! 🗑️');
+}
+
+// ═══ 초기화 ═══
+updateYearLabel();
+buildAll();
+loadData();
+loadHours();
+showCalMonth(curMonth);
+switchView('ot');
+if (document.getElementById('joinDate').value) renderLeave();
+
+// ═══ PWA 설정 ═══
+(function() {
+  const icon192 = 'data:image/png;base64,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';
+  const icon512 = 'data:image/png;base64,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';
+
+  // Apple touch icon
+  const appleIcon = document.getElementById('apple-icon');
+  if (appleIcon) appleIcon.href = icon192;
+
+  // Manifest 동적 생성
+  const manifest = {
+    name: '잔업 정산기',
+    short_name: '잔업정산기',
+    description: '월별 잔업시간 및 연차 관리 앱',
+    start_url: './',
+    display: 'standalone',
+    background_color: '#ffffff',
+    theme_color: '#1a2535',
+    orientation: 'portrait',
+    icons: [
+      { src: icon192, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+      { src: icon512, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const el = document.getElementById('manifest-placeholder');
+  if (el) el.href = url;
+
+  // Service Worker (오프라인 지원)
+  if ('serviceWorker' in navigator) {
+    const swCode = `
+      const CACHE = 'janbup-v1';
+      self.addEventListener('install', e => {
+        self.skipWaiting();
+      });
+      self.addEventListener('activate', e => {
+        self.clients.claim();
+      });
+      self.addEventListener('fetch', e => {
+        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+      });
+    `;
+    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+    const swUrl = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).catch(() => {});
+  }
+})();
+</script>
+</body>
+</html>

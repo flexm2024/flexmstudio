@@ -25,7 +25,13 @@ async function storedPw(env: Env) {
 }
 
 async function isAuth(req: Request, env: Env) {
-  const token = req.headers.get('Authorization')?.replace('Bearer ', '') ?? ''
+  const auth = req.headers.get('Authorization') ?? ''
+  const token = auth.replace('Bearer ', '')
+  if (!token) return false
+  // 세션 토큰 확인 (우선)
+  const session = await env.APP_KV.get(`session_${token}`)
+  if (session) return true
+  // 하위 호환: 비밀번호 자체를 토큰으로 사용한 경우도 허용
   return token === await storedPw(env)
 }
 
@@ -34,9 +40,10 @@ async function getResources(env: Env): Promise<Resource[]> {
   return raw ? JSON.parse(raw) : []
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const onRequest = async (ctx: any): Promise<Response> => {
-  const { request, env }: { request: Request; env: Env } = ctx
+interface Ctx { request: Request; env: Env }
+
+export const onRequest = async (ctx: Ctx): Promise<Response> => {
+  const { request, env } = ctx
 
   if (request.method === 'OPTIONS') {
     return new Response(null, {

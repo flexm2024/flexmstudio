@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock, faPaperPlane, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useScrollFadeIn } from '../hooks/useScrollFadeIn'
 import { useMetaTags } from '../hooks/useMetaTags'
+import { useWindowWidth } from '../hooks/useWindowWidth'
 
 type MsgType = '' | '협업제안' | '자료요청' | '기타문의'
 
@@ -19,6 +20,7 @@ export default function Contact() {
   const [sent, setSent]     = useState(false)
   const formRef = useScrollFadeIn()
   const infoRef = useScrollFadeIn()
+  const { isMobile } = useWindowWidth()
 
   useMetaTags({ title: '연락하기', description: '협업 제안, 자료 요청, 커피챗 등 편하게 연락주세요.', keywords: '연락, 협업, 문의', canonical: '/contact' })
 
@@ -38,11 +40,10 @@ export default function Contact() {
     if (!validate()) return
     setSending(true)
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: 'c98e903a-fbdb-4dfb-bf63-db3a1143a749',
           subject: `[포트폴리오 문의] ${form.type} - ${form.name}`,
           from_name: form.name,
           replyto: form.email,
@@ -69,11 +70,11 @@ export default function Contact() {
   const field = (k: keyof typeof errors) => errors[k] ? errInput : baseInput
 
   return (
-    <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '5rem 1.5rem', position: 'relative' }}>
+    <div style={{ maxWidth: '72rem', margin: '0 auto', padding: isMobile ? '4rem 1rem' : '5rem var(--page-px)', position: 'relative', overflowX: 'hidden' }}>
 
       {/* 배경 장식 */}
       <div style={{
-        position: 'absolute', top: '2rem', right: '-4rem', width: '500px', height: '500px',
+        position: 'absolute', top: '2rem', right: 0, width: '500px', height: '500px',
         background: 'radial-gradient(ellipse, color-mix(in srgb, var(--c-accent) 6%, transparent) 0%, transparent 70%)',
         pointerEvents: 'none', zIndex: 0,
       }} />
@@ -106,7 +107,7 @@ export default function Contact() {
       </div>
 
       {/* 2단 레이아웃 */}
-      <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2rem', position: 'relative', zIndex: 1 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '400px 1fr', gap: '2rem', position: 'relative', zIndex: 1 }}>
 
         {/* ── 왼쪽: 정보 ── */}
         <div ref={infoRef} className="scroll-fade" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -131,10 +132,6 @@ export default function Contact() {
               icon: <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>,
               label: '이메일', value: 'necc1321@gmail.com', href: 'mailto:necc1321@gmail.com',
             },
-            {
-              icon: <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>,
-              label: 'GitHub', value: 'github.com/necc1321', href: 'https://github.com/necc1321',
-            },
           ].map(({ icon, label, value, href }) => (
             <a key={label} href={href} target="_blank" rel="noreferrer" className="card"
               style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 1.25rem', textDecoration: 'none' }}>
@@ -154,7 +151,7 @@ export default function Contact() {
 
         {/* ── 오른쪽: 폼 ── */}
         <div ref={formRef} className="scroll-fade">
-          <div className="glow-card" style={{ padding: '2.5rem' }}>
+          <div className="glow-card" style={{ padding: isMobile ? '1.25rem' : '2.5rem' }}>
 
             {sent ? (
               /* 전송 완료 상태 */
@@ -179,7 +176,7 @@ export default function Contact() {
               <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
                 {/* 이름 + 이메일 */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.85rem' }}>
                   {([
                     { label: '이름', key: 'name' as const, type: 'text', placeholder: '홍길동' },
                     { label: '이메일', key: 'email' as const, type: 'email', placeholder: 'hong@example.com' },

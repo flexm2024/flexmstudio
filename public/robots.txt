@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://flexm.studio/sitemap.xml
+Sitemap: https://flexmstudio.com/sitemap.xml

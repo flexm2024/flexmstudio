@@ -1,4 +1,3 @@
-import { BLOG_SEEDS } from '../src/data/blog'
 import type { Post } from '../src/data/blog'
 
 interface KV {
@@ -21,16 +20,17 @@ const STATIC_PAGES = [
   { path: '/contact',   changefreq: 'yearly',  priority: '0.5' },
 ]
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const onRequest = async (ctx: any): Promise<Response> => {
-  const { env }: { env: Env } = ctx
+interface Ctx { env: Env }
+
+export const onRequest = async (ctx: Ctx): Promise<Response> => {
+  const { env } = ctx
 
   let posts: Post[] = []
   try {
     const raw = await env.APP_KV.get(BLOG_KV_KEY)
-    posts = raw ? (JSON.parse(raw) as Post[]) : BLOG_SEEDS
+    posts = raw ? (JSON.parse(raw) as Post[]) : []
   } catch {
-    posts = BLOG_SEEDS
+    posts = []
   }
 
   const staticUrls = STATIC_PAGES.map(p => `

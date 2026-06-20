@@ -1,5 +1,5 @@
 // 블로그 RSS 피드를 생성하는 Cloudflare Pages Function
-import type { Post } from '../src/data/blog'
+import type { Post } from '../../src/data/blog'
 
 interface KV {
   get(key: string): Promise<string | null>

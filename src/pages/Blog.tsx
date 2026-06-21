@@ -234,7 +234,7 @@ export default function Blog() {
             {featured && (
               <Link to={`/blog/${featured.slug || featured.id}`} style={{ textDecoration: 'none', display: 'flex', height: '100%' }}>
                 <article className="card" style={{ overflow: 'hidden', padding: 0, width: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-                  <div style={{ flex: 1, minHeight: '220px', overflow: 'hidden', position: 'relative', background: COVER_VARIANTS[0], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem', color: 'var(--c-accent)' }}>
+                  <div style={{ flex: 1, minHeight: '500px', overflow: 'hidden', position: 'relative', background: COVER_VARIANTS[0], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem', color: 'var(--c-accent)' }}>
                     {featured.coverImage
                       ? <img src={featured.coverImage} alt={featured.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       : <FontAwesomeIcon icon={getIcon(featured.icon)} />

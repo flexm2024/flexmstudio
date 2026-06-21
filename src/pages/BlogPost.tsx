@@ -109,7 +109,7 @@ export default function BlogPost() {
         {post.coverImage && (
           <div style={{ maxWidth: '820px', margin: '0 auto', padding: '0 var(--page-px) 1rem' }}>
             <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--c-border)' }}>
-              <img src={post.coverImage} alt={post.title} style={{ width: '100%', maxHeight: '220px', objectFit: 'cover', display: 'block' }} />
+              <img src={post.coverImage} alt={post.title} style={{ width: '100%', maxHeight: '500px', objectFit: 'cover', display: 'block' }} />
             </div>
           </div>
         )}
@@ -150,7 +150,7 @@ export default function BlogPost() {
         {post.coverImage && (
           <div style={{ maxWidth: '820px', margin: '0 auto', padding: '0 var(--page-px) 1rem' }}>
             <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--c-border)' }}>
-              <img src={post.coverImage} alt={post.title} style={{ width: '100%', maxHeight: '220px', objectFit: 'cover', display: 'block' }} />
+              <img src={post.coverImage} alt={post.title} style={{ width: '100%', maxHeight: '500px', objectFit: 'cover', display: 'block' }} />
             </div>
           </div>
         )}
@@ -190,7 +190,7 @@ export default function BlogPost() {
       <article style={{ overflowX: 'hidden' }}>
         <div style={{ borderRadius: '20px', overflow: 'hidden', marginBottom: '2.5rem', border: '1px solid var(--c-border)' }}>
           {post.coverImage
-            ? <img src={post.coverImage} alt={post.title} style={{ width: '100%', height: '260px', objectFit: 'cover', display: 'block' }} />
+            ? <img src={post.coverImage} alt={post.title} style={{ width: '100%', height: '500px', objectFit: 'cover', display: 'block' }} />
             : <div style={{ height: '200px', background: 'linear-gradient(135deg, color-mix(in srgb, var(--c-accent) 20%, transparent), color-mix(in srgb, var(--c-accent-mint) 12%, transparent))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '5rem', color: 'var(--c-accent)' }}>
                 <FontAwesomeIcon icon={getIcon(post.icon)} />
               </div>

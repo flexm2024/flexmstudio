@@ -345,6 +345,7 @@ code, pre, .mono { font-family: var(--font-mono); }
 @keyframes slideUp   { from { transform: translateY(100%) } to { transform: translateY(0) } }
 @keyframes blink     { 0%, 100% { opacity: 1 } 50% { opacity: 0 } }
 @keyframes bounce    { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(9px) } }
+@keyframes spin      { to { transform: rotate(360deg) } }
 @keyframes float     { 0%, 100% { transform: translateY(0) rotate(0deg) } 50% { transform: translateY(-22px) rotate(3deg) } }
 @keyframes scrollDot { 0%, 100% { transform: translateY(0); opacity: 1 } 50% { transform: translateY(10px); opacity: 0.3 } }
 @keyframes floatB    { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-16px) } }

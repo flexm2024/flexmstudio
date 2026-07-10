@@ -1,12 +1,11 @@
-# 백엔드 + Cloudflare Tunnel 동시 시작
+# 백엔드 + Cloudflare Tunnel 백그라운드 실행
 $backendPath = "$PSScriptRoot\backend"
 $tunnelConfig = "$env:USERPROFILE\.cloudflared\shorts-backend-config.yml"
 
-Write-Host "백엔드 시작 중..." -ForegroundColor Cyan
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; uvicorn main:app --reload"
+Start-Process powershell -ArgumentList "-WindowStyle Hidden -Command cd '$backendPath'; uvicorn main:app" -WindowStyle Hidden
 
 Start-Sleep -Seconds 3
 
-Write-Host "Cloudflare Tunnel 시작 중..." -ForegroundColor Cyan
-Write-Host "주소: https://shorts.flexmstudio.com" -ForegroundColor Green
-cloudflared tunnel --config $tunnelConfig run
+Start-Process "https://shorts-generator.pages.dev"
+
+Start-Process cloudflared -ArgumentList "tunnel --config `"$tunnelConfig`" run" -WindowStyle Hidden

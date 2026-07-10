@@ -12,6 +12,9 @@ class Voice(str, Enum):
     alloy = "alloy"
     echo = "echo"
     nova = "nova"
+    shimmer = "shimmer"
+    onyx = "onyx"
+    fable = "fable"
 
 class GenerateRequest(BaseModel):
     title: str = ""
@@ -23,6 +26,7 @@ class Scene(BaseModel):
     narration: str
     image_prompt: str
     duration_estimate: float
+    subtitle_chunks: Optional[list[str]] = None
 
 class JobStatus(str, Enum):
     pending = "pending"
@@ -34,6 +38,7 @@ class JobStatus(str, Enum):
     rendering = "rendering"
     done = "done"
     error = "error"
+    cancelled = "cancelled"
 
 class Job(BaseModel):
     job_id: str
@@ -46,6 +51,7 @@ class Job(BaseModel):
     scenes: list[Scene] = []
     output_path: Optional[str] = None
     error: Optional[str] = None
+    subtitle_align: str = "center"  # "left" | "center" | "right"
 
 class ScriptGenRequest(BaseModel):
     title: str

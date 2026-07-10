@@ -56,9 +56,26 @@ export async function listJobs(): Promise<JobSummary[]> {
 
 export interface JobInfo {
   script: string
-  scenes: { narration: string; image_prompt: string; duration_estimate: number }[]
+  scenes: { narration: string; image_prompt: string; duration_estimate: number; subtitle_chunks?: string[] }[]
   image_count: number
   audio_count: number
+  subtitle_align?: string
+}
+
+export async function updateSubtitleAlign(jobId: string, align: string): Promise<void> {
+  await fetch(`${API_BASE}/api/job/${jobId}/subtitle_align`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ align }),
+  })
+}
+
+export async function updateSceneChunks(jobId: string, idx: number, chunks: string[]): Promise<void> {
+  await fetch(`${API_BASE}/api/job/${jobId}/scene/${idx}/subtitle_chunks`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chunks }),
+  })
 }
 
 export async function getJobInfo(jobId: string): Promise<JobInfo | null> {
@@ -114,4 +131,18 @@ export async function triggerRender(jobId: string): Promise<void> {
 export async function deleteJob(jobId: string): Promise<void> {
   const res = await fetch(`${API_BASE}/api/job/${jobId}`, { method: "DELETE" })
   if (!res.ok) throw new Error("삭제 실패")
+}
+
+export async function cancelJob(jobId: string): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/job/${jobId}/cancel`, { method: "POST" })
+  if (!res.ok) throw new Error("취소 실패")
+}
+
+export function getVoiceSampleUrl(voice: string): string {
+  return `${API_BASE}/api/sample/voice/${voice}`
+}
+
+export async function regenerateImage(jobId: string, idx: number): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/job/${jobId}/image/${idx}/regenerate`, { method: "POST" })
+  if (!res.ok) throw new Error("이미지 재생성 실패")
 }

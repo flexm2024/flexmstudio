@@ -17,10 +17,10 @@ from job_store import create_job, get_job, update_job, list_jobs, delete_job
 from pipeline.parser import parse_script
 from pipeline.image_gen import generate_images
 from pipeline.audio_gen import generate_audio
-from pipeline.assembler import generate_frames, render_video
+from pipeline.assembler import render_video
 
 app = FastAPI()
-_origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001,https://shorts.flexmstudio.com")
+_origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001,https://shorts.flexmstudio.com,https://shorts-generator.pages.dev")
 _allowed_origins = [o.strip() for o in _origins_env.split(",") if o.strip()]
 
 app.add_middleware(
@@ -33,12 +33,18 @@ app.add_middleware(
 STORAGE_DIR = Path("storage")
 
 
+def _is_cancelled(job_id: str) -> bool:
+    j = get_job(job_id)
+    return j is None or j.status == JobStatus.cancelled
+
+
 def run_pipeline(job_id: str, request: GenerateRequest):
     """파트 1: 스크립트 분석 → 이미지 생성 → TTS → 검수 대기."""
     job = get_job(job_id)
     job_dir = STORAGE_DIR / job_id
 
     try:
+        if _is_cancelled(job_id): return
         job_dir.mkdir(parents=True, exist_ok=True)
         job.status = JobStatus.parsing
         job.message = "스크립트 분석 중..."
@@ -84,6 +90,7 @@ def run_render(job_id: str):
     job_dir = STORAGE_DIR / job_id
 
     try:
+        if _is_cancelled(job_id): return
         image_paths = sorted((job_dir / "images").glob("scene_*.png"))
         audio_paths = sorted((job_dir / "audio").glob("scene_*.mp3"))
 
@@ -92,14 +99,12 @@ def run_render(job_id: str):
         job.progress = 82
         update_job(job)
 
-        frames = generate_frames(job.scenes, image_paths)
-
         job.status = JobStatus.rendering
         job.message = "영상 렌더링 중..."
         job.progress = 90
         update_job(job)
 
-        output_path = render_video(job.scenes, frames, audio_paths, job_dir)
+        output_path = render_video(job.scenes, image_paths, audio_paths, job_dir, align=job.subtitle_align)
         job.output_path = str(output_path.resolve())
         job.status = JobStatus.done
         job.message = "완료!"
@@ -212,8 +217,8 @@ async def trigger_render(job_id: str, background_tasks: BackgroundTasks):
     job = get_job(job_id)
     if not job:
         raise HTTPException(status_code=404)
-    if job.status != JobStatus.awaiting_render:
-        raise HTTPException(status_code=400, detail="검수 대기 상태가 아닙니다")
+    if job.status not in (JobStatus.awaiting_render, JobStatus.done):
+        raise HTTPException(status_code=400, detail="렌더를 시작할 수 없는 상태입니다")
     background_tasks.add_task(run_render, job_id)
     return {"ok": True}
 
@@ -232,6 +237,7 @@ async def job_info(job_id: str):
         "scenes": [s.model_dump() for s in job.scenes],
         "image_count": image_count,
         "audio_count": audio_count,
+        "subtitle_align": job.subtitle_align,
     }
 
 
@@ -249,6 +255,99 @@ async def job_audio(job_id: str, idx: int):
     if not path.exists():
         raise HTTPException(status_code=404)
     return FileResponse(path, media_type="audio/mpeg")
+
+
+@app.post("/api/job/{job_id}/cancel")
+async def cancel_job(job_id: str):
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404)
+    job.status = JobStatus.cancelled
+    job.message = "사용자가 취소했습니다."
+    update_job(job)
+    return {"ok": True}
+
+
+@app.get("/api/sample/voice/{voice}")
+async def voice_sample(voice: str):
+    """목소리 샘플 오디오 생성 (최초 1회 생성 후 캐시)."""
+    if voice not in {"alloy", "echo", "nova", "shimmer", "onyx", "fable"}:
+        raise HTTPException(status_code=400, detail="잘못된 목소리")
+    cache_dir = STORAGE_DIR / "_samples"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path = cache_dir / f"voice_{voice}.mp3"
+    if not cache_path.exists():
+        if os.getenv("DEMO_MODE"):
+            raise HTTPException(status_code=404, detail="DEMO_MODE: 샘플 없음")
+        from openai import OpenAI as _OAI
+        _c = _OAI(api_key=os.getenv("OPENAI_API_KEY", ""))
+        resp = _c.audio.speech.create(
+            model="tts-1", voice=voice,
+            input="안녕하세요! 저는 AI 목소리입니다. 자연스럽고 편안하게 읽어드립니다."
+        )
+        cache_path.write_bytes(resp.content)
+    return FileResponse(str(cache_path), media_type="audio/mpeg")
+
+
+@app.post("/api/job/{job_id}/subtitle_align")
+async def update_subtitle_align(job_id: str, body: dict):
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404)
+    align = body.get("align", "center")
+    if align not in ("left", "center", "right"):
+        raise HTTPException(status_code=400, detail="align must be left/center/right")
+    job.subtitle_align = align
+    update_job(job)
+    return {"ok": True}
+
+
+@app.post("/api/job/{job_id}/scene/{idx}/subtitle_chunks")
+async def update_subtitle_chunks(job_id: str, idx: int, body: dict):
+    job = get_job(job_id)
+    if not job or idx >= len(job.scenes):
+        raise HTTPException(status_code=404)
+    chunks = [c.strip() for c in body.get("chunks", []) if c.strip()]
+    job.scenes[idx].subtitle_chunks = chunks or None
+    update_job(job)
+    return {"ok": True}
+
+
+@app.post("/api/job/{job_id}/image/{idx}/regenerate")
+async def regenerate_image(job_id: str, idx: int):
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404)
+    if not job.scenes or idx >= len(job.scenes):
+        raise HTTPException(status_code=400, detail="씬 인덱스가 잘못되었습니다")
+    job_dir = STORAGE_DIR / job_id
+    scene = job.scenes[idx]
+
+    if os.getenv("DEMO_MODE"):
+        from PIL import Image as PILImage, ImageDraw
+        images_dir = job_dir / "images"
+        images_dir.mkdir(parents=True, exist_ok=True)
+        colors = [(70, 130, 180), (210, 105, 30), (60, 130, 60), (150, 60, 150)]
+        img = PILImage.new("RGB", (1024, 1792), color=colors[idx % len(colors)])
+        draw = ImageDraw.Draw(img)
+        draw.text((512, 896), scene.image_prompt[:60], fill="white", anchor="mm")
+        (images_dir / f"scene_{idx:02d}.png").write_bytes(img.tobytes())
+        return {"ok": True}
+
+    from openai import OpenAI
+    import base64
+    client_oi = OpenAI(api_key=os.getenv("OPENAI_API_KEY", ""))
+    response = client_oi.images.generate(
+        model="gpt-image-1",
+        prompt=scene.image_prompt,
+        size="1024x1536",
+        quality="medium",
+        n=1,
+    )
+    image_data = base64.b64decode(response.data[0].b64_json)
+    image_path = job_dir / "images" / f"scene_{idx:02d}.png"
+    image_path.write_bytes(image_data)
+    return {"ok": True}
 
 
 @app.post("/api/upload/{job_id}")
